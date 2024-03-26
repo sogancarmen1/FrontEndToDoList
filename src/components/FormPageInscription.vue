@@ -7,6 +7,7 @@ function onSubmit() {}
 </script>
 
 <template>
+    <RouterView></RouterView>
     <!--
         Faire la vérification au niveau de l'email (afficher le message en bas), faire le voir au niveau du password, 
         Vérifier si les données entré au niveau du password respect un certain regex? (Faire le message pour ça)
