@@ -16,7 +16,6 @@ export default {
         else {
             this.showError = false;
         }
-        console.log("Value of show error : ", this.showError);
     }
   },
 }
@@ -24,7 +23,6 @@ export default {
 
 
 <template>
-  <RouterView></RouterView>
     <!--
         Faire la vérification au niveau de l'email (afficher le message en bas), faire le voir au niveau du password, 
         Vérifier si les données entré au niveau du password respect un certain regex? (Faire le message pour ça)
@@ -47,7 +45,7 @@ export default {
                             <p class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">Password</p>
                             <input v-model="password" placeholder="Enter your password" type="password" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"/>
                         </div>
-                        <div v-if="showError" class="text-sm text-red-700">Email or password invalid</div>
+                        <div v-if="showError" class="text-sm text-red-700 text-center py-2">Email or password invalid</div>
                         <router-link v-if="showError" to="/home"></router-link>
                         <div class="py-5">
                             <button @click="onSubmit" class="mx-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
