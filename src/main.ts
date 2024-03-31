@@ -5,11 +5,17 @@ import { createWebHistory, createRouter } from 'vue-router';
 import FormPageConnexion from './components/FormPageConnexion.vue';
 import FormPageInscription from './components/FormPageInscription.vue';
 import HomePage from './components/HomePage.vue';
+import AddTaskPage from "./components/AddTaskPage.vue";
+import VoirProfil from "./components/VoirProfil.vue";
+import UpdateTask from "./components/UpdateTask.vue";
 
 const routes = [
-    { path: '/login', component: FormPageConnexion },
+    { path: '/', component: FormPageConnexion },
     { path: '/register', component: FormPageInscription },
-    { path: '/home', component: HomePage }
+    { path: '/home', component: HomePage },
+    { path: '/addtask', component: AddTaskPage },
+    { path: '/showprofil', component: VoirProfil },
+    { path: '/updatetask', component: UpdateTask }
   ]
   
 const router = createRouter({
@@ -17,6 +23,6 @@ const router = createRouter({
     routes,
 })
 
-const app = createApp(App)
+export const app = createApp(App)
 app.use(router)
 app.mount('#app')

@@ -15,6 +15,7 @@ export default {
         }
         else {
             this.showError = false;
+            this.$router.push("/home");
         }
     }
   },
@@ -46,7 +47,6 @@ export default {
                             <input v-model="password" placeholder="Enter your password" type="password" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"/>
                         </div>
                         <div v-if="showError" class="text-sm text-red-700 text-center py-2">Email or password invalid</div>
-                        <router-link v-if="showError" to="/home"></router-link>
                         <div class="py-5">
                             <button @click="onSubmit" class="mx-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                                 Log in

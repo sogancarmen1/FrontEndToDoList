@@ -33,6 +33,9 @@ export default {
         else {
             this.isEmpty = false;
         }
+        if(this.isEqual == false && this.isNotCorrectEmail ==  false && this.isEmpty == false) {
+            this.$router.push("/");
+        }
         // console.log("Value of show error : ", this.isCorrectEmail);
     }
   },

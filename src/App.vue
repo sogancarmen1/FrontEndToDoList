@@ -1,17 +1,30 @@
-<script setup lang="ts">
+<script lang="ts">
+// import HomePage from "./components/HomePage.vue";
+// import FormPageConnexion from "./components/FormPageConnexion.vue";
+// import AddTaskPage from "./components/AddTaskPage.vue";
 import HomePage from "./components/HomePage.vue";
-import { ref } from "vue";
-const myArray = ref([
-  { id: 1, name: 'tâche 1', dueDate: '2000-02-14', priority: 'High', status: 'in_progress' },
-  { id: 2, name: 'tâche 2', dueDate: '2010-02-14', priority: 'low', status: 'done' },
-  { id: 3, name: 'tâche 3', dueDate: '2020-01-01', priority: 'High', status: 'pause' }
-]);
+// import VoirProfil from "./components/VoirProfil.vue";
 
+export default {
+  props: ["tasks"],
+  components: {
+    'homepage':HomePage,
+  },
+
+  data() {
+    return {
+
+    }
+  }
+}
 
 </script>
 
 <template>
-  <routerView class="p-8 bg-gray-100 min-h-screen" :tasks="myArray"></routerView>
+  <!-- <AddTaskPage></AddTaskPage> -->
+  <!-- <VoirProfil></VoirProfil> -->
+  <routerView class="p-8 bg-gray-100 min-h-screen" :tasks="tasks"></routerView>
+  <!-- <FormPageConnexion></FormPageConnexion> -->
   <!-- <div class="p-8 bg-gray-100 min-h-screen">
     <HomePage :tasks="myArray"></HomePage>
   </div> -->
