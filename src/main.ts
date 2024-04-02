@@ -8,6 +8,7 @@ import HomePage from './components/HomePage.vue';
 import AddTaskPage from "./components/AddTaskPage.vue";
 import VoirProfil from "./components/VoirProfil.vue";
 import UpdateTask from "./components/UpdateTask.vue";
+import EssaiOp from "./components/EssaiOp.vue";
 
 const routes = [
     { path: '/', component: FormPageConnexion },
@@ -15,7 +16,8 @@ const routes = [
     { path: '/home', component: HomePage },
     { path: '/addtask', component: AddTaskPage },
     { path: '/showprofil', component: VoirProfil },
-    { path: '/updatetask', component: UpdateTask }
+    { path: '/updatetask', component: UpdateTask },
+    { path: '/essai', component: EssaiOp },
   ]
   
 const router = createRouter({

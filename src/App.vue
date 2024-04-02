@@ -3,6 +3,7 @@
 // import FormPageConnexion from "./components/FormPageConnexion.vue";
 // import AddTaskPage from "./components/AddTaskPage.vue";
 import HomePage from "./components/HomePage.vue";
+import EssaiOp from "./components/EssaiOp.vue";
 // import VoirProfil from "./components/VoirProfil.vue";
 
 export default {
