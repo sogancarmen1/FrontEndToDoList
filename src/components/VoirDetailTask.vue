@@ -1,6 +1,6 @@
 <script>
     export default {
-        props: ['reveledetails', 'tooglereveledetail', 'tasks'],
+        props: ['reveledetails', 'tooglereveledetail', 'projects'],
     }
 </script>
 
@@ -17,13 +17,16 @@
                     <div>
                         <div>
                             <p class="text-md text-green-700 underline">Détails de la tâche</p>
-                            <p v-for="task in tasks" :key="task.id">
-                                <div v-if="task.isSelected" class="text-sm font-medium">
-                                    <p><span class="text-slate-700">Name</span> : {{ task.name }}</p>
-                                    <p><span class="text-red-700">Due Date</span> : {{ task.dueDate }}</p>
-                                    <p><span class="text-red-700">Priority</span> : {{ task.priority }}</p>
-                                    <p><span class="text-red-700">Status</span> : {{ task.status }}</p>
-                                </div>
+                            <p v-for="project in projects" :key="project.id">
+                                <p v-for="task in project.listOfTask" :key="task.id">
+                                    <div v-if="task.isSelected" class="text-sm font-medium">
+                                        <p class="text-md"><span class="text-red-700">In project</span> : {{ project.nameOfProject }}</p>
+                                        <p><span class="text-slate-700">Name</span> : {{ task.name }}</p>
+                                        <p><span class="text-red-700">Due Date</span> : {{ task.dueDate }}</p>
+                                        <p><span class="text-red-700">Priority</span> : {{ task.priority }}</p>
+                                        <p><span class="text-red-700">Status</span> : {{ task.status }}</p>
+                                    </div>
+                                </p>
                             </p>
                         </div>
                         <div class="py-5">

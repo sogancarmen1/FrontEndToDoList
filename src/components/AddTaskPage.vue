@@ -1,7 +1,7 @@
 <script>
     // import HomePage from './HomePage.vue';
     export default {
-        props: ['revele', 'toggleModale'],
+        props: ['revele', 'toggleModale', 'projects'],
         data() {
             return {
                 id: 1,
@@ -9,6 +9,7 @@
                 dueDate: "",
                 priority: "",
                 status: "",
+                inProject: "",
                 isEmpty: false,
                 nameOfModale: "Modale",
             }
@@ -24,14 +25,15 @@
                 this.dueDate = "";
                 this.priority = "";
                 this.status = "";
+                this.inProject = "";
             },
             onSubmit() {
-                if(this.name == "" && this.priority == "" && this.status == "" && this.dueDate == "") {
+                if(this.name == "" || this.priority == "" || this.status == "" || this.dueDate == "") {
                     this.isEmpty = true;
                 }
                 else {
                     this.isEmpty = false;
-                    this.$emit('form-submitted', { id: this.id, name: this.name, dueDate: this.dueDate, priority: this.priority, status: this.status })
+                    this.$emit('form-submitted', { id: this.id, nameFormatted: this.name.slice(0, 8) + "...", name: this.name, dueDate: this.dueDate, priority: this.priority, status: this.status, inProject: this.inProject})
                     this.toggleModale();
                     this.resetForm();
                 }
@@ -56,6 +58,10 @@
                             <p class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">Name</p>
                             <input v-model="name" placeholder="Enter name of task" type="" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"/>
                         </div>
+                        <!-- <div>
+                            <p class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">value</p>
+                            <input v-model="value" placeholder="Enter name of task" type="" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"/>
+                        </div> -->
                         <div>
                             <p class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">Due Date</p>
                             <input v-model="dueDate" placeholder="Enter name of task" type="date" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"/>
@@ -78,6 +84,15 @@
                                 <option>waiting</option>
                                 <option>done</option>
                                 <option>canceled</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">In project</p>
+                            <select v-model="inProject" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                                <option disabled value="">Please select project</option>
+                                <option v-for="project in projects" :key="project.id">
+                                    {{ project.nameOfProject }}
+                                </option>
                             </select>
                         </div>
                         <div v-if="isEmpty" class="text-sm text-red-700 text-center py-2">the fiels shouldn't empty</div>

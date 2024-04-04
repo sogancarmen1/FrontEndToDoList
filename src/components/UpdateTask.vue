@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
     // import HomePage from './HomePage.vue';
     export default {
-        props: ['reveleUpdateTask', 'tooglereveleUpdateTask', 'tasks', 'nameUpdate', 'dueDateUpdate', 'priorityUpdate', 'statusUpdate'],
+        props: ['reveleUpdateTask', 'tooglereveleUpdateTask', 'projects', 'nameUpdate', 'dueDateUpdate', 'priorityUpdate', 'statusUpdate'],
         data() {
             return {
                 id: 1,
@@ -11,6 +11,7 @@ import { ref } from 'vue';
                 dueDate: "",
                 priority: "",
                 status: "",
+                inProject: "",
                 isEmpty: false,
                 nameOfModale: "Modale",
             }
@@ -23,7 +24,7 @@ import { ref } from 'vue';
         methods: {
             onSubmit() {
                 this.tooglereveleUpdateTask();
-                this.$emit('form-submitted-update', { id: this.id, name: this.nameUpdate, dueDate: this.dueDate, priority: this.priority, status: this.status });
+                this.$emit('form-submitted-update', { id: this.id, nameFormatted: this.name.slice(0, 8) + "...", nameUpdate: this.nameUpdate, dueDate: this.dueDate, priority: this.priority, status: this.status, inProjectUpdate: this.inProjectUpdate});
                 console.log("type", this.nameUpdate);
                 // this.$emit('essai', updateData());
                 // updateData();
@@ -75,6 +76,15 @@ import { ref } from 'vue';
                                 <option>waiting</option>
                                 <option>done</option>
                                 <option>canceled</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">In project</p>
+                            <select :value="inProjectUpdate" @input="inProjectUpdate = $event.target.value" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                                <option disabled value="">Please select project</option>
+                                <option v-for="project in projects" :key="project.id">
+                                    {{ project.nameOfProject }}
+                                </option>
                             </select>
                         </div>
                         <div v-if="isEmpty" class="text-sm text-red-700 text-center py-2">the fiels shouldn't empty</div>
