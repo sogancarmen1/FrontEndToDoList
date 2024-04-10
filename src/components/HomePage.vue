@@ -7,6 +7,7 @@
     import LogoPage from "./LogoPage.vue";
     import AddProjectPage from "./AddProjectPage.vue";
     import SettingsPage from "./SettingsPage.vue";
+    import RemoveTask from "./RemoveTask.vue";
     export default {
         data() {
             return {
@@ -24,16 +25,20 @@
                 ],
                 revele: false,
                 receivedId: {},
+                receivedId1: {},
                 receiveProject: {},
                 reveleProfil: false,
                 reveledetails: false,
                 reveleUpdateTask: false,
+                name: "",
+                dueDate: "",
+                priority: "",
+                status: "",
+                inProject: "",
                 nameUpdate: "",
-                dueDateUpdate: "",
-                priorityUpdate: "",
-                statusUpdate: "",
                 inProjectUpdate: "",
                 count: 1,
+                count2: 1,
                 isChecked: false,
                 reveleButtonUpDown: false,
                 reveleButtonDropDown: true,
@@ -42,6 +47,7 @@
                 showImage: true,
                 isProjectSelected: true,
                 isSettingsSeleted: false,
+                reveleRemovePage: false,
             }
         },
 
@@ -53,9 +59,41 @@
             'logopage': LogoPage,
             'addproject' : AddProjectPage,
             'settingpage': SettingsPage,
+            'removetask': RemoveTask,
         },
 
         methods: {
+            toogleReveleRemovePage(value, value2) {
+                this.reveleRemovePage = !this.reveleRemovePage;
+                this.projects.forEach(project => {
+                    project.listOfTask.forEach(task => {
+                        task.isSelected = false;
+                    })
+                });
+                let valueFor = this.projects.findIndex(project => project.id === value2 );
+                if(valueFor != -1){
+                    let forValue = this.projects[valueFor].listOfTask.findIndex(task => task.id === value);
+                    if(forValue != -1) {
+                        this.projects[valueFor].listOfTask[forValue].isSelected = true;
+                    }
+                }
+            },
+
+            deleteTask(value, value2) {
+                this.reveleRemovePage = !this.reveleRemovePage;
+                let valueFor = this.projects.findIndex(project => project.id === value2 );
+                if(valueFor != -1){
+                    let forValue = this.projects[valueFor].listOfTask.findIndex(task => task.id === value);
+                    if(forValue != -1) {
+                        this.projects[valueFor].listOfTask.splice(forValue, 1);
+                        if(this.projects[valueFor].listOfTask.length == 0) {
+                            this.projects[valueFor].isSelectedProject = true;
+                            this.projects[valueFor].reveleTaskList = false;
+                        }
+                    }
+                }
+            },
+
             toogleSettingsToProject() {
                 this.isProjectSelected = false;
                 this.isSettingsSeleted = true;
@@ -125,6 +163,7 @@
                 this.revele = !this.revele;
             },
 
+            // Chercher à faire des réglages ici et regarder dans la console
             tooglereveleUpdateTask(value, value2) {
                 this.reveleUpdateTask = !this.reveleUpdateTask;
                 this.projects.forEach(project => {
@@ -137,32 +176,46 @@
                 if(valueFor != -1){
                     let forValue = this.projects[valueFor].listOfTask.findIndex(task => task.id === value);
                     if(forValue != -1) {
-                        this.projects[valueFor].listOfTask[forValue].isSelected = true;
                         this.nameUpdate = this.projects[valueFor].listOfTask[forValue].name;
                         this.dueDateUpdate = this.projects[valueFor].listOfTask[forValue].dueDate;
                         this.priorityUpdate = this.projects[valueFor].listOfTask[forValue].priority;
                         this.statusUpdate = this.projects[valueFor].listOfTask[forValue].status;
                         this.inProjectUpdate = this.projects[valueFor].listOfTask[forValue].inProject;
-                        console.log("Une valeur que je cherche : ", this.inProjectUpdate);
                     }
                 }
             },
 
+            // Chercher à faire des réglages ici et regarder dans la console
             formSubmittedUpdate(data) {
-                this.receivedId = {
-                    id: this.count++,
-                    name: data.nameUpdate,
+                this.receivedId1 = {
+                    idUpdate: this.count2++,
+                    nameFormatted: data.nameFormatted,
+                    nameUpdate: data.nameUpdate,
+                    dueDate: data.dueDate,
+                    priority: data.priority,
+                    status: data.status,
                     inProjectUpdate: data.inProjectUpdate,
-                }
-                console.log("typeEqual : ", this.receivedId.name);
-                this.projects.forEach(project => {
-                    if(this.receivedId.inProjectUpdate === project.nameOfProject) {
-                        let forValue1 = this.projects[valueFor].listOfTask.findIndex(task => task.id === data.id);
-                        if(forValue1 != -1) {
-                            console.log("Value : ", this.projects[valueFor].listOfTask[forValue1].name);
-                        }
-                    }
-                });
+                    isSelected: false,
+                };
+                console.log("Ce qui s'affiche dans HomePage : ", this.receivedId.idUpdate);
+                let value1 = this.projects.findIndex(project => project.name === this.receivedId1.inProject);
+                let value2 = this.projects[value1].listOfTask.findIndex(task => task.id === this.receivedId1.id);
+                console.log("Ma valeur", value2);
+                // this.projects.forEach(project => {
+                //     if(this.receivedId1.inProject == project.name) {
+                //         let value = project.listOfTask.findIndex(task => task.id == this.receivedId1.id - 2)
+                //         console.log(value);
+                //         // project.listOfTask.forEach(task => {
+                //         //     let forValue = task.findIndex(task => task.id === this.receivedId1.id - 2);
+                //         //     console.log(forValue);
+                //         //     if(task.id == this.receivedId1.idUpdate) {
+                //         //        console.log("Nom de la tache : ", task.name);
+                //         //         // task.name = this.receivedId1.nameUpdate;
+                //         //        console.log("Nouveau nom de la tache : ", task.name);
+                //         //     }
+                //         // })
+                //     }
+                // });
             },
 
             handleFormSubmitted(data) {
@@ -196,21 +249,6 @@
                     listOfTask: [],
                 }
                 this.projects.push(this.receiveProject);
-            },
-
-            deleteTask(value, value2) {
-                let valueFor = this.projects.findIndex(project => project.id === value2 );
-                if(valueFor != -1){
-                    let forValue = this.projects[valueFor].listOfTask.findIndex(task => task.id === value);
-                    if(forValue != -1) {
-                        this.projects[valueFor].listOfTask.splice(forValue, 1);
-                        console.log("taille du tableau : ", this.projects[valueFor].listOfTask.length);
-                        if(this.projects[valueFor].listOfTask.length == 0) {
-                            this.projects[valueFor].isSelectedProject = true;
-                            this.projects[valueFor].reveleTaskList = false;
-                        }
-                    }
-                }
             },
         },
     }
@@ -314,7 +352,8 @@
                                             <svg class="w-4"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"/></svg>
                                         </button>
-                                        <button @click="deleteTask(task.id, project.id)" class="border hover:bg-gray-100 p-1 rounded-md border-black/20">
+                                        <!-- @click="deleteTask(task.id, project.id)" -->
+                                        <button @click="toogleReveleRemovePage(task.id, project.id)" class="border hover:bg-gray-100 p-1 rounded-md border-black/20">
                                             <svg class="w-4"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
                                         </button>
@@ -329,8 +368,9 @@
     </div>
     <addtask @form-submitted="handleFormSubmitted" :revele="revele" :toggleModale="toggleModale" :projects="projects"></addtask>
     <voirdetail :projects="projects" :reveledetails="reveledetails" :tooglereveledetail="tooglereveledetail"></voirdetail>
-    <updatetask @form-submitted-update="formSubmittedUpdate" :reveleUpdateTask="reveleUpdateTask" :projects="projects" :tooglereveleUpdateTask="tooglereveleUpdateTask" :nameUpdate="nameUpdate" :dueDateUpdate="dueDateUpdate" :priorityUpdate="priorityUpdate" :statusUpdate="statusUpdate"></updatetask>
+    <updatetask @form-submitted-update="formSubmittedUpdate" :reveleUpdateTask="reveleUpdateTask" :projects="projects" :tooglereveleUpdateTask="tooglereveleUpdateTask" :nameUpdate="name" :dueDate="dueDate" :priority="priority" :status="status" :inProjectUpdate="inProjectUpdate"></updatetask>
     <addproject @form-project-submitted="formProjectSubmitted" :showOrNotImage="showOrNotImage" :showCreateTaskButton="showCreateTaskButton" :reveleCreateProjectForm="reveleCreateProjectForm" :toggleReveleCreateProjectForm="toggleReveleCreateProjectForm"></addproject>
+    <removetask :deleteTask="deleteTask" :projects="projects" :toogleReveleRemovePage="toogleReveleRemovePage" :reveleRemovePage="reveleRemovePage"></removetask>
 </template>
 
 <style scoped>
