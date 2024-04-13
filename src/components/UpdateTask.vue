@@ -153,7 +153,7 @@ export default {
           </div>
           <!-- :value="status"
               @input="status = $event.target.value" -->
-          <div>
+          <!-- <div>
             <p
               class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
             >
@@ -168,7 +168,7 @@ export default {
                 {{ project.nameOfProject }}
               </option>
             </select>
-          </div>
+          </div> -->
           <!-- :value="inProject"
               @input="inProject = $event.target.value" -->
           <div v-if="isEmpty" class="text-sm text-red-700 text-center py-2">
