@@ -1,58 +1,36 @@
 <script>
-import { ref } from "vue";
-
-// import HomePage from './HomePage.vue';
 export default {
-  props: [
-    "reveleUpdateTask",
-    "tooglereveleUpdateTask",
-    "projects",
-    "name",
-    "dueDate",
-    "priority",
-    "status",
-    "inProjectUpdate",
-  ],
+  props: ["reveleUpdateTask", "tooglereveleUpdateTask", "projects", "task"],
   data() {
     return {
-      id: 1,
-      name: "",
-      inProjectUpdate: "",
-      dueDate: "",
-      priority: "",
-      status: "",
-      inProject: "",
       isEmpty: false,
       nameOfModale: "Modale",
     };
   },
-
-  components: {
-    // 'homepage': HomePage,
-  },
-
   methods: {
     onSubmit() {
-      this.tooglereveleUpdateTask();
-      this.$emit("form-submitted-update", {
-        id: this.id,
-        nameFormatted: this.name.slice(0, 8) + "...",
-        name: this.name,
-        dueDate: this.dueDate,
-        priority: this.priority,
-        status: this.status,
-        inProjectUpdate: this.inProjectUpdate,
-      });
-      this.nameUpdate = "";
-      console.log("type", this.name);
-      // this.$emit('essai', updateData());
-      // updateData();
+      if (
+        this.$props.task.name == "" ||
+        this.$props.task.priority == "" ||
+        this.$props.task.status == "" ||
+        this.$props.task.dueDate == "" ||
+        this.$props.task.inProject == ""
+      ) {
+        this.isEmpty = true;
+      } else {
+        this.isEmpty = false;
+        this.$emit("form-submitted-update", {
+          id: this.$props.task.id,
+          nameFormatted: this.$props.task.name.slice(0, 8) + "...",
+          name: this.$props.task.name,
+          dueDate: this.$props.task.dueDate,
+          priority: this.$props.task.priority,
+          status: this.$props.task.status,
+          inProjectUpdate: this.$props.task.inProject,
+        });
+        this.tooglereveleUpdateTask();
+      }
     },
-  },
-
-  mounted() {
-    // console.log("salut tout le monde");
-    // this.name = selectedTask.nam
   },
 };
 </script>
@@ -85,8 +63,7 @@ export default {
             </p>
             <!-- Chercher à faire les réglages ici et voir dans la console -->
             <input
-              :value="name"
-              @input="name = $event.target.value"
+              v-model="task.name"
               placeholder="Enter name of task"
               type=""
               class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
@@ -101,7 +78,7 @@ export default {
               Due Date
             </p>
             <input
-              v-model="dueDate"
+              v-model="task.dueDate"
               placeholder="Enter name of task"
               type="date"
               class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
@@ -116,7 +93,7 @@ export default {
               Priority
             </p>
             <select
-              v-model="priority"
+              v-model="task.priority"
               class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
             >
               <option disabled value="">Please select priority</option>
@@ -134,7 +111,7 @@ export default {
               Status
             </p>
             <select
-              v-model="status"
+              v-model="task.status"
               class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
             >
               <option disabled value="">Please select status</option>
@@ -154,7 +131,7 @@ export default {
               In project
             </p>
             <select
-              v-model="inProjectUpdate"
+              v-model="task.inProject"
               class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
             >
               <option disabled value="">Please select project</option>
