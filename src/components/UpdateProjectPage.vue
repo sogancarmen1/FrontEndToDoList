@@ -4,14 +4,12 @@ export default {
   props: [
     "reveleUpdateProject",
     "toogleUpdateProject",
-    "projects",
+    "project",
     "showCreateTaskButton",
     "showOrNotImage",
   ],
   data() {
     return {
-      id: 1,
-      nameOfProject: "",
       isEmpty: false,
       nameOfModale: "Modale",
       isSelectedProject: false,
@@ -23,20 +21,18 @@ export default {
   },
 
   methods: {
-    resetForm() {
-      this.nameOfProject = "";
-    },
     onSubmit() {
-      if (this.nameOfProject == "") {
+      if (this.$props.project.nameOfProject == "") {
         this.isEmpty = true;
       } else {
         this.isEmpty = false;
         this.$emit("edit-project-submitted", {
-          id: this.id,
-          isSelectedProject: this.isSelectedProject,
-          nameOfProject: this.nameOfProject,
+          id: this.$props.project.id,
+          isSelectedProject: this.$props.project.isSelectedProject,
+          nameOfProject: this.$props.project.nameOfProject,
         });
       }
+      this.toogleUpdateProject({});
     },
   },
 };
@@ -75,7 +71,7 @@ export default {
               Name of project
             </p>
             <input
-              v-model="nameOfProject"
+              v-model="project.nameOfProject"
               placeholder="Enter name of project"
               type=""
               class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
