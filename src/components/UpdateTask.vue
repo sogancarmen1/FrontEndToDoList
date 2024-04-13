@@ -78,6 +78,9 @@ export default {
       <div class="px-8 pt-4 flex items-center flex-none">
         <div>
           <div>
+            <h1 class="text-center font-bold py-4 text-2xl text-gray-800">
+              Edit a task
+            </h1>
             <p
               class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
             >

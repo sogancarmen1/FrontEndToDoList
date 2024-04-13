@@ -8,6 +8,10 @@
     import AddProjectPage from "./AddProjectPage.vue";
     import SettingsPage from "./SettingsPage.vue";
     import RemoveTask from "./RemoveTask.vue";
+    import ParametersProjectPage from "./ParametersProjectPage.vue";
+    import VoirDetailParametersProject from "./VoirDetailParametersProject.vue";
+    import DeleteProject from "./DeleteProject.vue";
+    import UpdateProjectPage from "./UpdateProjectPage.vue";
     export default {
         data() {
             return {
@@ -48,6 +52,12 @@
                 isProjectSelected: true,
                 isSettingsSeleted: false,
                 reveleRemovePage: false,
+                isHovered: false,
+                isParameterProjectSelected: false,
+                isMouseOver: false,
+                valueSend: false,
+                reveleRemoveProject: false,
+                reveleUpdateProject: false,
             }
         },
 
@@ -60,9 +70,65 @@
             'addproject' : AddProjectPage,
             'settingpage': SettingsPage,
             'removetask': RemoveTask,
+            'parameterproject': ParametersProjectPage,
+            'voirdetailparameter': VoirDetailParametersProject,
+            'deleteproject': DeleteProject,
+            'updateproject': UpdateProjectPage,
         },
 
         methods: {
+            toogleUpdateProject(value) {
+                this.reveleUpdateProject = !this.reveleUpdateProject;
+            },
+
+            editProject(updatedProjectData) {
+                let valueFor = this.projects.findIndex(project => project.id === updatedProjectData.id);
+                if(valueFor != -1) {
+                    this.projects[valueFor].isSelectedProject = true;
+                }
+                let indexFind = this.projects.findIndex(project => project.isSelectedProject == true);
+                if(indexFind != -1) {
+                    this.projects[indexFind].nameOfProject = updatedProjectData.nameOfProject;
+                }
+                this.reveleUpdateProject = !this.reveleUpdateProject;
+            },
+
+            toogleReveleRemoveProject(value) {
+                this.reveleRemoveProject = !this.reveleRemoveProject;
+                this.projects.forEach(project => {
+                    if(project.id === value) {
+                        project.isProjectSelected = true;
+                    }
+                    else {
+                        project.isProjectSelected = false;
+                    }
+                });
+            },
+
+            deleteProject(value) {
+                this.reveleRemoveProject = !this.reveleRemoveProject;
+                let valueFor = this.projects.findIndex(project => project.id == value && project.isSelectedProject == true);
+                if(valueFor != -1) {
+                    this.projects.splice(valueFor, 1);
+                }
+                if(this.projects.length == 0) {
+                    this.showImage = true;
+                    this.isEmptyProject = false;
+                }
+            },
+
+            toogleHover(value2) {
+                this.projects.forEach(project => {
+                    project.isMouseOver = project.id === value2;
+                });
+                this.isHovered = true;
+            },
+
+            toogleHoverMouseLeave() {
+                this.projects.forEach(project => project.isMouseOver = false);
+                this.isHovered = false;
+            },
+
             toogleReveleRemovePage(value, value2) {
                 this.reveleRemovePage = !this.reveleRemovePage;
                 this.projects.forEach(project => {
@@ -320,8 +386,26 @@
                         <img v-if="showImage" class="flex items-center mx-[220px] w-[470px] rounded-bl-lg rounded-tl-lg" src="../assets/vecteezy_young-man-working-on-the-computer-programmer-business_26618169-1.jpg" alt="">
                         <tbody class="text-xs text-black">
                             <tr v-for="project in projects" :key="project.id">
-                                <div class="flex justify-between border rounded-xl bg-gray-50 my-2">
-                                    <div class="px-4 py-3">{{ project.nameOfProject }}</div>
+                                <div @mouseover="toogleHover(project.id)" @mouseleave="toogleHoverMouseLeave()" class="flex justify-between border rounded-xl bg-gray-50 my-2">
+                                    <div class="px-4 py-1 flex space-x-2">
+                                        <div class="py-2">
+                                            {{ project.nameOfProject }}
+                                        </div>
+                                        <div>
+                                            <div class="flex space-x-2" v-if="project.isMouseOver">
+                                                <button @click="toogleUpdateProject(project.id)"
+                                                class="rounded-md px-3 mt-1 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full sm:text-sm focus:ring-1"
+                                                >
+                                                Modified
+                                                </button>
+                                                <button @click="toogleReveleRemoveProject(project.id)"
+                                                class="rounded-md px-3 py-1 mt-1 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full sm:text-sm focus:ring-1"
+                                                >
+                                                Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div>
                                         <button v-show="project.isSelectedProject" @click="tooglereveleTaskList(project.id)" class="py-1 my-2 mx-4 px-2 border rounded-full">
                                             <svg class="w-3"
@@ -371,6 +455,9 @@
     <updatetask @form-submitted-update="formSubmittedUpdate" :reveleUpdateTask="reveleUpdateTask" :projects="projects" :tooglereveleUpdateTask="tooglereveleUpdateTask" :nameUpdate="name" :dueDate="dueDate" :priority="priority" :status="status" :inProjectUpdate="inProjectUpdate"></updatetask>
     <addproject @form-project-submitted="formProjectSubmitted" :showOrNotImage="showOrNotImage" :showCreateTaskButton="showCreateTaskButton" :reveleCreateProjectForm="reveleCreateProjectForm" :toggleReveleCreateProjectForm="toggleReveleCreateProjectForm"></addproject>
     <removetask :deleteTask="deleteTask" :projects="projects" :toogleReveleRemovePage="toogleReveleRemovePage" :reveleRemovePage="reveleRemovePage"></removetask>
+    <deleteproject :deleteProject="deleteProject" :toogleReveleRemoveProject="toogleReveleRemoveProject" :reveleRemoveProject="reveleRemoveProject" :projects="projects"></deleteproject>
+    <updateproject v-for="project in projects" @edit-project-submitted="editProject(project.id)" :projects="projects" :reveleUpdateProject="reveleUpdateProject" :toogleUpdateProject="toogleUpdateProject" ></updateproject>
+    <!-- <voirdetailparameter class=""></voirdetailparameter> -->
 </template>
 
 <style scoped>
