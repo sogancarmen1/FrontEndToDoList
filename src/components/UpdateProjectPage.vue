@@ -30,9 +30,11 @@ export default {
           id: this.$props.project.id,
           isSelectedProject: this.$props.project.isSelectedProject,
           nameOfProject: this.$props.project.nameOfProject,
+          listOfTask: this.$props.project.listOfTask,
+          reveleTaskList: this.$props.project.reveleTaskList,
         });
       }
-      this.toogleUpdateProject({});
+      this.toogleUpdateProject();
     },
   },
 };
@@ -62,7 +64,7 @@ export default {
       <div class="px-8 pt-4 flex items-center flex-none">
         <div>
           <div>
-            <p class="text-center font-bold py-4 text-2xl text-gray-800">
+            <p class="text-gray-800 dark:text-white text-center font-bold py-4 text-2xl">
               Edit a project
             </p>
             <p

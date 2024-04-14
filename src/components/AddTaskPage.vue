@@ -1,7 +1,7 @@
 <script>
 // import HomePage from './HomePage.vue';
 export default {
-  props: ["revele", "toggleModale", "projects"],
+  props: ["revele", "toggleModale", "projects", "isDark"],
   data() {
     return {
       id: 1,
@@ -64,30 +64,53 @@ export default {
       @click="toggleModale"
       class="bg-[rgba(0,0,0,0.5)] fixed top-0 bottom-0 right-0 left-0"
     ></div>
-    <div class="space-y-2 border rounded-lg bg-white shadow-2xl fixed">
-      <button @click="toggleModale" class="w-5 py-2 absolute right-3">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-          <path
-            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
-          />
+    <div 
+    :class="{ dark: isDark }"
+    class="space-y-2 rounded-lg dark:bg-black/90 bg-white shadow-2xl fixed">
+      <button @click="toggleModale" class="w-5 py-4 absolute right-4">
+        <svg
+          :class="{ dark: isDark }"
+          class="dark:fill-white"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          version="1.1"
+          id="Capa_1"
+          x="0px"
+          y="0px"
+          viewBox="0 0 512.021 512.021"
+          style="enable-background: new 0 0 512.021 512.021"
+          xml:space="preserve"
+          width="20"
+          height="20"
+        >
+          <g>
+            <path
+              d="M301.258,256.01L502.645,54.645c12.501-12.501,12.501-32.769,0-45.269c-12.501-12.501-32.769-12.501-45.269,0l0,0   L256.01,210.762L54.645,9.376c-12.501-12.501-32.769-12.501-45.269,0s-12.501,32.769,0,45.269L210.762,256.01L9.376,457.376   c-12.501,12.501-12.501,32.769,0,45.269s32.769,12.501,45.269,0L256.01,301.258l201.365,201.387   c12.501,12.501,32.769,12.501,45.269,0c12.501-12.501,12.501-32.769,0-45.269L301.258,256.01z"
+            />
+          </g>
         </svg>
       </button>
       <!-- <div class="flex"> -->
       <div class="px-8 pt-4 flex items-center flex-none">
         <div>
-          <h1 class="text-center font-bold py-4 text-2xl text-gray-800">
+          <h1
+            :class="{ dark: isDark }"
+            class="text-center font-bold py-4 text-2xl dark:text-white text-gray-800"
+          >
             Add a task
           </h1>
           <div>
             <div>
               <p
-                class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
+                :class="{ dark: isDark }"
+                class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium dark:text-white text-slate-700"
               >
                 In project
               </p>
               <select
                 v-model="inProject"
-                class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                :class="{ dark: isDark }"
+                class="mt-1 px-3 py-2 dark:bg-black/20 dark:text-white text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
               >
                 <option disabled value="">Please select project</option>
                 <option v-for="project in projects" :key="project.id">
@@ -96,7 +119,8 @@ export default {
               </select>
             </div>
             <p
-              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
+              :class="{ dark: isDark }"
+              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium dark:text-white text-slate-700"
             >
               Name
             </p>
@@ -104,12 +128,14 @@ export default {
               v-model="name"
               placeholder="Enter name of task"
               type=""
-              class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+              :class="{ dark: isDark }"
+              class="mt-1 px-3 py-2 dark:bg-black/20 dark:text-white text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
             />
           </div>
           <div>
             <p
-              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
+              :class="{ dark: isDark }"
+              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium dark:text-white text-slate-700"
             >
               Due Date
             </p>
@@ -117,18 +143,21 @@ export default {
               v-model="dueDate"
               placeholder="Enter name of task"
               type="date"
-              class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+              :class="{ dark: isDark }"
+              class="mt-1 px-3 py-2 dark:bg-black/20 dark:text-white text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
             />
           </div>
           <div>
             <p
-              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
+              :class="{ dark: isDark }"
+              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium dark:text-white text-slate-700"
             >
               Priority
             </p>
             <select
               v-model="priority"
-              class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+              :class="{ dark: isDark }"
+              class="mt-1 px-3 py-2 dark:bg-black/20 dark:text-white text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
             >
               <option disabled value="">Please select priority</option>
               <option>High</option>
@@ -138,13 +167,15 @@ export default {
           </div>
           <div>
             <p
-              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
+              :class="{ dark: isDark }"
+              class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium dark:text-white text-slate-700"
             >
               Status
             </p>
             <select
               v-model="status"
-              class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+              :class="{ dark: isDark }"
+              class="mt-1 px-3 py-2 dark:bg-black/20 dark:text-white text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
             >
               <option disabled value="">Please select status</option>
               <option>todo</option>
@@ -160,7 +191,7 @@ export default {
           <div class="py-5">
             <button
               @click="onSubmit"
-              class="mx-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              class="shadow-xl mx-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
             >
               Add task
