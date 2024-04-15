@@ -12,6 +12,7 @@
     import VoirDetailParametersProject from "./VoirDetailParametersProject.vue";
     import DeleteProject from "./DeleteProject.vue";
     import UpdateProjectPage from "./UpdateProjectPage.vue";
+    import FormPageConnexion from "./FormPageConnexion.vue";
     import { useDark, useToggle } from "@vueuse/core";
     const isDark = useDark();
     const toggleDark = useToggle(isDark)
@@ -86,6 +87,7 @@
             'voirdetailparameter': VoirDetailParametersProject,
             'deleteproject': DeleteProject,
             'updateproject': UpdateProjectPage,
+            'formpageconnexion': FormPageConnexion,
         },
 
         methods: {
@@ -338,13 +340,13 @@
                         <div><h1 class="font-bold px-2 py-4 text-2xl text-black dark:text-white" :class="{ 'data': isDark }">My projects</h1></div>
                         <div class="flex space-x-2">
                             <div v-if="isEmptyProject">
-                                <button @click="toggleModale" class="shadow-md flex my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                                <button :class="{ 'dark': isDark }" @click="toggleModale" class="dark:shadow-black/50 shadow-md flex my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline" type="button">
                                     <svg class="py-1" xmlns="http://www.w3.org/2000/svg" fill="white" id="Outline" viewBox="0 0 24 24" width="25" height="25"><path d="M23,11H13V1a1,1,0,0,0-1-1h0a1,1,0,0,0-1,1V11H1a1,1,0,0,0-1,1H0a1,1,0,0,0,1,1H11V23a1,1,0,0,0,1,1h0a1,1,0,0,0,1-1V13H23a1,1,0,0,0,1-1h0A1,1,0,0,0,23,11Z"/></svg>
                                     <span>Create task</span>
                                 </button>
                             </div>
                             <div>
-                                <button @click="toggleReveleCreateProjectForm" class="shadow-md flex my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline" type="button">
+                                <button :class="{ 'dark': isDark }" @click="toggleReveleCreateProjectForm" class="dark:shadow-black/50 shadow-md flex my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline" type="button">
                                     <svg class="py-1" xmlns="http://www.w3.org/2000/svg" fill="white" id="Outline" viewBox="0 0 24 24" width="25" height="25"><path d="M23,11H13V1a1,1,0,0,0-1-1h0a1,1,0,0,0-1,1V11H1a1,1,0,0,0-1,1H0a1,1,0,0,0,1,1H11V23a1,1,0,0,0,1,1h0a1,1,0,0,0,1-1V13H23a1,1,0,0,0,1-1h0A1,1,0,0,0,23,11Z"/></svg>
                                     <span class="">Create project</span>
                                 </button>
@@ -371,20 +373,22 @@
                             <img v-if="showImage" class="flex items-center mx-[320px] my-8 w-[330px] rounded-bl-lg rounded-tl-lg" src="../assets/plan.png" alt="">
                             <tbody class="text-xs text-black">
                                 <tr v-for="project in projects" :key="project.id" class="">
-                                    <div @mouseover="toogleHover(project.id)" @mouseleave="toogleHoverMouseLeave()" class="flex justify-between border rounded-xl bg-gray-50 my-2">
+                                    <div :class="{ 'dark': isDark }" @mouseover="toogleHover(project.id)" @mouseleave="toogleHoverMouseLeave()" class="dark:bg-black/20 flex justify-between border dark:border-black/30 rounded-xl bg-gray-50 my-2">
                                         <div class="px-4 py-1 flex space-x-2">
-                                            <div class="py-2">
+                                            <div :class="{ 'dark': isDark }" class="dark:text-white py-2">
                                                 {{ project.nameOfProject }}
                                             </div>
                                             <div>
                                                 <div class="flex space-x-2" v-if="project.isMouseOver">
                                                     <button @click="toogleUpdateProject(project)"
-                                                    class="rounded-md px-3 mt-1 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full sm:text-sm focus:ring-1"
+                                                    :class="{ 'dark': isDark }"
+                                                    class="rounded-md px-3 mt-1 dark:bg-black/50 dark:border-none dark:shadow-black dark:text-white shadow-md bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full sm:text-sm focus:ring-1"
                                                     >
                                                     Modified
                                                     </button>
                                                     <button @click="toogleReveleRemoveProject(project.id)"
-                                                    class="rounded-md px-3 py-1 mt-1 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full sm:text-sm focus:ring-1"
+                                                    :class="{ 'dark': isDark }"
+                                                    class="rounded-md px-3 py-1 mt-1 dark:bg-black/50 dark:border-none dark:shadow-black dark:text-white bg-white border shadow-md border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full sm:text-sm focus:ring-1"
                                                     >
                                                     Delete
                                                     </button>
@@ -392,13 +396,11 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <button v-show="project.isSelectedProject" @click="tooglereveleTaskList(project.id)" class="py-1 my-2 mx-4 px-2 border rounded-full">
-                                                <svg class="w-3"
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
+                                            <button v-show="project.isSelectedProject" @click="tooglereveleTaskList(project.id)" :class="{ 'dark': isDark }" class="py-1 my-2 mx-4 px-2 rounded-full">
+                                                <svg :class="{ 'dark': isDark }" class="dark:fill-white" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="15" height="15"><path d="M18.71,8.21a1,1,0,0,0-1.42,0l-4.58,4.58a1,1,0,0,1-1.42,0L6.71,8.21a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41l4.59,4.59a3,3,0,0,0,4.24,0l4.59-4.59A1,1,0,0,0,18.71,8.21Z"/></svg>
                                             </button>
-                                            <button v-show="project.reveleTaskList" @click="toogleNonReveleTaskList(project.id)" class="absolute right-8 py-1 my-2 mx-4 px-2 border rounded-full">
-                                                <svg class="w-3"
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg>
+                                            <button v-show="project.reveleTaskList" @click="toogleNonReveleTaskList(project.id)" class="absolute right-8 py-1 my-2 mx-4 px-2 rounded-full">
+                                                <svg :class="{ 'dark': isDark }" class="dark:fill-white" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="15" height="15"><path d="M18,15.5a1,1,0,0,1-.71-.29l-4.58-4.59a1,1,0,0,0-1.42,0L6.71,15.21a1,1,0,0,1-1.42-1.42L9.88,9.21a3.06,3.06,0,0,1,4.24,0l4.59,4.58a1,1,0,0,1,0,1.42A1,1,0,0,1,18,15.5Z"/></svg>
                                             </button>
                                         </div>
                                     </div>
@@ -407,24 +409,20 @@
                                             <label for="myCheckbox"></label>
                                             <input type="checkbox" id="myCheckbox" v-model="isChecked">
                                         </td>
-                                        <td class="px-4 pt-2 w-20 font-medium text-gray-900" v-if="task.name.length > 8">{{ task.nameFormatted }}</td>
-                                        <td class="px-4 pt-2 w-20 font-medium text-gray-900" v-else>{{ task.name }}</td>
-                                        <td class="px-4 pt-2 w-22 font-medium text-gray-900">{{ task.dueDate }}</td>
-                                        <td class="px-4 pt-2 w-16 font-medium text-gray-900">{{ task.priority }}</td>
-                                        <td class="px-4 pt-2 w-24 font-medium text-gray-900">{{ task.status }}</td>
+                                        <td :class="{ 'dark': isDark }" class="px-4 pt-2 w-20 font-medium dark:text-white text-gray-900" v-if="task.name.length > 8">{{ task.nameFormatted }}</td>
+                                        <td :class="{ 'dark': isDark }" class="px-4 pt-2 w-20 font-medium text-gray-900 dark:text-white" v-else>{{ task.name }}</td>
+                                        <td :class="{ 'dark': isDark }" class="px-4 pt-2 w-22 font-medium text-gray-900 dark:text-white">{{ task.dueDate }}</td>
+                                        <td :class="{ 'dark': isDark }" class="px-4 pt-2 w-16 font-medium text-gray-900 dark:text-white">{{ task.priority }}</td>
+                                        <td :class="{ 'dark': isDark }" class="px-4 pt-2 w-24 font-medium text-gray-900 dark:text-white">{{ task.status }}</td>
                                         <td class="pb-2 flex w-16 space-x-2">
-                                            <button @click="tooglereveledetail(task.id, project.id)" class="border hover:bg-gray-100 border-black/20 p-1 rounded-md">
-                                                <svg class="w-5"
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
+                                            <button @click="tooglereveledetail(task.id, project.id)" :class="{ 'dark': isDark }" class="dark:shadow-black/50 shadow-md border dark:hover:bg-black/30 hover:bg-gray-100 border-black/20 p-1 rounded-md">
+                                                <svg :class="{ 'dark': isDark }" class="dark:fill-white" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="20" height="20"><path d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10.011,10.011,0,0,1,12,22Z"/><path d="M12,10H11a1,1,0,0,0,0,2h1v6a1,1,0,0,0,2,0V12A2,2,0,0,0,12,10Z"/><circle cx="12" cy="6.5" r="1.5"/></svg>
                                             </button>
-                                            <button @click="tooglereveleUpdateTask(task)" class="border hover:bg-gray-100 p-1 rounded-md border-black/20">
-                                                <svg class="w-4"
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"/></svg>
+                                            <button @click="tooglereveleUpdateTask(task)" :class="{ 'dark': isDark }" class="dark:shadow-black/50 shadow-md border dark:hover:bg-black/30 hover:bg-gray-100 p-1 rounded-md border-black/20">
+                                                <svg :class="{ 'dark': isDark }" class="dark:fill-white" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="18" height="18"><path d="M22.853,1.148a3.626,3.626,0,0,0-5.124,0L1.465,17.412A4.968,4.968,0,0,0,0,20.947V23a1,1,0,0,0,1,1H3.053a4.966,4.966,0,0,0,3.535-1.464L22.853,6.271A3.626,3.626,0,0,0,22.853,1.148ZM5.174,21.122A3.022,3.022,0,0,1,3.053,22H2V20.947a2.98,2.98,0,0,1,.879-2.121L15.222,6.483l2.3,2.3ZM21.438,4.857,18.932,7.364l-2.3-2.295,2.507-2.507a1.623,1.623,0,1,1,2.295,2.3Z"/></svg>
                                             </button>
-                                            <!-- @click="deleteTask(task.id, project.id)" -->
-                                            <button @click="toogleReveleRemovePage(task.id, project.id)" class="border hover:bg-gray-100 p-1 rounded-md border-black/20">
-                                                <svg class="w-4"
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
+                                            <button @click="toogleReveleRemovePage(task.id, project.id)" :class="{ 'dark': isDark }" class="dark:shadow-black/50 shadow-md border dark:hover:bg-black/30 hover:bg-gray-100 p-1 rounded-md border-black/20">
+                                                <svg :class="{ 'dark': isDark }" class="dark:fill-white" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="20" height="20"><path d="M21,4H17.9A5.009,5.009,0,0,0,13,0H11A5.009,5.009,0,0,0,6.1,4H3A1,1,0,0,0,3,6H4V19a5.006,5.006,0,0,0,5,5h6a5.006,5.006,0,0,0,5-5V6h1a1,1,0,0,0,0-2ZM11,2h2a3.006,3.006,0,0,1,2.829,2H8.171A3.006,3.006,0,0,1,11,2Zm7,17a3,3,0,0,1-3,3H9a3,3,0,0,1-3-3V6H18Z"/><path d="M10,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,10,18Z"/><path d="M14,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,14,18Z"/></svg>
                                             </button>
                                         </td>
                                     </tr>
@@ -437,12 +435,13 @@
         </div>
     </div>
     <addtask :isDark="isDark" @form-submitted="handleFormSubmitted" :revele="revele" :toggleModale="toggleModale" :projects="projects"></addtask>
-    <voirdetail :projects="projects" :reveledetails="reveledetails" :tooglereveledetail="tooglereveledetail"></voirdetail>
-    <updatetask @form-submitted-update="formSubmittedUpdate" :reveleUpdateTask="reveleUpdateTask" :projects="projects" :tooglereveleUpdateTask="tooglereveleUpdateTask" :task="selectedTask"></updatetask>
+    <voirdetail :isDark="isDark" :projects="projects" :reveledetails="reveledetails" :tooglereveledetail="tooglereveledetail"></voirdetail>
+    <updatetask :isDark="isDark" @form-submitted-update="formSubmittedUpdate" :reveleUpdateTask="reveleUpdateTask" :projects="projects" :tooglereveleUpdateTask="tooglereveleUpdateTask" :task="selectedTask"></updatetask>
     <addproject :isDark="isDark" :moonIsSelected="moonIsSelected" :sunIsSelected="sunIsSelected" @form-project-submitted="formProjectSubmitted" :showOrNotImage="showOrNotImage" :showCreateTaskButton="showCreateTaskButton" :reveleCreateProjectForm="reveleCreateProjectForm" :toggleReveleCreateProjectForm="toggleReveleCreateProjectForm"></addproject>
-    <removetask :deleteTask="deleteTask" :projects="projects" :toogleReveleRemovePage="toogleReveleRemovePage" :reveleRemovePage="reveleRemovePage"></removetask>
-    <deleteproject :deleteProject="deleteProject" :toogleReveleRemoveProject="toogleReveleRemoveProject" :reveleRemoveProject="reveleRemoveProject" :projects="projects"></deleteproject>
-    <updateproject @edit-project-submitted="editProject" :project="selectedProject" :reveleUpdateProject="reveleUpdateProject" :toogleUpdateProject="toogleUpdateProject" ></updateproject>
+    <removetask :isDark="isDark" :deleteTask="deleteTask" :projects="projects" :toogleReveleRemovePage="toogleReveleRemovePage" :reveleRemovePage="reveleRemovePage"></removetask>
+    <deleteproject :isDark="isDark" :deleteProject="deleteProject" :toogleReveleRemoveProject="toogleReveleRemoveProject" :reveleRemoveProject="reveleRemoveProject" :projects="projects"></deleteproject>
+    <updateproject :isDark="isDark" @edit-project-submitted="editProject" :project="selectedProject" :reveleUpdateProject="reveleUpdateProject" :toogleUpdateProject="toogleUpdateProject" ></updateproject>
+    <!-- <formpageconnexion :isDark="isDark"></formpageconnexion> -->
     <!-- <voirdetailparameter class=""></voirdetailparameter> -->
 </template>
 
