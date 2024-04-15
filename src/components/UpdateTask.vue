@@ -95,6 +95,7 @@ export default {
             <!-- Chercher à faire les réglages ici et voir dans la console -->
             <input
               :class="{ 'dark': isDark }"
+              @keyup.enter="onSubmit"
               v-model="task.name"
               placeholder="Enter name of task"
               type=""
@@ -112,6 +113,7 @@ export default {
             </p>
             <input
               v-model="task.dueDate"
+              @keyup.enter="onSubmit"
               placeholder="Enter name of task"
               type="date"
               class="mt-1 px-3 py-2 dark:bg-black/80 dark:text-white bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
@@ -129,6 +131,7 @@ export default {
             </p>
             <select
               :class="{ 'dark': isDark }"
+              @keyup.enter="onSubmit"
               v-model="task.priority"
               class="mt-1 px-3 py-2 dark:bg-black/80 dark:text-white bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
             >
@@ -149,6 +152,7 @@ export default {
             </p>
             <select
               :class="{ 'dark': isDark }"
+              @keyup.enter="onSubmit"
               v-model="task.status"
               class="mt-1 px-3 py-2 dark:bg-black/80 dark:text-white bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
             >

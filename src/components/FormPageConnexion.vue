@@ -69,6 +69,7 @@ export default {
               </p>
               <input
                 :class="{ dark: isDark }"
+                @keyup.enter="onSubmit"
                 v-model="emailValue"
                 placeholder="Enter your email"
                 type="email"
@@ -84,6 +85,7 @@ export default {
               </p>
               <input
                 :class="{ dark: isDark }"
+                @keyup.enter="onSubmit"
                 v-model="password"
                 placeholder="Enter your password"
                 type="password"
@@ -117,8 +119,37 @@ export default {
         </div>
       </div>
     </div>
-    <div class="px-8">
-      <input class="" type="checkbox" v-model="isDark" />
+    <!-- <div class="px-8">
+      <label for="check">
+        <input class="" id="check" type="checkbox" v-model="isDark" />
+      </label>
+    </div> -->
+    <div class="absolute bottom-4 right-4">
+      <label for="darkModeToggle" class="flex items-center cursor-pointer">
+        <div class="relative">
+          <!-- Checkbox caché -->
+          <input
+            id="darkModeToggle"
+            type="checkbox"
+            class="hidden"
+            v-model="isDark"
+          />
+          <!-- Barre de commutation -->
+          <div
+            class="w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full shadow-inner"
+          ></div>
+          <!-- Curseur -->
+          <div
+            class="absolute left-0 top-0 w-8 h-8 bg-white dark:bg-black border dark:border-gray-600 rounded-full shadow-md transform ease-out transition-transform duration-300"
+          ></div>
+        </div>
+        <!-- Étiquette du mode sombre -->
+        <div
+          class="ml-3 text-sm text-gray-700 dark:text-white font-medium"
+        >
+          Dark Mode
+        </div>
+      </label>
     </div>
   </div>
 </template>

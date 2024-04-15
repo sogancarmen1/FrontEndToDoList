@@ -311,7 +311,32 @@
             <div :class="{ 'dark': isDark }" class="flex px-8 justify-between bg-white dark:bg-black/80 shadow-xl py-1">
                 <logopage :isDark="isDark" :valueFixedOther="valueFixedOther" :valueFixed="valueFixed" :moonIsSelected="moonIsSelected" :sunIsSelected="sunIsSelected" ></logopage>
                 <div class="flex space-x-8">
-                    <input type="checkbox" v-model="isDark"/>
+                    <label for="darkModeToggle" class="flex items-center cursor-pointer">
+                        <div class="relative">
+                        <!-- Checkbox caché -->
+                        <input
+                            id="darkModeToggle"
+                            type="checkbox"
+                            class="hidden"
+                            v-model="isDark"
+                        />
+                        <!-- Barre de commutation -->
+                        <div
+                            class="w-14 h-8 bg-gray-300 dark:bg-gray-600 rounded-full shadow-inner"
+                        ></div>
+                        <!-- Curseur -->
+                        <div
+                            class="absolute left-0 top-0 w-8 h-8 bg-white dark:bg-black border dark:border-gray-600 rounded-full shadow-md transform transition-transform duration-300"
+                        ></div>
+                        </div>
+                        <!-- Étiquette du mode sombre -->
+                        <div
+                        class="ml-3 text-sm text-gray-700 dark:text-white font-medium"
+                        >
+                        Dark Mode
+                        </div>
+                    </label>
+                    <!-- <input type="checkbox" v-model="isDark"/> -->
                     <button @click="toggleProfil" class="py-1">
                         <svg :class="{ 'dark': isDark }" class="dark:fill-white border rounded-full px-2" mlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="40" height="40"><path d="M12,12A6,6,0,1,0,6,6,6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6,4,4,0,0,1,12,2Z"/><path d="M12,14a9.01,9.01,0,0,0-9,9,1,1,0,0,0,2,0,7,7,0,0,1,14,0,1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"/></svg>
                     </button>
@@ -328,7 +353,9 @@
                     </button>
                     <button @click="toogleSettingsToProject" class="flex mx-8 px-6 py-2 space-x-2 hover:rounded-xl hover:bg-gray-300/50">
                         <svg  class="dark:fill-white" xmlns="http://www.w3.org/2000/svg" :class="{ 'dark': isDark }" id="Outline" viewBox="0 0 24 24" width="25" height="25"><path d="M1,4.75H3.736a3.728,3.728,0,0,0,7.195,0H23a1,1,0,0,0,0-2H10.931a3.728,3.728,0,0,0-7.195,0H1a1,1,0,0,0,0,2ZM7.333,2a1.75,1.75,0,1,1-1.75,1.75A1.752,1.752,0,0,1,7.333,2Z"/><path d="M23,11H20.264a3.727,3.727,0,0,0-7.194,0H1a1,1,0,0,0,0,2H13.07a3.727,3.727,0,0,0,7.194,0H23a1,1,0,0,0,0-2Zm-6.333,2.75A1.75,1.75,0,1,1,18.417,12,1.752,1.752,0,0,1,16.667,13.75Z"/><path d="M23,19.25H10.931a3.728,3.728,0,0,0-7.195,0H1a1,1,0,0,0,0,2H3.736a3.728,3.728,0,0,0,7.195,0H23a1,1,0,0,0,0-2ZM7.333,22a1.75,1.75,0,1,1,1.75-1.75A1.753,1.753,0,0,1,7.333,22Z"/></svg>
-                        <span class="font-bold text-black dark:text-white">Settings</span>
+                        <router-link :class="{ 'dark': isDark }" class="font-bold text-black dark:text-white" to="/settings">
+                            Settings
+                        </router-link>
                     </button>
                 </div>
             </div>

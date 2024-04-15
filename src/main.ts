@@ -9,6 +9,7 @@ import AddTaskPage from "./components/AddTaskPage.vue";
 import VoirProfil from "./components/VoirProfil.vue";
 import UpdateTask from "./components/UpdateTask.vue";
 import EssaiOp from "./components/EssaiOp.vue";
+import SettingsPage from "./components/SettingsPage.vue";
 
 const routes = [
   { path: "/", component: FormPageConnexion },
@@ -18,6 +19,7 @@ const routes = [
   { path: "/showprofil", component: VoirProfil },
   { path: "/updatetask", component: UpdateTask },
   { path: "/essai", component: EssaiOp },
+  { path: "/settings", component: SettingsPage },
 ];
 
 const router = createRouter({
