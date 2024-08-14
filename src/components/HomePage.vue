@@ -16,12 +16,14 @@
     import { useDark, useToggle } from "@vueuse/core";
     import SideBar from "./SideBar.vue";
     import TopBar from "./TopBar.vue";
+    import axios from "axios";
+    import TheLoader from "./TheLoader.vue";
     const isDark = useDark();
     const toggleDark = useToggle(isDark)
     export default {
         data() {
             return {
-                projects: [
+                // projects: [
                     // {
                     //     id: 1,
                     //     nameOfProject: "My_project",
@@ -32,7 +34,7 @@
                     //         // {id: 2, isSelected:false, nameFormatted:"", name: "SoganSenami", dueDate: "2020-2-05", priority: "Average", status: "done", inProject:"My_project"}
                     //     ]
                     // },
-                ],
+                // ],
                 revele: false,
                 receivedId: {},
                 receivedId1: {},
@@ -53,8 +55,8 @@
                 reveleButtonUpDown: false,
                 reveleButtonDropDown: true,
                 reveleCreateProjectForm: false,
-                isEmptyProject: false,
-                showImage: true,
+                // isEmptyProject: false,
+                // showImage: true,
                 isProjectSelected: true,
                 isSettingsSeleted: false,
                 reveleRemovePage: false,
@@ -77,6 +79,7 @@
         },
 
         components: {
+            'theloader': TheLoader,
             'addtask': AddTaskPage,
             'voirprofil': VoirProfil,
             'voirdetail': VoirDetailTask,
@@ -93,6 +96,7 @@
             'sidebar': SideBar,
             'topbar': TopBar,
         },
+        
 
         methods: {
             tooglesunIsSelected() {
@@ -133,16 +137,16 @@
 
             deleteProject(value) {
                 this.reveleRemoveProject = !this.reveleRemoveProject;
-                // && project.isSelectedProject == true
-                let valueFor = this.projects.findIndex(project => project.id == value);
-                console.log("Le tableau du projet : ", valueFor);
-                if(valueFor != -1) {
-                    this.projects.splice(valueFor, 1);
-                }
-                if(this.projects.length == 0) {
-                    this.showImage = true;
-                    this.isEmptyProject = false;
-                }
+                axios
+                .delete(`http://localhost:3000/projects/${value}`)
+                .then(response => {
+                    console.log(response.data);
+                    this.projects = this.projects.filter(project => project.id !== value);
+                    if(this.projects.length == 0) {
+                        this.showImage = true;
+                        this.isEmptyProject = false;
+                    }
+                })
             },
 
             toogleHover(value2) {
@@ -176,9 +180,14 @@
             deleteTask(value, value2) {
                 this.reveleRemovePage = !this.reveleRemovePage;
                 let valueFor = this.projects.findIndex(project => project.id === value2 );
+                let valueFor1 = this.projects.find(project => project.id === value2 );
                 if(valueFor != -1){
                     let forValue = this.projects[valueFor].listOfTask.findIndex(task => task.id === value);
+                    let forValue1 = this.projects[valueFor].listOfTask.find(task => task.id === value);
+                    console.log(forValue1);
                     if(forValue != -1) {
+                        //Partie permettant de supprimer une tâche dans un projet donnée
+                        axios.delete(`http://localhost:3000/tasks/${value}`).then(response => {})
                         this.projects[valueFor].listOfTask.splice(forValue, 1);
                         if(this.projects[valueFor].listOfTask.length == 0) {
                             this.projects[valueFor].isSelectedProject = true;
@@ -282,10 +291,16 @@
                     inProject: data.inProject,
                     isSelected: false,
                 };
-                // console.log("Une autre valeur que je cherche : ", this.receivedId.inProject);
-                //Continuer le code en même temps
+                //Insertion d'une tâche dans la base de donnée
                 this.projects.forEach(project => {
                     if(this.receivedId.inProject === project.nameOfProject) {
+                        axios.post("http://localhost:3000/tasks", {
+                            name: this.receivedId.name,
+                            dueDate: this.receivedId.dueDate,
+                            priority: this.receivedId.priority,
+                            status: this.receivedId.status,
+                            projectId: project.id
+                        }).then(response => {})
                         project.listOfTask.push(this.receivedId);
                         project.reveleTaskList = true;
                         project.isSelectedProject = false;
@@ -303,6 +318,77 @@
                 }
                 this.projects.push(this.receiveProject);
             },
+        },
+
+        setup(){
+            const projects = ref([]);
+            const showImage = ref(false);
+            const isEmptyProject = ref(false);
+            const projectId = ref(1);
+            const showLoader = ref(true);
+            onMounted(() => {
+                //Récupération des projets
+                axios
+                .get("http://localhost:3000/projects", {
+                    params: {
+                        id: projectId.value,
+                    },
+                })
+                .then(response => {
+                    const mappedProjects = response.data.map(project => ({
+                        id: project.id,
+                        nameOfProject: project.name,
+                        isSelectedProject: true,
+                        reveleTaskList: false,
+                    }));
+
+                    projects.value = mappedProjects;
+
+                    //Récupération des taches de chaque projet
+                    projects.value.forEach(project => {
+                        axios.get(`http://localhost:3000/tasks`,{
+                            params: {
+                                id: project.id
+                            }
+                        })
+                        .then(response => {
+                            const mappedTasks = response.data.map(task => ({
+                                id: task.id,
+                                name: task.name,
+                                nameFormatted: "",
+                                dueDate: task.dueDate.slice(0,10),
+                                priority: task.priority,
+                                status: task.status,
+                                inProject: task.projectId
+                            }))
+                            project.listOfTask = mappedTasks
+                        })
+                        .catch((error) => {
+                            console.log(error.response.data.message);
+                        })
+                    })
+
+                    showLoader.value = false;
+
+                    if(projects.value.length == 0) {
+                        showImage.value = true;
+                    };
+                    isEmptyProject.value = true;
+                })
+                .finally(() => {
+                    if(projects.value.length == 0) {
+                        showImage.value = true;
+                        showLoader.value = false;
+                    };
+                })
+            });
+
+            return {
+                projects,
+                showImage,
+                isEmptyProject,
+                showLoader
+            };
         },
     }
 </script>
@@ -352,7 +438,9 @@
 
                     <div class="h-[399px] overflow-auto">
                         <table class="w-full text-sm text-left text-gray-500">
-                            <img v-if="showImage" class="flex items-center mx-[320px] my-8 w-[330px] rounded-bl-lg rounded-tl-lg" src="../assets/plan.png" alt="">
+                            <p v-if="showImage" :class="{ 'dark': isDark }" class="w-50 mt-32 flex justify-center dark:text-white">No projects</p>
+                            <theloader v-if="showLoader"></theloader>
+                            <!-- <img v-if="showImage" class="flex items-center mx-[320px] my-8 w-[330px] rounded-bl-lg rounded-tl-lg" src="../assets/plan.png" alt=""> -->
                             <tbody class="text-xs text-black">
                                 <tr v-for="project in projects" :key="project.id" class="">
                                     <div :class="{ 'dark': isDark }" @mouseover="toogleHover(project.id)" @mouseleave="toogleHoverMouseLeave()" class="dark:bg-black/20 flex justify-between border dark:border-black/30 rounded-xl bg-gray-50 my-2">

@@ -3,22 +3,20 @@
 // import FormPageConnexion from "./components/FormPageConnexion.vue";
 // import AddTaskPage from "./components/AddTaskPage.vue";
 import HomePage from "./components/HomePage.vue";
-import EssaiOp from "./components/EssaiOp.vue";
+import TheLoader from "./components/TheLoader.vue";
 // import VoirProfil from "./components/VoirProfil.vue";
 
 export default {
   props: ["tasks"],
   components: {
-    'homepage':HomePage,
+    homepage: HomePage,
+    theloader: TheLoader,
   },
 
   data() {
-    return {
-
-    }
-  }
-}
-
+    return {};
+  },
+};
 </script>
 
 <template>
