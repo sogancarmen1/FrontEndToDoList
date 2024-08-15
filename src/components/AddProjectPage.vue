@@ -15,6 +15,7 @@ export default {
     return {
       id: 1,
       nameOfProject: "",
+      description: "",
       isEmpty: false,
       nameOfModale: "Modale",
     };
@@ -27,6 +28,7 @@ export default {
   methods: {
     resetForm() {
       this.nameOfProject = "";
+      this.description = "";
     },
     onSubmit() {
       if (this.nameOfProject == "") {
@@ -36,6 +38,7 @@ export default {
         this.$emit("form-project-submitted", {
           id: this.id,
           nameOfProject: this.nameOfProject,
+          description: this.description,
         });
         this.toggleReveleCreateProjectForm();
         this.showCreateTaskButton();
@@ -65,7 +68,7 @@ export default {
         class="w-5 py-4 absolute right-4"
       >
         <svg
-          :class="{ 'dark': isDark }"
+          :class="{ dark: isDark }"
           class="dark:fill-white"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -115,6 +118,23 @@ export default {
           <div v-if="isEmpty" class="text-sm text-red-700 text-center py-2">
             the fiels shouldn't empty
           </div>
+          <p
+            :class="{ dark: isDark }"
+            class="after:ml-0.5 py-4 after:text-red-500 block text-sm font-medium text-slate-700 dark:text-white"
+          >
+            Description
+          </p>
+          <textarea
+            v-model="description"
+            placeholder="Enter a description..."
+            @keyup.enter="onSubmit"
+            autofocus
+            rows="5"
+            cols="10"
+            type="text"
+            :class="{ dark: isDark }"
+            class="mt-1 px-3 py-2 resize-none dark:bg-black dark:text-white bg-white text-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+          />
           <div class="py-5">
             <button
               @click="onSubmit"

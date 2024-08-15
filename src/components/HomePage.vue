@@ -18,6 +18,7 @@
     import TopBar from "./TopBar.vue";
     import axios from "axios";
     import TheLoader from "./TheLoader.vue";
+    import { getData, postData, deleteData } from "../utils/utils";
     const isDark = useDark();
     const toggleDark = useToggle(isDark)
     export default {
@@ -135,18 +136,14 @@
                 });
             },
 
-            deleteProject(value) {
+            async deleteProject(value) {
                 this.reveleRemoveProject = !this.reveleRemoveProject;
-                axios
-                .delete(`http://localhost:3000/projects/${value}`)
-                .then(response => {
-                    console.log(response.data);
-                    this.projects = this.projects.filter(project => project.id !== value);
-                    if(this.projects.length == 0) {
-                        this.showImage = true;
-                        this.isEmptyProject = false;
-                    }
-                })
+                await deleteData(`http://localhost:3000/projects/${value}`)
+                this.projects = this.projects.filter(project => project.id !== value);
+                if(this.projects.length == 0) {
+                    this.showImage = true;
+                    this.isEmptyProject = false;
+                }
             },
 
             toogleHover(value2) {
@@ -177,7 +174,7 @@
                 }
             },
 
-            deleteTask(value, value2) {
+            async deleteTask(value, value2) {
                 this.reveleRemovePage = !this.reveleRemovePage;
                 let valueFor = this.projects.findIndex(project => project.id === value2 );
                 let valueFor1 = this.projects.find(project => project.id === value2 );
@@ -187,7 +184,7 @@
                     console.log(forValue1);
                     if(forValue != -1) {
                         //Partie permettant de supprimer une tâche dans un projet donnée
-                        axios.delete(`http://localhost:3000/tasks/${value}`).then(response => {})
+                        await deleteData(`http://localhost:3000/tasks/${value}`);
                         this.projects[valueFor].listOfTask.splice(forValue, 1);
                         if(this.projects[valueFor].listOfTask.length == 0) {
                             this.projects[valueFor].isSelectedProject = true;
@@ -218,15 +215,29 @@
                 this.reveleCreateProjectForm = !this.reveleCreateProjectForm;
             },
             //Chercher à comprendre cette partie dans ce code, c'est important
+
+
             tooglereveleTaskList(projectId) {
-                this.projects.forEach(project => {
-                    project.listOfTask.forEach(task => {
-                        task.nameFormatted = task.name;
-                        if(task.name.length >= 8) {
-                            task.nameFormatted = task.nameFormatted.slice(0, 8) + "...";
-                        }
-                    });
-                    if (project.id === projectId) {
+                this.projects.forEach(async (project) => {
+                    if (project.id === projectId){
+                        const dataReceived = await getData("http://localhost:3000/tasks", projectId);
+
+                        project.listOfTask = dataReceived.map(task => ({
+                            id: task.id,
+                            name: task.name,
+                            nameFormatted: "",
+                            dueDate: task.dueDate.slice(0,10),
+                            priority: task.priority,
+                            status: task.status,
+                            inProject: task.projectId
+                        }))
+
+                        project.listOfTask.forEach(task => {
+                            task.nameFormatted = task.name;
+                            if(task.name.length >= 8) {
+                                task.nameFormatted = task.nameFormatted.slice(0, 8) + "...";
+                            }
+                        });
                         project.reveleTaskList = true;
                         project.isSelectedProject = false;
                     }
@@ -292,15 +303,15 @@
                     isSelected: false,
                 };
                 //Insertion d'une tâche dans la base de donnée
-                this.projects.forEach(project => {
+                this.projects.forEach(async (project) => {
                     if(this.receivedId.inProject === project.nameOfProject) {
-                        axios.post("http://localhost:3000/tasks", {
+                        await postData("http://localhost:3000/tasks", {
                             name: this.receivedId.name,
                             dueDate: this.receivedId.dueDate,
                             priority: this.receivedId.priority,
                             status: this.receivedId.status,
                             projectId: project.id
-                        }).then(response => {})
+                        });
                         project.listOfTask.push(this.receivedId);
                         project.reveleTaskList = true;
                         project.isSelectedProject = false;
@@ -312,6 +323,7 @@
                 this.receiveProject = {
                     id: this.count++,
                     nameOfProject: data.nameOfProject,
+                    description: data.description,
                     isSelectedProject: true,
                     reveleTaskList: false,
                     listOfTask: [],
@@ -326,61 +338,19 @@
             const isEmptyProject = ref(false);
             const projectId = ref(1);
             const showLoader = ref(true);
-            onMounted(() => {
-                //Récupération des projets
-                axios
-                .get("http://localhost:3000/projects", {
-                    params: {
-                        id: projectId.value,
-                    },
-                })
-                .then(response => {
-                    const mappedProjects = response.data.map(project => ({
-                        id: project.id,
-                        nameOfProject: project.name,
-                        isSelectedProject: true,
-                        reveleTaskList: false,
-                    }));
+            onMounted(async () => {
+                const responseReceived = await getData("http://localhost:3000/projects", projectId.value);
 
-                    projects.value = mappedProjects;
+                projects.value = responseReceived.map(project => ({
+                    id: project.id,
+                    nameOfProject: project.name,
+                    listOfTask: [],
+                    isSelectedProject: true,
+                    reveleTaskList: false,
+                }))
 
-                    //Récupération des taches de chaque projet
-                    projects.value.forEach(project => {
-                        axios.get(`http://localhost:3000/tasks`,{
-                            params: {
-                                id: project.id
-                            }
-                        })
-                        .then(response => {
-                            const mappedTasks = response.data.map(task => ({
-                                id: task.id,
-                                name: task.name,
-                                nameFormatted: "",
-                                dueDate: task.dueDate.slice(0,10),
-                                priority: task.priority,
-                                status: task.status,
-                                inProject: task.projectId
-                            }))
-                            project.listOfTask = mappedTasks
-                        })
-                        .catch((error) => {
-                            console.log(error.response.data.message);
-                        })
-                    })
-
-                    showLoader.value = false;
-
-                    if(projects.value.length == 0) {
-                        showImage.value = true;
-                    };
-                    isEmptyProject.value = true;
-                })
-                .finally(() => {
-                    if(projects.value.length == 0) {
-                        showImage.value = true;
-                        showLoader.value = false;
-                    };
-                })
+                showLoader.value = false
+                isEmptyProject.value = true
             });
 
             return {
@@ -438,7 +408,7 @@
 
                     <div class="h-[399px] overflow-auto">
                         <table class="w-full text-sm text-left text-gray-500">
-                            <p v-if="showImage" :class="{ 'dark': isDark }" class="w-50 mt-32 flex justify-center dark:text-white">No projects</p>
+                            <p v-if="showImage" :class="{ 'dark': isDark }" class="w-50 mt-32 flex justify-center dark:text-white font-bold text-2xl">No projects</p>
                             <theloader v-if="showLoader"></theloader>
                             <!-- <img v-if="showImage" class="flex items-center mx-[320px] my-8 w-[330px] rounded-bl-lg rounded-tl-lg" src="../assets/plan.png" alt=""> -->
                             <tbody class="text-xs text-black">
