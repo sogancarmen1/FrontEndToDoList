@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center mt-32">
+  <div v-if="showLoader" class="flex justify-center mt-32">
     <div class="lds-roller">
       <div></div>
       <div></div>
@@ -14,7 +14,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["showLoader"],
+};
 </script>
 
 <style scoped>

@@ -1,5 +1,7 @@
 <script>
 import { useDark, useToggle } from "@vueuse/core";
+import { postData } from "../utils/utils";
+import axios from "axios";
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 export default {
@@ -14,13 +16,17 @@ export default {
   },
 
   methods: {
-    onSubmit() {
-      if (this.emailValue != "admin@gmail.com" || this.password != "admin") {
-        this.showError = true;
-      } else {
-        this.showError = false;
-        this.$router.push("/home");
-      }
+    async onSubmit() {
+      // if (this.emailValue != "admin@gmail.com" || this.password != "admin") {
+      //   this.showError = true;
+      // } else {
+      this.showError = false;
+      const value = await postData("http://localhost:3000/auth/login", {
+        email: this.emailValue,
+        password: this.password,
+      });
+      this.$router.push("/home");
+      // }
     },
   },
 };
@@ -144,9 +150,7 @@ export default {
           ></div>
         </div>
         <!-- Étiquette du mode sombre -->
-        <div
-          class="ml-3 text-sm text-gray-700 dark:text-white font-medium"
-        >
+        <div class="ml-3 text-sm text-gray-700 dark:text-white font-medium">
           Dark Mode
         </div>
       </label>

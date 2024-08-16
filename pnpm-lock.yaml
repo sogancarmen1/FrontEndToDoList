@@ -20,13 +20,25 @@ importers:
       axios:
         specifier: ^1.7.3
         version: 1.7.3
+      js-cookie:
+        specifier: ^3.0.5
+        version: 3.0.5
+      jwt-decode:
+        specifier: ^4.0.0
+        version: 4.0.0
       vue:
         specifier: ^3.3.11
         version: 3.3.13(typescript@5.3.3)
+      vue-cookies:
+        specifier: ^1.8.4
+        version: 1.8.4
       vue-router:
         specifier: '4'
         version: 4.3.0(vue@3.3.13(typescript@5.3.3))
     devDependencies:
+      '@types/js-cookie':
+        specifier: ^3.0.6
+        version: 3.0.6
       '@vitejs/plugin-vue':
         specifier: ^4.5.2
         version: 4.5.2(vite@5.0.10)(vue@3.3.13(typescript@5.3.3))
@@ -319,6 +331,9 @@ packages:
     resolution: {integrity: sha512-PyJsSsafjmIhVgaI1Zdj7m8BB8mMckFah/xbpplObyHfiXzKcI5UOUXRyOdHW7nz4DpMCuzLnF7v5IWHenCwYA==}
     cpu: [x64]
     os: [win32]
+
+  '@types/js-cookie@3.0.6':
+    resolution: {integrity: sha512-wkw9yd1kEXOPnvEeEV1Go1MmxtBJL0RR79aOTAApecWFVu7w0NNXNqhcWgvw2YgZDYadliXkl14pa3WXw5jlCQ==}
 
   '@types/web-bluetooth@0.0.20':
     resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
@@ -627,6 +642,14 @@ packages:
     resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
     hasBin: true
 
+  js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
+
+  jwt-decode@4.0.0:
+    resolution: {integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==}
+    engines: {node: '>=18'}
+
   lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
     engines: {node: '>=10'}
@@ -914,6 +937,9 @@ packages:
       terser:
         optional: true
 
+  vue-cookies@1.8.4:
+    resolution: {integrity: sha512-9zjvACKE4W0kEb8OQtXzpizKhf6zfFOG/Z1TEUjSJn4Z4rintuAHo8y/FpCUhTWHMmPe8E+Fko+/tiXVM+5jOw==}
+
   vue-demi@0.14.7:
     resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
     engines: {node: '>=12'}
@@ -1139,6 +1165,8 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.9.1':
     optional: true
+
+  '@types/js-cookie@3.0.6': {}
 
   '@types/web-bluetooth@0.0.20': {}
 
@@ -1489,6 +1517,10 @@ snapshots:
 
   jiti@1.21.0: {}
 
+  js-cookie@3.0.5: {}
+
+  jwt-decode@4.0.0: {}
+
   lilconfig@2.1.0: {}
 
   lilconfig@3.0.0: {}
@@ -1747,6 +1779,8 @@ snapshots:
       rollup: 4.9.1
     optionalDependencies:
       fsevents: 2.3.3
+
+  vue-cookies@1.8.4: {}
 
   vue-demi@0.14.7(vue@3.3.13(typescript@5.3.3)):
     dependencies:

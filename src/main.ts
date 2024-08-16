@@ -10,11 +10,16 @@ import VoirProfil from "./components/VoirProfil.vue";
 import UpdateTask from "./components/UpdateTask.vue";
 import EssaiOp from "./components/EssaiOp.vue";
 import SettingsPage from "./components/SettingsPage.vue";
+import { isAuthenticated } from "./utils/utils";
 
 const routes = [
-  { path: "/", component: FormPageConnexion },
+  { path: "/", name: "Login", component: FormPageConnexion },
   { path: "/register", component: FormPageInscription },
-  { path: "/home", component: HomePage },
+  {
+    path: "/home",
+    name: "Dashboard",
+    component: HomePage,
+  },
   { path: "/addtask", component: AddTaskPage },
   { path: "/showprofil", component: VoirProfil },
   { path: "/updatetask", component: UpdateTask },
@@ -26,6 +31,13 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+// router.beforeEach(async (to, from, next) => {
+//   if (isAuthenticated() == false && to.name !== "Login") next({ name: "Login" });
+//   else {
+//     next({ name: "Dashboard" });
+//   }
+// });
 
 export const app = createApp(App);
 app.use(router);

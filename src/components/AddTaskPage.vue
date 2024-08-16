@@ -10,6 +10,7 @@ export default {
       priority: "",
       status: "",
       inProject: "",
+      description: "",
       isEmpty: false,
       nameOfModale: "Modale",
     };
@@ -26,6 +27,7 @@ export default {
       this.priority = "";
       this.status = "";
       this.inProject = "";
+      this.description = "";
     },
     onSubmit() {
       if (
@@ -46,6 +48,7 @@ export default {
           priority: this.priority,
           status: this.status,
           inProject: this.inProject,
+          description: this.description,
         });
         this.toggleModale();
         this.resetForm();
@@ -64,9 +67,10 @@ export default {
       @click="toggleModale"
       class="bg-[rgba(0,0,0,0.5)] fixed top-0 bottom-0 right-0 left-0"
     ></div>
-    <div 
-    :class="{ dark: isDark }"
-    class="space-y-2 rounded-lg dark:bg-black/90 bg-white shadow-2xl fixed">
+    <div
+      :class="{ dark: isDark }"
+      class="space-y-2 rounded-lg dark:bg-black/90 bg-white shadow-2xl fixed"
+    >
       <button @click="toggleModale" class="w-5 py-4 absolute right-4">
         <svg
           :class="{ dark: isDark }"
@@ -192,6 +196,22 @@ export default {
           </div>
           <div v-if="isEmpty" class="text-sm text-red-700 text-center py-2">
             the fiels shouldn't empty
+          </div>
+          <div>
+            <p
+              :class="{ dark: isDark }"
+              class="after:ml-0.5 py-2 after:text-red-500 block text-sm font-medium dark:text-white text-slate-700"
+            >
+              Description
+            </p>
+            <textarea
+              v-model="description"
+              @keyup.enter="onSubmit"
+              placeholder="Add a description..."
+              type=""
+              :class="{ dark: isDark }"
+              class="resize-none px-3 py-2 dark:bg-black/20 dark:text-white text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+            />
           </div>
           <div class="py-5">
             <button

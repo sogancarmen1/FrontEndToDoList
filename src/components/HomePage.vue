@@ -19,6 +19,7 @@
     import axios from "axios";
     import TheLoader from "./TheLoader.vue";
     import { getData, postData, deleteData } from "../utils/utils";
+    import {jwtDecode} from "jwt-decode"
     const isDark = useDark();
     const toggleDark = useToggle(isDark)
     export default {
@@ -222,7 +223,7 @@
                     if (project.id === projectId){
                         const dataReceived = await getData("http://localhost:3000/tasks", projectId);
 
-                        project.listOfTask = dataReceived.map(task => ({
+                        project.listOfTask = dataReceived.data.map(task => ({
                             id: task.id,
                             name: task.name,
                             nameFormatted: "",
@@ -330,27 +331,37 @@
                 }
                 this.projects.push(this.receiveProject);
             },
+
+            
         },
 
         setup(){
             const projects = ref([]);
             const showImage = ref(false);
             const isEmptyProject = ref(false);
-            const projectId = ref(1);
-            const showLoader = ref(true);
+            const showLoader = ref(false);
+            const userId = ref(0);
             onMounted(async () => {
-                const responseReceived = await getData("http://localhost:3000/projects", projectId.value);
+                showLoader.value = true;
+                // showImage.value = false;
 
-                projects.value = responseReceived.map(project => ({
-                    id: project.id,
-                    nameOfProject: project.name,
-                    listOfTask: [],
-                    isSelectedProject: true,
-                    reveleTaskList: false,
-                }))
-
-                showLoader.value = false
-                isEmptyProject.value = true
+                const responseReceived = await getData("http://localhost:3000/projects");
+                if(responseReceived != null) {
+                    projects.value = responseReceived.data.map(project => ({
+                        id: project.id,
+                        nameOfProject: project.name,
+                        listOfTask: [],
+                        isSelectedProject: true,
+                        reveleTaskList: false,
+                    }))
+                    showImage.value = false
+                    showLoader.value = false
+                    isEmptyProject.value = true
+                    if(projects.value.length == 0) {
+                        showLoader.value = false;
+                        showImage.value = true;
+                    }
+                }
             });
 
             return {
@@ -409,7 +420,7 @@
                     <div class="h-[399px] overflow-auto">
                         <table class="w-full text-sm text-left text-gray-500">
                             <p v-if="showImage" :class="{ 'dark': isDark }" class="w-50 mt-32 flex justify-center dark:text-white font-bold text-2xl">No projects</p>
-                            <theloader v-if="showLoader"></theloader>
+                            <theloader :showLoader="showLoader"></theloader>
                             <!-- <img v-if="showImage" class="flex items-center mx-[320px] my-8 w-[330px] rounded-bl-lg rounded-tl-lg" src="../assets/plan.png" alt=""> -->
                             <tbody class="text-xs text-black">
                                 <tr v-for="project in projects" :key="project.id" class="">
