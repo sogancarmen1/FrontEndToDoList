@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import { postData, isAuthenticated } from "../utils/utils";
+import { postData } from "../utils/utils";
 
 export default {
   props: ["reveleProfil", "toggleProfil"],

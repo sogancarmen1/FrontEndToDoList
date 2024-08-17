@@ -1,6 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
-import { ref } from "vue";
 
 export async function getData(route: string, paramsValue?: any) {
   var data = null;
@@ -25,11 +23,4 @@ export async function postData(route: string, dataEntered?: any) {
 
 export async function deleteData(route: string) {
   await axios.delete(route);
-}
-
-export function isAuthenticated() {
-  const authToken = Cookies.get("Authorization");
-  const result = ref(false);
-  authToken != undefined ? (result.value = true) : (result.value = false);
-  return result.value;
 }

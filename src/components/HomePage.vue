@@ -279,9 +279,22 @@
             },
 
             // Chercher à faire des réglages ici et regarder dans la console
-            tooglereveleUpdateTask(value) {
+            tooglereveleUpdateTask(value, value2) {
                 this.reveleUpdateTask = !this.reveleUpdateTask;
-                this.selectedTask = {...value};
+                this.projects.forEach(project => {
+                    if(project.id == value2) {
+                        project.listOfTask.forEach((task) => {
+                            if(task.id == value) {
+                                this.selectedTask = {...task}
+                                console.log(task);
+                            }
+                        })
+                    }
+                })
+                // this.selectedTask = {...value};
+                // this.selectedTask = {
+                //     name: "jesuisl"
+                // }
             },
 
             // Chercher à faire des réglages ici et regarder dans la console
@@ -320,7 +333,7 @@
                 });
             },
 
-            formProjectSubmitted(data) {
+            async formProjectSubmitted(data) {
                 this.receiveProject = {
                     id: this.count++,
                     nameOfProject: data.nameOfProject,
@@ -329,7 +342,13 @@
                     reveleTaskList: false,
                     listOfTask: [],
                 }
-                this.projects.push(this.receiveProject);
+                const projectCreated = await postData("http://localhost:3000/projects", {
+                    name: this.receiveProject.nameOfProject,
+                    description: this.receiveProject.description
+                })
+                if(projectCreated.data.sucess == true) {
+                    this.projects.push(this.receiveProject);
+                }
             },
 
             
@@ -469,7 +488,7 @@
                                             <button @click="tooglereveledetail(task.id, project.id)" :class="{ 'dark': isDark }" class="dark:shadow-black/50 shadow-md border dark:hover:bg-black/30 hover:bg-gray-100 border-black/20 p-1 rounded-md">
                                                 <svg :class="{ 'dark': isDark }" class="dark:fill-white" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="20" height="20"><path d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10.011,10.011,0,0,1,12,22Z"/><path d="M12,10H11a1,1,0,0,0,0,2h1v6a1,1,0,0,0,2,0V12A2,2,0,0,0,12,10Z"/><circle cx="12" cy="6.5" r="1.5"/></svg>
                                             </button>
-                                            <button @click="tooglereveleUpdateTask(task)" :class="{ 'dark': isDark }" class="dark:shadow-black/50 shadow-md border dark:hover:bg-black/30 hover:bg-gray-100 p-1 rounded-md border-black/20">
+                                            <button @click="tooglereveleUpdateTask(task.id, project.id)" :class="{ 'dark': isDark }" class="dark:shadow-black/50 shadow-md border dark:hover:bg-black/30 hover:bg-gray-100 p-1 rounded-md border-black/20">
                                                 <svg :class="{ 'dark': isDark }" class="dark:fill-white" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="18" height="18"><path d="M22.853,1.148a3.626,3.626,0,0,0-5.124,0L1.465,17.412A4.968,4.968,0,0,0,0,20.947V23a1,1,0,0,0,1,1H3.053a4.966,4.966,0,0,0,3.535-1.464L22.853,6.271A3.626,3.626,0,0,0,22.853,1.148ZM5.174,21.122A3.022,3.022,0,0,1,3.053,22H2V20.947a2.98,2.98,0,0,1,.879-2.121L15.222,6.483l2.3,2.3ZM21.438,4.857,18.932,7.364l-2.3-2.295,2.507-2.507a1.623,1.623,0,1,1,2.295,2.3Z"/></svg>
                                             </button>
                                             <button @click="toogleReveleRemovePage(task.id, project.id)" :class="{ 'dark': isDark }" class="dark:shadow-black/50 shadow-md border dark:hover:bg-black/30 hover:bg-gray-100 p-1 rounded-md border-black/20">

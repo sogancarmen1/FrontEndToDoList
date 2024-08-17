@@ -4,6 +4,9 @@ import { postData } from "../utils/utils";
 import axios from "axios";
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+import Cookies from "js-cookie";
+import { ref } from "vue";
+import { useUserStore } from "../stores/user";
 export default {
   props: [""],
   data() {
@@ -17,16 +20,15 @@ export default {
 
   methods: {
     async onSubmit() {
-      // if (this.emailValue != "admin@gmail.com" || this.password != "admin") {
-      //   this.showError = true;
-      // } else {
-      this.showError = false;
       const value = await postData("http://localhost:3000/auth/login", {
         email: this.emailValue,
         password: this.password,
       });
-      this.$router.push("/home");
-      // }
+      if (value.data != null) {
+        const userStore = useUserStore();
+        userStore.setUserData(value.data.data);
+        this.$router.push("/home");
+      }
     },
   },
 };

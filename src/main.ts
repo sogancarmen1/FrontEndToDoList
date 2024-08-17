@@ -10,7 +10,8 @@ import VoirProfil from "./components/VoirProfil.vue";
 import UpdateTask from "./components/UpdateTask.vue";
 import EssaiOp from "./components/EssaiOp.vue";
 import SettingsPage from "./components/SettingsPage.vue";
-import { isAuthenticated } from "./utils/utils";
+import { createPinia } from "pinia";
+import { useUserStore } from "./stores/user";
 
 const routes = [
   { path: "/", name: "Login", component: FormPageConnexion },
@@ -19,6 +20,9 @@ const routes = [
     path: "/home",
     name: "Dashboard",
     component: HomePage,
+    meta: {
+      requiresAuth: true,
+    },
   },
   { path: "/addtask", component: AddTaskPage },
   { path: "/showprofil", component: VoirProfil },
@@ -32,13 +36,21 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach(async (to, from, next) => {
-//   if (isAuthenticated() == false && to.name !== "Login") next({ name: "Login" });
-//   else {
-//     next({ name: "Dashboard" });
-//   }
-// });
-
 export const app = createApp(App);
+app.use(createPinia());
 app.use(router);
 app.mount("#app");
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!userStore.userData) {
+      next("/");
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
