@@ -7,6 +7,8 @@ const toggleDark = useToggle(isDark);
 import Cookies from "js-cookie";
 import { ref } from "vue";
 import { useUserStore } from "../stores/user";
+import { onMounted, onUpdated } from "vue";
+import { useToast } from "vue-toast-notification";
 export default {
   props: [""],
   data() {
@@ -22,14 +24,25 @@ export default {
 
   methods: {
     async onSubmit() {
-      const value = await postData("http://localhost:3000/auth/login", {
-        email: this.emailValue,
-        password: this.password,
-      });
-      if (value.data != null) {
-        const userStore = useUserStore();
-        userStore.setUserData(value.data.data);
-        this.$router.push("/home");
+      try {
+        const value = await postData("http://localhost:3000/auth/login", {
+          email: this.emailValue,
+          password: this.password,
+        });
+        if (value.data != null) {
+          const userStore = useUserStore();
+          const toast = useToast();
+          userStore.setUserData(value.data.data);
+          toast.success(value.data.message, {
+            position: "top-right",
+          });
+          this.$router.push("/home");
+        }
+      } catch (error) {
+        const toast = useToast();
+        toast.error(error.response.data.message, {
+          position: "top-right",
+        });
       }
     },
     showOrNotPassword() {
