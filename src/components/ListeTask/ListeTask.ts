@@ -49,6 +49,7 @@ export function notShowHigh() {
   if (priority.value == "High") {
     High.value = false;
     showChoicePriority.value = true;
+    priority.value = "";
   }
 }
 
@@ -56,6 +57,7 @@ export function notShowAverage() {
   if (priority.value == "Average") {
     Average.value = false;
     showChoicePriority.value = true;
+    priority.value = "";
   }
 }
 
@@ -63,6 +65,7 @@ export function notShowLow() {
   if (priority.value == "Low") {
     Low.value = false;
     showChoicePriority.value = true;
+    priority.value = "";
   }
 }
 
@@ -110,6 +113,7 @@ export function notShowTodo() {
   if (status.value == "todo") {
     todo.value = false;
     showChoiceStatus.value = true;
+    status.value = "";
   }
 }
 
@@ -117,6 +121,7 @@ export function notShowInProgress() {
   if (status.value == "in_progress") {
     in_progress.value = false;
     showChoiceStatus.value = true;
+    status.value = "";
   }
 }
 
@@ -124,6 +129,7 @@ export function notShowWaiting() {
   if (status.value == "waiting") {
     waiting.value = false;
     showChoiceStatus.value = true;
+    status.value = "";
   }
 }
 
@@ -131,6 +137,7 @@ export function notShowDone() {
   if (status.value == "done") {
     done.value = false;
     showChoiceStatus.value = true;
+    status.value = "";
   }
 }
 
@@ -138,5 +145,6 @@ export function notShowCanceled() {
   if (status.value == "canceled") {
     canceled.value = false;
     showChoiceStatus.value = true;
+    status.value = "";
   }
 }

@@ -12,18 +12,18 @@
         />
         <!-- Button create -->
         <div
-          class="flex gap-1 rounded-xl px-1 sm:bg-white/30 sm:border cursor-pointer transition easy-in-out"
+          class="flex gap-1 rounded-2xl px-1 sm:bg-white/30 sm:border cursor-pointer transition easy-in-out"
         >
           <icon-view
             classProp="text-red-300 rounded-full"
             iconProp="fa-solid fa-circle-plus"
           />
-          <span class="hidden text-white sm:inline pt-1 text-base">Créer</span>
+          <span class="hidden text-white sm:inline text-md font-zen">Create</span>
         </div>
       </div>
       <!-- Search bar -->
       <div
-        class="flex gap-1 bg-white/50 rounded-xl w-full mx-2 px-4 py-[2px] sm:w-80 transition-all duration-500 ease-in-out"
+        class="flex gap-1 bg-white/50 rounded-2xl w-full mx-2 px-4 py-[2px] sm:w-80 transition-all duration-500 ease-in-out"
       >
         <icon-view
           classProp="block float-left text-white cursor-pointeur"
@@ -31,7 +31,7 @@
         />
         <input
           type=""
-          placeholder="Rechercher"
+          placeholder="Search"
           class="outline-none bg-transparent text-base w-full text-white"
         />
       </div>

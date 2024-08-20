@@ -8,21 +8,21 @@
         />
       </div>
       <div class="flex flex-col pt-[20px]">
-        <span class="text-base font-bold">Mes Tâches</span>
+        <span class="text-base font-bold font-zen">My Tasks</span>
         <span class="pt-2">
           <router-link
             to="/tasks/list"
             @click="toggleIsNotSelected"
             :class="isSelected ? 'border-b text-black' : 'text-black/50'"
-            class="border-black/50 cursor-pointer pb-[6px] hover:text-black"
-            >Liste</router-link
+            class="border-black/50 cursor-pointer pb-[6px] font-zen hover:text-black"
+            >List</router-link
           >
           <router-link
             to="/tasks/file"
             @click="toggleIsSelected"
             :class="isNotSelected ? 'border-b text-black' : 'text-black/50'"
-            class="text-base mx-2 border-black/50 cursor-pointer pb-[6px] hover:text-black"
-            >Fichiers</router-link
+            class="text-base mx-2 border-black/50 font-zen cursor-pointer pb-[6px] hover:text-black"
+            >Files</router-link
           >
         </span>
       </div>

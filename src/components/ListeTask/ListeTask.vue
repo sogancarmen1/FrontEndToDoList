@@ -4,7 +4,7 @@
       <td
         @mouseover="showIconAndBorder = true"
         @mouseleave="showIconAndBorder = false"
-        class="pl-2 pb-8 relative pt-2 pr-[325px] border-y text-sm whitespace-nowrap cursor-pointer"
+        class="pl-2 pb-8 relative pt-2 pr-[291px] border-y text-sm whitespace-nowrap cursor-pointer"
       >
         <div class="flex">
           <!-- :class="showInput ? 'inline' : 'hidden'" -->
@@ -34,13 +34,13 @@
           >
             <div class="flex">
               <font-awesome-icon
-                class="pt-[4px] px-[1px]"
+                class="pt-[6px] px-[1px]"
                 icon="fa-circle-check"
               ></font-awesome-icon>
               <p
                 @click="onClick"
                 :class="showIconAndBorder ? 'border' : 'border border-black/0'"
-                class="text-ellipsis overflow-hidden w-[197px]"
+                class="text-ellipsis font-zen overflow-hidden w-[197px]"
               >
                 {{ nameOfTask }}
               </p>
@@ -58,18 +58,19 @@
         </div>
       </td>
       <td
-        class="pl-2 pr-20 border text-sm whitespace-nowrap text-black/70 hover:text-black"
+        class="pl-2 pr-[80px] border text-sm whitespace-nowrap text-black/70 hover:text-black"
       >
-        <span>Projet</span>
+        <!-- La taille des noms de projet ne peut pas dépasser ce qui est écrit là donc faire un hover pour l'afficher en vignette -->
+        <span class="font-zen px-2">Projet</span>
       </td>
-      <td class="px-[134px] relative min-w-10 pr-8 text-sm whitespace-nowrap">
+      <td class="px-[123px] relative min-w-10 pr-8 text-sm whitespace-nowrap">
         <form
           action=""
           class="absolute w-full h-full bottom-[-8px] top-[-1px] right-[-0px]"
         >
           <input
             v-model="date"
-            class="border-y w-full px-2 pt-2 pb-[10px] outline-none cursor-pointer"
+            class="border-y w-full font-zen px-2 pt-2 pb-[10px] outline-none cursor-pointer"
             type="date"
           />
         </form>
@@ -86,9 +87,9 @@
             name=""
             id=""
             @click="showOrNotPriorityChoice(priority)"
-            class="absolute rounded bottom-[2px] left-[-4px] px-2 py-2 mx-2 outline-none"
+            class="absolute font-zen rounded bottom-[2px] left-[-4px] px-2 py-2 mx-2 outline-none"
           >
-            <option disabled value="">Ajouter</option>
+            <option disabled value="">Add</option>
             <option value="High">HIGH</option>
             <option value="Average">AVERAGE</option>
             <option value="Low">LOW</option>
@@ -135,7 +136,8 @@
       <td
         class="pl-2 pr-20 border-y text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
       >
-        <span>Collaborateur</span>
+        <!-- Gardez le même nom ici aussi -->
+        <span class="font-zen">Collaborateur</span>
       </td>
       <td
         @mouseover="showCloseIconInStatus = true"
@@ -149,21 +151,21 @@
             name=""
             id=""
             @click="showOrNotStatusChoice(status)"
-            class="absolute rounded bottom-[2px] left-[-4px] py-2 mx-2 outline-none"
+            class="absolute rounded px-1 font-zen bottom-[2px] left-[-4px] py-2 mx-2 outline-none"
           >
-            <option disabled value="">Ajouter</option>
-            <option value="todo">A FAIRE</option>
-            <option value="in_progress">EN COURS</option>
-            <option value="waiting">EN ATTENTE</option>
-            <option value="done">TERMINÉE</option>
-            <option value="canceled">ANNULÉE</option>
+            <option disabled value="">Add</option>
+            <option value="todo">TODO</option>
+            <option value="in_progress">IN_PROGRESS</option>
+            <option value="waiting">WAITING</option>
+            <option value="done">DONE</option>
+            <option value="canceled">CANCELED</option>
           </select>
         </form>
         <div
           v-if="todo"
           class="absolute rounded border bg-blue-300 bottom-[2px] left-[-4px] px-4 py-2 mx-2"
         >
-          <span class="text-white">A FAIRE</span>
+          <span class="text-white">TODO</span>
           <font-awesome-icon
             :class="showCloseIconInStatus ? 'inline' : 'hidden'"
             @click="notShowTodo"

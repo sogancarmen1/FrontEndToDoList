@@ -22,6 +22,10 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+        zen: ["Zen Kaku Gothic Antique", "sans-serif"],
+      },
       boxShadow: {
         "custom-shadow":
           "0 4px 20px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3)",

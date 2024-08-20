@@ -2,13 +2,13 @@
   <div class="sm:flex justify-between">
     <div
       :class="classProp"
-      class="border rounded px-2 cursor-pointer whitespace-nowrap"
+      class="border rounded px-8 cursor-pointer whitespace-nowrap"
     >
       <font-awesome-icon
         icon="fa-plus"
-        class="text-sm pr-2"
+        class="text-sm pr-2 font-zen"
       ></font-awesome-icon>
-      <span class="text-sm">Ajouter une tâche</span>
+      <span class="text-sm font-zen">Add task</span>
     </div>
     <div class="flex cursor-pointer">
       <slot></slot>

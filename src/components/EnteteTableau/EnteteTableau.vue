@@ -6,7 +6,7 @@
         @mouseleave="taskIsSelected = false"
         class="pl-2 py-2 pr-52 border-y text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
       >
-        <span>Nom de la tâche</span>
+        <span class="font-zen">Task name</span>
         <font-awesome-icon
           v-show="taskIsSelected"
           icon="fa-chevron-down"
@@ -18,7 +18,7 @@
         @mouseleave="projectIsSelected = false"
         class="pl-2 pr-20 border text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
       >
-        <span>Projet</span>
+        <span class="font-zen">Project</span>
         <font-awesome-icon
           v-show="projectIsSelected"
           icon="fa-chevron-down"
@@ -30,7 +30,7 @@
         @mouseleave="dateIsSelected = false"
         class="pl-2 pr-20 border-y text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
       >
-        <span>Date de fin</span>
+        <span class="font-zen">Due Date</span>
         <font-awesome-icon
           v-show="dateIsSelected"
           icon="fa-chevron-down"
@@ -42,7 +42,7 @@
         @mouseleave="priorityIsSelected = false"
         class="pl-2 pr-14 border text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
       >
-        <span>Priorité</span>
+        <span class="font-zen">Priority</span>
         <font-awesome-icon
           v-show="priorityIsSelected"
           icon="fa-chevron-down"
@@ -54,7 +54,7 @@
         @mouseleave="collaboratorIsSelected = false"
         class="pl-2 pr-20 border-y text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
       >
-        <span>Collaborateur</span>
+        <span class="font-zen">Contributor</span>
         <font-awesome-icon
           v-show="collaboratorIsSelected"
           icon="fa-chevron-down"
@@ -66,7 +66,7 @@
         @mouseleave="statusIsSelected = false"
         class="pl-2 pr-20 border text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
       >
-        <span>Status</span>
+        <span class="font-zen">Status</span>
         <font-awesome-icon
           v-show="statusIsSelected"
           icon="fa-chevron-down"

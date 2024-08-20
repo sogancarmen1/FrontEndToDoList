@@ -4,16 +4,16 @@ export const stores = ref([
   {
     id: 1,
     nameIcon: "fa-house",
-    textWithIcon: "Accueil",
-    title: "Accueil",
+    textWithIcon: "Home",
+    title: "Home",
     nameRoute: "/",
     isSelectedAccueil: true,
   },
   {
     id: 2,
     nameIcon: "fa-circle-check",
-    textWithIcon: "Mes tâches",
-    title: "Mes tâches",
+    textWithIcon: "My tasks",
+    title: "My tasks",
     nameRoute: `/tasks${isNotSelected ? "/list" : "/file"}`,
     isSelectedTacks: false,
   },
@@ -29,7 +29,7 @@ export const projectsAndEquipe = ref([
     firstNameIcon: "fa-caret-down",
     secondeFormFirstNameIcon: "fa-caret-right",
     secondNameIcon: "fa-chevron-down",
-    title: "Projets",
+    title: "Projects",
     thirdNameIcon: "fa-plus",
     fourNameIcon: "fa-list-check",
     isSelect: false,
@@ -86,7 +86,7 @@ export const projectsAndEquipe = ref([
     id: 2,
     firstNameIcon: "fa-caret-down",
     secondeFormFirstNameIcon: "fa-caret-right",
-    title: "Equipe",
+    title: "Team",
     myEspace: "Mon espace de travail",
     thirdNameIcons: "fa-chevron-right",
     fourNameIcon: "fa-user-group",
@@ -98,7 +98,7 @@ export const projectsAndEquipe = ref([
 export const footerContent = ref([
   {
     firstNameIcon: "fa-envelope",
-    title: "Inviter des collègues",
+    title: "Invite colleagues",
   },
   {
     firstNameIcon: "fa-circle-info",

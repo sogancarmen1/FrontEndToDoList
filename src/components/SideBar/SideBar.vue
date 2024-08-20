@@ -6,7 +6,7 @@
       <ul v-for="store in stores" :key="store.nameIcon" class="cursor-pointer">
         <router-link class="" :to="store.nameRoute">
           <li
-            class="flex hover:bg-white/30 px-3 sm:px-2 sm:mx-4 rounded-md"
+            class="flex hover:bg-white/30 px-3 sm:px-2 sm:mx-4 rounded-2xl"
             :title="store.title"
           >
             <IconView
@@ -14,7 +14,7 @@
               class-prop="text-white flex gap-3 px-2 py-2"
             />
             <span
-              class="pt-1 text-white text-base hidden transition ease-in-out duration-500 sm:inline"
+              class="pt-[2px] text-white font-zen text-base hidden transition ease-in-out duration-500 sm:inline"
               >{{ store.textWithIcon }}</span
             >
           </li>
@@ -51,7 +51,7 @@
                 :icon-prop="projectAndEquipe.fourNameIcon"
                 class-prop="text-white flex px-4 sm:pl-8"
               ></IconView>
-              <span class="pt-1 text-white text-base hidden sm:inline">{{
+              <span class="font-zen text-white text-base hidden sm:inline">{{
                 projectAndEquipe.title
               }}</span>
               <IconView
@@ -79,7 +79,7 @@
                   <RouterLink :to="path(Number(project.id))">
                     <span
                       v-if="project.disable"
-                      class="px-2 rounded bg-blue-500 my-8 mr-1"
+                      class="px-2 font-zen rounded bg-blue-500 my-8 mr-1"
                     ></span>
                     {{
                       project.name.length > 17
@@ -122,7 +122,7 @@
               class-prop="text-white"
               :title="content.title"
             ></IconView>
-            <span class="pt-1 text-white text-[12px] hidden sm:inline">{{
+            <span class="pt-1 text-white text-[12px] font-zen hidden sm:inline">{{
               content.title
             }}</span>
           </li>

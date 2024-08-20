@@ -11,21 +11,21 @@
               class="text-sm px-1"
               icon="fa-pen-nib"
             ></font-awesome-icon>
-            <span class="text-sm">Description</span>
+            <span class="text-sm font-zen">Description</span>
           </div>
           <div class="px-4">
             <font-awesome-icon
               class="text-sm px-1"
               icon="fa-filter"
             ></font-awesome-icon>
-            <span class="text-sm">Filtrer</span>
+            <span class="text-sm font-zen">Filter</span>
           </div>
           <div class="px-4">
             <font-awesome-icon
               class="text-sm px-1"
               icon="fa-sort"
             ></font-awesome-icon>
-            <span class="text-sm">Trier</span>
+            <span class="text-sm font-zen">Sort</span>
           </div>
         </AddtaskButton>
         <entete-tableau></entete-tableau>
