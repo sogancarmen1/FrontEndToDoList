@@ -3,6 +3,9 @@ import "./style.css";
 import ToastPlugin from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-bootstrap.css";
 import App from "./App.vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 import { createWebHistory, createRouter } from "vue-router";
 import FormPageConnexion from "./components/FormPageConnexion.vue";
 import FormPageInscription from "./components/FormPageInscription.vue";
@@ -14,8 +17,102 @@ import EssaiOp from "./components/EssaiOp.vue";
 import SettingsPage from "./components/SettingsPage.vue";
 import { createPinia } from "pinia";
 import { useUserStore } from "./stores/user";
+import HomeView from "./components/HomeView.vue";
+import TaskView from "./components/TaskView.vue";
+import ListView from "./components/ListView.vue";
+import FilesView from "./components/FilesView.vue";
+import ProjectviewListe from "./components/ProjectviewListe.vue";
+import ProjectviewFile from "./components/ProjectviewFile.vue";
+
+import {
+  faUserSecret,
+  faUser,
+  faBars,
+  faCirclePlus,
+  faCircleChevronDown,
+  faCaretDown,
+  faMagnifyingGlass,
+  faCircleCheck,
+  faHouse,
+  faUserGroup,
+  faListCheck,
+  faEnvelope,
+  faCircleInfo,
+  faChevronDown,
+  faPlus,
+  faChevronRight,
+  faCaretRight,
+  faCircleUser,
+  faFilter,
+  faSort,
+  faCalendar,
+  faXmark,
+  faPenNib,
+  faPaperclip,
+  faEllipsis,
+  faCheck,
+  faLock,
+  faDiagramProject,
+  faListUl,
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(
+  faUserSecret,
+  faUser,
+  faBars,
+  faCirclePlus,
+  faCircleChevronDown,
+  faCaretDown,
+  faMagnifyingGlass,
+  faCircleCheck,
+  faHouse,
+  faUserGroup,
+  faListCheck,
+  faEnvelope,
+  faCircleInfo,
+  faChevronDown,
+  faPlus,
+  faChevronRight,
+  faCaretRight,
+  faCircleUser,
+  faFilter,
+  faSort,
+  faCalendar,
+  faXmark,
+  faPenNib,
+  faPaperclip,
+  faEllipsis,
+  faCheck,
+  faLock,
+  faDiagramProject,
+  faListUl
+);
 
 const routes = [
+  { path: "/template", component: HomeView },
+  {
+    path: "/tasks",
+    name: "tasks",
+    component: TaskView,
+  },
+  {
+    path: "/tasks/list",
+    name: "list",
+    component: ListView,
+  },
+  {
+    path: "/tasks/file",
+    name: "file",
+    component: FilesView,
+  },
+  {
+    path: "/project/:id/list",
+    component: ProjectviewListe,
+  },
+  {
+    path: "/project/:id/files",
+    component: ProjectviewFile,
+  },
   { path: "/", name: "Login", component: FormPageConnexion },
   { path: "/register", component: FormPageInscription },
   {
@@ -39,6 +136,7 @@ const router = createRouter({
 });
 
 export const app = createApp(App);
+app.component("font-awesome-icon", FontAwesomeIcon);
 app.use(createPinia());
 app.use(router);
 app.use(ToastPlugin);
