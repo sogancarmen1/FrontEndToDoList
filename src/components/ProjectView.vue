@@ -11,8 +11,8 @@
         <div class="flex flex-col pt-[20px]">
           <span class="text-base font-bold">{{
             projectsAndEquipe[0].listOfProject?.find(
-              (project) => project.id == $route.params.id
-            )?.name
+              (project) => project.id == Number($route.params.id)
+            )?.nameOfProject
           }}</span>
           <span class="pt-2">
             <router-link
@@ -38,11 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  createLink,
-  value,
-  value1,
-} from "./ProjectviewListe/ProjectviewListe";
+import { createLink, value, value1 } from "./ProjectviewListe/ProjectviewListe";
 import IconView from "./IconView.vue";
 import {
   isSelected,

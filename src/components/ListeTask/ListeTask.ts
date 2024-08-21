@@ -1,6 +1,58 @@
 import { ref } from "vue";
 export const detailOfTask = ref(false);
 export const deleteBackground = ref(false);
+export const hoveredTaskId = ref<number | null>(null);
+export const projects = ref([
+  {
+    id: 1,
+    nameOfProject: "My_project",
+    isSelectedProject: true,
+    reveleTaskList: false,
+    disable: true,
+    listOfTask: [
+      {
+        id: 1,
+        isSelected: false,
+        nameFormatted: "",
+        name: "Sogan",
+        dueDate: "2020-2-05",
+        priority: "High",
+        status: "in_progress",
+        inProject: "My_project",
+        showInput: false,
+        showValueOfInput: true,
+        showValueOfInputOfDate: true,
+        showInputOfDate: false,
+        showChoicePriority: false,
+        showValueOfInputOfPriority: true,
+        showCloseIcon: false,
+        showCloseIconStatus: false,
+        showChoiceStatus: false,
+        showValueOfInputOfStatus: true,
+      },
+      {
+        id: 2,
+        isSelected: false,
+        nameFormatted: "",
+        name: "SoganSenami",
+        dueDate: "2020-2-05",
+        priority: "Average",
+        status: "done",
+        inProject: "My_project",
+        showInput: false,
+        showValueOfInput: true,
+        showValueOfInputOfDate: true,
+        showInputOfDate: false,
+        showChoicePriority: false,
+        showValueOfInputOfPriority: true,
+        showCloseIcon: false,
+        showCloseIconStatus: false,
+        showChoiceStatus: false,
+        showValueOfInputOfStatus: true,
+      },
+    ],
+  },
+]);
 export function showDetailOrNot() {
   detailOfTask.value = true;
   deleteBackground.value = true;
@@ -9,142 +61,53 @@ export function hiddenBackgroundAndDetail() {
   detailOfTask.value = false;
   deleteBackground.value = false;
 }
-export const nameOfTask = ref("");
-export const showInput = ref(true);
-export const showValueOfInput = ref(false);
 export const showIconAndBorder = ref(false);
-export const onSubmit = function () {
-  showValueOfInput.value = true;
-  showInput.value = false;
+export const onSubmit = function (task: any) {
+  task.showValueOfInput = true;
+  task.showInput = false;
 };
-export const onClick = function () {
-  showValueOfInput.value = false;
-  showInput.value = true;
+export const onClick = function (task: any) {
+  task.showValueOfInput = false;
+  task.showInput = true;
 };
-export const priority = ref("");
-export const date = ref("");
-export const showChoicePriority = ref(true);
-export const High = ref(false);
-export const Average = ref(false);
-export const Low = ref(false);
-export function showOrNotPriorityChoice(priority: string) {
-  if (priority == "High") {
-    High.value = true;
-    showChoicePriority.value = false;
-    return true;
-  }
-  if (priority == "Average") {
-    Average.value = true;
-    showChoicePriority.value = false;
-    return true;
-  }
-  if (priority == "Low") {
-    Low.value = true;
-    showChoicePriority.value = false;
-    return true;
-  }
-  return false;
-}
-export function notShowHigh() {
-  if (priority.value == "High") {
-    High.value = false;
-    showChoicePriority.value = true;
-    priority.value = "";
+export const onClickDate = function (task: any) {
+  task.showValueOfInputOfDate = false;
+  task.showInputOfDate = true;
+};
+export const onSubmitDate = function (task: any) {
+  task.showValueOfInputOfDate = true;
+  task.showInputOfDate = false;
+};
+// export const showInputOfPriority = ref(false);
+// export const showValueOfInputOfStatus = ref(true);
+export function showOrNotPriorityChoice(task: any) {
+  if (task.priority) {
+    task.showValueOfInputOfPriority = true;
+    task.showChoicePriority = false;
+  } else {
+    task.showValueOfInputOfPriority = false;
+    task.showCloseIcon = false;
   }
 }
-
-export function notShowAverage() {
-  if (priority.value == "Average") {
-    Average.value = false;
-    showChoicePriority.value = true;
-    priority.value = "";
-  }
+export function resetPriority(task: any) {
+  task.priority = "";
+  task.showChoicePriority = true;
+  task.showValueOfInputOfPriority = false;
+  task.showCloseIcon = false;
 }
 
-export function notShowLow() {
-  if (priority.value == "Low") {
-    Low.value = false;
-    showChoicePriority.value = true;
-    priority.value = "";
-  }
+// export const showCloseIconStatus = ref(false);
+
+// export const status = ref("DONE");
+// export const showChoiceStatus = ref(false);
+
+export function showOrNotStatusChoice(task: any) {
+  task.showChoiceStatus = false;
+  task.showValueOfInputOfStatus = true;
 }
 
-export const showCloseIcon = ref(false);
-
-export const status = ref("");
-export const showChoiceStatus = ref(true);
-export const todo = ref(false);
-export const in_progress = ref(false);
-export const waiting = ref(false);
-export const done = ref(false);
-export const canceled = ref(false);
-export const showCloseIconInStatus = ref(false);
-
-export function showOrNotStatusChoice(status: string) {
-  if (status == "todo") {
-    todo.value = true;
-    showChoiceStatus.value = false;
-    return true;
-  }
-  if (status == "in_progress") {
-    in_progress.value = true;
-    showChoiceStatus.value = false;
-    return true;
-  }
-  if (status == "waiting") {
-    waiting.value = true;
-    showChoiceStatus.value = false;
-    return true;
-  }
-  if (status == "done") {
-    done.value = true;
-    showChoiceStatus.value = false;
-    return true;
-  }
-  if (status == "canceled") {
-    canceled.value = true;
-    showChoiceStatus.value = false;
-    return true;
-  }
-  return false;
-}
-
-export function notShowTodo() {
-  if (status.value == "todo") {
-    todo.value = false;
-    showChoiceStatus.value = true;
-    status.value = "";
-  }
-}
-
-export function notShowInProgress() {
-  if (status.value == "in_progress") {
-    in_progress.value = false;
-    showChoiceStatus.value = true;
-    status.value = "";
-  }
-}
-
-export function notShowWaiting() {
-  if (status.value == "waiting") {
-    waiting.value = false;
-    showChoiceStatus.value = true;
-    status.value = "";
-  }
-}
-
-export function notShowDone() {
-  if (status.value == "done") {
-    done.value = false;
-    showChoiceStatus.value = true;
-    status.value = "";
-  }
-}
-
-export function notShowCanceled() {
-  if (status.value == "canceled") {
-    canceled.value = false;
-    showChoiceStatus.value = true;
-    status.value = "";
-  }
+export function resetTodo(task: any) {
+  task.status = "";
+  task.showChoiceStatus = true;
+  task.showValueOfInputOfStatus = false;
 }

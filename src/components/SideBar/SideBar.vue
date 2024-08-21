@@ -82,9 +82,9 @@
                       class="px-2 font-zen rounded bg-blue-500 my-8 mr-1"
                     ></span>
                     {{
-                      project.name.length > 17
-                        ? project.name.slice(0, 10) + "..."
-                        : project.name
+                      project.nameOfProject.length > 17
+                        ? project.nameOfProject.slice(0, 10) + "..."
+                        : project.nameOfProject
                     }}
                   </RouterLink>
                 </li>
