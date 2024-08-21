@@ -191,6 +191,55 @@ import {
   projects,
   hoveredTaskId,
 } from "./ListeTask";
+import { onMounted, ref } from "vue";
+import { getData } from "@/utils/utils";
+const showLoader = ref(false);
+onMounted(async () => {
+  showLoader.value = true;
+  // showImage.value = false;
+
+  const responseReceived = await getData("http://localhost:3000/projects");
+  if (responseReceived != null) {
+    const projectsWithTasks = await Promise.all(
+      responseReceived.data.map(async (project: any) => {
+        const tasksResponse = await getData(
+          "http://localhost:3000/tasks",
+          project.id
+        );
+        return {
+          id: project.id,
+          nameOfProject: project.name,
+          listOfTask:
+            tasksResponse?.data.map((task: any) => ({
+              nameFormatted: "",
+              name: task.name,
+              dueDate: task.dueDate.slice(0, 10),
+              priority: task.priority,
+              status: task.status,
+              isSelected: false,
+              inProject: project.name,
+              showInput: false,
+              showValueOfInput: true,
+              showValueOfInputOfDate: true,
+              showInputOfDate: false,
+              showChoicePriority: false,
+              showValueOfInputOfPriority: true,
+              showCloseIcon: false,
+              showCloseIconStatus: false,
+              showChoiceStatus: false,
+              showValueOfInputOfStatus: true,
+            })) || [],
+          disable: true,
+          isSelectedProject: true,
+          reveleTaskList: false,
+        };
+      })
+    );
+    projects.value = projectsWithTasks;
+  }
+});
+
+// });
 // const priorityClass = computed((task: any) => {
 //   if (task.priority === "High") return "bg-red-700";
 //   if (task.priority === "Average") return "bg-yellow-500";

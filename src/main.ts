@@ -89,7 +89,13 @@ library.add(
 );
 
 const routes = [
-  { path: "/template", component: HomeView },
+  {
+    path: "/home",
+    meta: {
+      requiresAuth: true,
+    },
+    component: HomeView,
+  },
   {
     path: "/tasks",
     name: "tasks",
@@ -97,6 +103,9 @@ const routes = [
   },
   {
     path: "/tasks/list",
+    meta: {
+      requiresAuth: true,
+    },
     name: "list",
     component: ListView,
   },
@@ -115,14 +124,14 @@ const routes = [
   },
   { path: "/", name: "Login", component: FormPageConnexion },
   { path: "/register", component: FormPageInscription },
-  {
-    path: "/home",
-    name: "Dashboard",
-    component: HomePage,
-    meta: {
-      requiresAuth: true,
-    },
-  },
+  // {
+  //   path: "/home",
+  //   name: "Dashboard",
+  //   component: HomePage,
+  //   meta: {
+  //     requiresAuth: true,
+  //   },
+  // },
   { path: "/addtask", component: AddTaskPage },
   { path: "/showprofil", component: VoirProfil },
   { path: "/updatetask", component: UpdateTask },

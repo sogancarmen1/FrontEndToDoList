@@ -82,7 +82,7 @@
                       class="px-2 font-zen rounded bg-blue-500 my-8 mr-1"
                     ></span>
                     {{
-                      project.nameOfProject.length > 17
+                      project.nameOfProject.length > 10
                         ? project.nameOfProject.slice(0, 10) + "..."
                         : project.nameOfProject
                     }}
@@ -122,9 +122,10 @@
               class-prop="text-white"
               :title="content.title"
             ></IconView>
-            <span class="pt-1 text-white text-[12px] font-zen hidden sm:inline">{{
-              content.title
-            }}</span>
+            <span
+              class="pt-1 text-white text-[12px] font-zen hidden sm:inline"
+              >{{ content.title }}</span
+            >
           </li>
         </ul>
       </div>
@@ -159,4 +160,21 @@ import { stores, projectsAndEquipe, footerContent } from "./sideBar";
 import IconView from "../IconView.vue";
 import { RouterLink } from "vue-router";
 import { toggleModalOfProjetAndPlusInSideBar } from "../layouts/topSideBar";
+import { onMounted } from "vue";
+import { getData } from "@/utils/utils";
+onMounted(async () => {
+  const responseReceived = await getData("http://localhost:3000/projects");
+  if (responseReceived != null) {
+    projectsAndEquipe.value[0].listOfProject = responseReceived.data.map(
+      (project: any) => ({
+        id: project.id,
+        nameOfProject: project.name,
+        listOfTask: [],
+        isSelectedProject: true,
+        reveleTaskList: false,
+        disable: true,
+      })
+    );
+  }
+});
 </script>
