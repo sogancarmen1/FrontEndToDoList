@@ -54,6 +54,7 @@ import {
   faLock,
   faDiagramProject,
   faListUl,
+  faRightFromBracket
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -85,7 +86,8 @@ library.add(
   faCheck,
   faLock,
   faDiagramProject,
-  faListUl
+  faListUl,
+  faRightFromBracket
 );
 
 const routes = [

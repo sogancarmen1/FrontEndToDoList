@@ -18,7 +18,9 @@
             classProp="text-red-300 rounded-full"
             iconProp="fa-solid fa-circle-plus"
           />
-          <span class="hidden text-white sm:inline text-md font-zen">Create</span>
+          <span class="hidden text-white sm:inline text-md font-zen"
+            >Create</span
+          >
         </div>
       </div>
       <!-- Search bar -->

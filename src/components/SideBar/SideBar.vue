@@ -110,24 +110,9 @@
         <hr
           class="border-opacity-10 border-white sm:border-opacity-10 sm:border-white pb-2"
         />
-        <ul
-          @click="toggleModalOfProjetAndPlusInSideBar"
-          v-for="content in footerContent"
-          :key="content.firstNameIcon"
-          class="cursor-pointer"
-        >
-          <li class="flex gap-2 hover:bg-white/30 mr-4 rounded-md py-1 px-1">
-            <IconView
-              :icon-prop="content.firstNameIcon"
-              class-prop="text-white"
-              :title="content.title"
-            ></IconView>
-            <span
-              class="pt-1 text-white text-[12px] font-zen hidden sm:inline"
-              >{{ content.title }}</span
-            >
-          </li>
-        </ul>
+        <div @click="onSubmit" class="absolute bottom-16 left-[30px]">
+          <ModalsideBar :icon-and-text-prop="iconAndTextLogout"></ModalsideBar>
+        </div>
       </div>
     </div>
     <div
@@ -146,6 +131,19 @@
 </template>
 
 <script setup lang="ts">
+import { postData } from "@/utils/utils";
+import { useRouter } from "vue-router";
+const router = useRouter();
+async function onSubmit() {
+  await postData("http://localhost:3000/auth/logout");
+  router.push("/");
+}
+const iconAndTextLogout = [
+  {
+    icon: "fa-right-from-bracket",
+    text: "Logout",
+  },
+];
 import {
   iconAndText,
   showModalProject,
@@ -156,7 +154,7 @@ import {
   path,
 } from "./sideBar";
 import ModalsideBar from "../ModalsideBar/ModalsideBar.vue";
-import { stores, projectsAndEquipe, footerContent } from "./sideBar";
+import { stores, projectsAndEquipe } from "./sideBar";
 import IconView from "../IconView.vue";
 import { RouterLink } from "vue-router";
 import { toggleModalOfProjetAndPlusInSideBar } from "../layouts/topSideBar";
