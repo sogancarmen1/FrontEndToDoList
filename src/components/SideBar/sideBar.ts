@@ -6,7 +6,7 @@ export const stores = ref([
     nameIcon: "fa-house",
     textWithIcon: "Home",
     title: "Home",
-    nameRoute: "/",
+    nameRoute: "/home",
     isSelectedAccueil: true,
   },
   {
