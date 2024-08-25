@@ -1,6 +1,6 @@
 <template>
   <ProjectView>
-    <table class="w-full">
+    <table class="w-full my-8 bg-white">
       <tr class="">
         <td
           @mouseover="taskIsSelected = true"

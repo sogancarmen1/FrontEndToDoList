@@ -94,14 +94,14 @@
               v-if="projectAndEquipe.showValue"
               class="relative cursor-pointer invisible sm:visible mx-2"
             >
-              <span
+              <!-- <span
                 class="text-white text-xs hover:bg-black/25 mx-2 py-2 absolute pl-2 pr-6 rounded-md"
                 >{{ projectAndEquipe.myEspace }}
                 <IconView
                   :icon-prop="projectAndEquipe.thirdNameIcons"
                   class-prop="text-white w-2 pb-1 px-1 h-2 ml-1 absolute top-[2px] rounded-full hover:bg-black/50"
                 ></IconView>
-              </span>
+              </span> -->
             </div>
           </li>
         </ul>
@@ -110,7 +110,7 @@
         <hr
           class="border-opacity-10 border-white sm:border-opacity-10 sm:border-white pb-2"
         />
-        <div @click="onSubmit" class="absolute bottom-16 left-[30px]">
+        <div @click="onSubmit" class="absolute bottom-16">
           <ModalsideBar :icon-and-text-prop="iconAndTextLogout"></ModalsideBar>
         </div>
       </div>

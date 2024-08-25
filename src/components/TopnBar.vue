@@ -4,12 +4,12 @@
   >
     <div class="flex justify-between py-2">
       <div class="flex gap-2">
-        <icon-view
+        <!-- <icon-view
           @click="$emit('toggle-sidebar')"
           classProp="text-white"
           iconProp="fa-solid fa-bars"
           title="Masquer la barre latérale"
-        />
+        /> -->
         <!-- Button create -->
         <div
           class="flex gap-1 rounded-2xl px-1 sm:bg-white/30 sm:border cursor-pointer transition easy-in-out"
@@ -46,5 +46,11 @@
 </template>
 
 <script setup lang="ts">
+import { onBeforeMount } from "vue";
+import { useProjectsStore } from "@/stores/user";
+const projectsStore = useProjectsStore();
+onBeforeMount(async () => {
+  await projectsStore.fetchProjects();
+});
 import IconView from "./IconView.vue";
 </script>

@@ -1,7 +1,7 @@
 <template>
   <topside-bar>
-    <div @click="toggleModalOfProjetAndPlus" class="w-full">
-      <div class="flex gap-0 pb-1">
+    <div @click="toggleModalOfProjetAndPlus" class="w-full bg-back">
+      <div class="flex gap-0 pb-1 bg-white shadow-sm">
         <div>
           <icon-view
             classProp="text-red-300 h-10 pt-6 mx-4"

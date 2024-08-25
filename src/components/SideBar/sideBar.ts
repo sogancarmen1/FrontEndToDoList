@@ -23,7 +23,7 @@ export function path(value: Number) {
   return `/project/${value}/list`;
 }
 
-import { projects } from "../ListeTask/ListeTask";
+// import { projects } from "../ListeTask/ListeTask";
 
 export const projectsAndEquipe = ref([
   {
@@ -36,65 +36,7 @@ export const projectsAndEquipe = ref([
     fourNameIcon: "fa-list-check",
     isSelect: false,
     showValue: true,
-    listOfProject: projects,
-    // listOfProject: [
-    //   {
-    //     id: 0,
-    //     name: "",
-    //     disable: false,
-    //   },
-    //   {
-    //     id: "1",
-    //     name: "mon premier projet",
-    //     disable: true,
-    //     tasks: [
-    //       {
-    //         id: 1,
-    //         name: "Tache 1",
-    //       },
-    //       {
-    //         id: 2,
-    //         name: "Tache 2",
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     id: "2",
-    //     name: "mon deuxieme projet",
-    //     disable: true,
-    //   },
-    //   {
-    //     id: "3",
-    //     name: "mon troisieme projet",
-    //     disable: true,
-    //   },
-    //   {
-    //     id: "4",
-    //     name: "mon quatrieme projet",
-    //     disable: true,
-    //   },
-    //   {
-    //     id: "5",
-    //     name: "mon cinquieme projet",
-    //     disable: true,
-    //   },
-    //   {
-    //     id: "6",
-    //     name: "mon sixieme projet",
-    //     disable: true,
-    //   },
-    // ],
-  },
-  {
-    id: 2,
-    firstNameIcon: "fa-caret-down",
-    secondeFormFirstNameIcon: "fa-caret-right",
-    title: "Team",
-    myEspace: "Mon espace de travail",
-    thirdNameIcons: "fa-chevron-right",
-    fourNameIcon: "fa-user-group",
-    showValue: true,
-    isSelect: false,
+    listOfProject: [],
   },
 ]);
 

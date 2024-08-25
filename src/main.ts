@@ -23,6 +23,7 @@ import ListView from "./components/ListView.vue";
 import FilesView from "./components/FilesView.vue";
 import ProjectviewListe from "./components/ProjectviewListe.vue";
 import ProjectviewFile from "./components/ProjectviewFile.vue";
+import AddTask from "./components/AddTask.vue";
 
 import {
   faUserSecret,
@@ -54,7 +55,7 @@ import {
   faLock,
   faDiagramProject,
   faListUl,
-  faRightFromBracket
+  faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -102,6 +103,11 @@ const routes = [
     path: "/tasks",
     name: "tasks",
     component: TaskView,
+  },
+  {
+    path: "/addtask",
+    name: "tasks",
+    component: AddTask,
   },
   {
     path: "/tasks/list",

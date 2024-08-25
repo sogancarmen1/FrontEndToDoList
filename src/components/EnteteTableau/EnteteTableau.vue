@@ -1,5 +1,5 @@
 <template>
-  <table class="w-full">
+  <table class="w-full bg-white">
     <tr class="">
       <td
         @mouseover="taskIsSelected = true"

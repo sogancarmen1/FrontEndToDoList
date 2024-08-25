@@ -40,6 +40,8 @@ module.exports = {
         emailColor: "#212121",
         password: "#424242",
         logInColor: "#7B76F1",
+        back: "#FBF7F4",
+        backOfHi: "#AEAEAE",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

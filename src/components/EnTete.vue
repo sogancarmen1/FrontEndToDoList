@@ -1,6 +1,6 @@
 <template>
-  <div @click="toggleModalOfProjetAndPlus" class="w-full">
-    <div class="flex gap-0 pb-1">
+  <div @click="toggleModalOfProjetAndPlus" class="bg-back w-full">
+    <div class="flex gap-0 pb-1 bg-white shadow-sm">
       <div>
         <icon-view
           classProp="text-black h-10 pt-6 mx-4"

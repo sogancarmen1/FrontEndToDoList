@@ -1,6 +1,7 @@
 <template>
   <div class="sm:flex justify-between">
     <div
+      @click=""
       :class="classProp"
       class="border rounded px-8 cursor-pointer whitespace-nowrap"
     >
@@ -21,4 +22,7 @@ import { defineProps } from "vue";
 defineProps({
   classProp: String,
 });
+import { useTaskStore } from "@/stores/user";
+const taskStore = useTaskStore();
+// const revele = ref(false);
 </script>

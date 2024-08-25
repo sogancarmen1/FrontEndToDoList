@@ -1,5 +1,9 @@
 <template>
-  <table v-for="project in projects" :key="project.id" class="w-full relative">
+  <table
+    v-for="project in projects"
+    :key="project.id"
+    class="w-full bg-white relative"
+  >
     <tr v-for="task in project.listOfTask" :key="task.id" class="">
       <td
         @mouseover="hoveredTaskId = task.id"
@@ -171,10 +175,17 @@
     class="border absolute h-full top-[47px] w-full"
   ></div>
   <modal-detail v-if="detailOfTask"></modal-detail>
+  <AddTask></AddTask>
+  <!-- new -->
 </template>
 
 <script setup lang="ts">
 import ModalDetail from "../ModalDetail/ModalDetail.vue";
+import AddTask from "../AddTask.vue";
+const revele = ref(false);
+function toggleRevele() {
+  revele.value = !revele.value;
+}
 import {
   onSubmit,
   onClick,
@@ -188,55 +199,14 @@ import {
   deleteBackground,
   onClickDate,
   onSubmitDate,
-  projects,
   hoveredTaskId,
 } from "./ListeTask";
-import { onMounted, ref } from "vue";
-import { getData } from "@/utils/utils";
-const showLoader = ref(false);
-onMounted(async () => {
-  showLoader.value = true;
-  // showImage.value = false;
-
-  const responseReceived = await getData("http://localhost:3000/projects");
-  if (responseReceived != null) {
-    const projectsWithTasks = await Promise.all(
-      responseReceived.data.map(async (project: any) => {
-        const tasksResponse = await getData(
-          "http://localhost:3000/tasks",
-          project.id
-        );
-        return {
-          id: project.id,
-          nameOfProject: project.name,
-          listOfTask:
-            tasksResponse?.data.map((task: any) => ({
-              nameFormatted: "",
-              name: task.name,
-              dueDate: task.dueDate.slice(0, 10),
-              priority: task.priority,
-              status: task.status,
-              isSelected: false,
-              inProject: project.name,
-              showInput: false,
-              showValueOfInput: true,
-              showValueOfInputOfDate: true,
-              showInputOfDate: false,
-              showChoicePriority: false,
-              showValueOfInputOfPriority: true,
-              showCloseIcon: false,
-              showCloseIconStatus: false,
-              showChoiceStatus: false,
-              showValueOfInputOfStatus: true,
-            })) || [],
-          disable: true,
-          isSelectedProject: true,
-          reveleTaskList: false,
-        };
-      })
-    );
-    projects.value = projectsWithTasks;
-  }
+import { onBeforeMount, ref } from "vue";
+import { useProjectsStore } from "@/stores/user";
+const projectsStore = useProjectsStore();
+const projects = ref<any[]>([]);
+onBeforeMount(async () => {
+  projects.value = projectsStore.projects;
 });
 
 // });
