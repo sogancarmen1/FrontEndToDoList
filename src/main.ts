@@ -24,6 +24,7 @@ import FilesView from "./components/FilesView.vue";
 import ProjectviewListe from "./components/ProjectviewListe.vue";
 import ProjectviewFile from "./components/ProjectviewFile.vue";
 import AddTask from "./components/AddTask.vue";
+import { useProjectsStore } from "@/stores/user";
 
 import {
   faUserSecret,
@@ -155,6 +156,10 @@ const router = createRouter({
 export const app = createApp(App);
 app.component("font-awesome-icon", FontAwesomeIcon);
 app.use(createPinia());
+
+const projectsStore = useProjectsStore();
+await projectsStore.fetchProjects();
+
 app.use(router);
 app.use(ToastPlugin);
 app.mount("#app");

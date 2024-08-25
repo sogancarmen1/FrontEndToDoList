@@ -22,7 +22,4 @@ import { defineProps } from "vue";
 defineProps({
   classProp: String,
 });
-import { useTaskStore } from "@/stores/user";
-const taskStore = useTaskStore();
-// const revele = ref(false);
 </script>

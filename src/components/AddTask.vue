@@ -1,13 +1,18 @@
 <template>
   <div
-    v-if="taskStores.revele"
     class="flex items-center justify-center h-screen fixed top-0 bottom-0 right-0 left-0"
   >
-    <div class="bg-[rgba(0,0,0,0.5)] fixed top-0 bottom-0 right-0 left-0"></div>
+    <div
+      @click="taskStores.toggleRevele"
+      class="bg-[rgba(0,0,0,0.5)] fixed top-0 bottom-0 right-0 left-0"
+    ></div>
     <div
       class="space-y-2 rounded-lg dark:bg-black/90 bg-white shadow-2xl fixed"
     >
-      <button @click="toggleRevele" class="w-5 py-4 absolute right-4">
+      <button
+        @click="taskStores.toggleRevele"
+        class="w-5 py-4 absolute right-4"
+      >
         <svg
           class="dark:fill-white"
           xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +55,11 @@
                 class="mt-1 px-3 py-2 dark:bg-black/20 dark:text-white text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
               >
                 <option disabled value="">Please select project</option>
-                <option v-for="project in projects" :key="project.id">
+                <option
+                  v-for="project in projects"
+                  :key="project.id"
+                  :value="project.id"
+                >
                   {{ project.nameOfProject }}
                 </option>
               </select>
@@ -87,14 +96,35 @@
 import { ref } from "vue";
 const inProject = ref("");
 import { useProjectsStore } from "@/stores/user";
-const revele = ref(false);
 const projectsStore = useProjectsStore();
 const name = ref("");
 const projects = projectsStore.projects;
 import { useTaskStore } from "@/stores/user";
 const taskStores = useTaskStore();
-function onSubmit() {}
-function toggleRevele() {
-  revele.value = !revele.value;
+import { postData } from "@/utils/utils";
+async function onSubmit() {
+  try {
+    const value = await postData("http://localhost:3000/tasks", {
+      name: name.value,
+      nameFormatted: "",
+      projectId: Number(inProject.value),
+      showInput: false,
+      showValueOfInput: true,
+      showValueOfInputOfDate: true,
+      showInputOfDate: false,
+      showChoicePriority: false,
+      showValueOfInputOfPriority: true,
+      showCloseIcon: false,
+      showCloseIconStatus: false,
+      showChoiceStatus: false,
+      showValueOfInputOfStatus: true,
+    });
+    // console.log(value.data.data);
+    console.log(
+      projectsStore.addProject(value.data.data, Number(inProject.value))
+    );
+    taskStores.toggleRevele();
+    return value;
+  } catch (error) {}
 }
 </script>

@@ -33,6 +33,15 @@ export const useProjectsStore = defineStore("projects", () => {
   const countPendingTasks = ref(0);
   const countOverdueTasks = ref(0);
 
+  function addTask(value: any, id: Number) {
+    projects.value.forEach((project: any) => {
+      if (project.id == id) {
+        project.listOfTask.push(value);
+      }
+    });
+    return true;
+  }
+
   async function fetchProjects() {
     const responseReceived = await getData("http://localhost:3000/projects");
     if (responseReceived != null) {
@@ -50,7 +59,7 @@ export const useProjectsStore = defineStore("projects", () => {
                 id: task.id,
                 nameFormatted: "",
                 name: task.name,
-                dueDate: task.dueDate.slice(0, 10),
+                dueDate: task.dueDate?.slice(0, 10) || null,
                 priority: task.priority,
                 status: task.status,
                 isSelected: false,
@@ -96,7 +105,7 @@ export const useProjectsStore = defineStore("projects", () => {
             default:
               break;
           }
-          if (date.getDate() > task.dueDate.split("-")[2]) {
+          if (date.getDate() > task.dueDate?.split("-")[2]) {
             countOverdueTasks.value++;
           }
         });
@@ -112,6 +121,7 @@ export const useProjectsStore = defineStore("projects", () => {
     countOnGoingTasks,
     countPendingTasks,
     countOverdueTasks,
+    addProject: addTask,
     fetchProjects,
   };
 });

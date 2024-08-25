@@ -91,10 +91,10 @@ export function showOrNotPriorityChoice(task: any) {
   }
 }
 export function resetPriority(task: any) {
-  task.priority = "";
-  task.showChoicePriority = true;
-  task.showValueOfInputOfPriority = false;
-  task.showCloseIcon = false;
+  task.priority = null;
+  // task.showChoicePriority = true;
+  // task.showValueOfInputOfPriority = false;
+  // task.showCloseIcon = false;
 }
 
 // export const showCloseIconStatus = ref(false);
@@ -108,7 +108,5 @@ export function showOrNotStatusChoice(task: any) {
 }
 
 export function resetTodo(task: any) {
-  task.status = "";
-  task.showChoiceStatus = true;
-  task.showValueOfInputOfStatus = false;
+  task.status = null;
 }

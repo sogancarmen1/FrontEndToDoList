@@ -2,9 +2,9 @@
   <table
     v-for="project in projects"
     :key="project.id"
-    class="w-full bg-white relative"
+    class="w-full bg-white relative overflow-auto"
   >
-    <tr v-for="task in project.listOfTask" :key="task.id" class="">
+    <tr v-for="task in project.listOfTask" :key="task.id" class="relative">
       <td
         @mouseover="hoveredTaskId = task.id"
         @mouseleave="hoveredTaskId = null"
@@ -78,7 +78,7 @@
           class="absolute w-full h-full bottom-[-8px] top-[-1px] right-[-0px]"
         >
           <input
-            v-if="task.showInputOfDate"
+            v-if="true"
             @change="onSubmitDate(task)"
             v-model="task.dueDate"
             class="border-y w-full font-zen px-2 pt-2 pb-[10px] outline-none cursor-pointer"
@@ -101,7 +101,7 @@
       >
         <form action="" class="border-black">
           <select
-            v-if="task.showChoicePriority"
+            v-if="task.priority == null ? true : false"
             v-model="task.priority"
             name=""
             id=""
@@ -114,7 +114,7 @@
             <option value="Low">LOW</option>
           </select>
           <p
-            v-if="task.showValueOfInputOfPriority"
+            v-if="task.priority == null ? false : true"
             :class="`absolute bg-red-500 text-white font-zen rounded bottom-[2px] left-[-4px] px-2 py-2 mx-2 outline-none`"
           >
             <span :class="`uppercase`">{{ task.priority }}</span>
@@ -139,7 +139,7 @@
       >
         <form action="" class="border-black w-full">
           <select
-            v-if="task.showChoiceStatus"
+            v-if="task.status == null ? true : false"
             v-model="task.status"
             name=""
             id=""
@@ -154,7 +154,7 @@
             <option value="canceled">CANCELED</option>
           </select>
           <p
-            v-if="task.showValueOfInputOfStatus"
+            v-if="task.status == null ? false : true"
             class="absolute bg-red-700 text-white font-zen rounded bottom-[2px] left-[-4px] px-2 py-2 mx-2 outline-none"
           >
             <span class="uppercase">{{ task.status }}</span>
@@ -175,17 +175,11 @@
     class="border absolute h-full top-[47px] w-full"
   ></div>
   <modal-detail v-if="detailOfTask"></modal-detail>
-  <AddTask></AddTask>
   <!-- new -->
 </template>
 
 <script setup lang="ts">
 import ModalDetail from "../ModalDetail/ModalDetail.vue";
-import AddTask from "../AddTask.vue";
-const revele = ref(false);
-function toggleRevele() {
-  revele.value = !revele.value;
-}
 import {
   onSubmit,
   onClick,
@@ -206,6 +200,7 @@ import { useProjectsStore } from "@/stores/user";
 const projectsStore = useProjectsStore();
 const projects = ref<any[]>([]);
 onBeforeMount(async () => {
+  // await projectsStore.fetchProjects();
   projects.value = projectsStore.projects;
 });
 
