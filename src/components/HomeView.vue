@@ -145,7 +145,7 @@
                   <tr class="border-b hover:bg-gray-50">
                     <td class="py-3 px-4">{{ project.nameOfProject }}</td>
                     <td class="py-3 px-4">Team Alpha</td>
-                    <td class="py-3 px-8">{{ project.listOfTask.length }}</td>
+                    <td class="py-3 px-8">{{ project.listOfTask?.length }}</td>
                     <td class="py-3 px-4">
                       {{
                         project.hasOwnProperty("description")

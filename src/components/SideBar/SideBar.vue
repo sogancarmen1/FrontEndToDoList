@@ -1,4 +1,10 @@
 <template>
+  <div
+    v-if="projectStore.showModalOfAddProject"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <AddProject></AddProject>
+  </div>
   <!-- Travailler sur les transitions après -->
   <!-- Travailler sur le truc de la mise à jour -->
   <div @click="" class="bg-black/85 h-screen w-16 sm:w-52 pt-4">
@@ -117,11 +123,13 @@
     </div>
     <div
       v-if="showModalProject"
+      @click="projectStore.toggleModalAddProject"
       class="absolute left-14 top-[191px] text-white"
     >
       <ModalsideBar :icon-and-text-prop="iconAndText"></ModalsideBar>
     </div>
     <div
+      @click="projectStore.toggleModalAddProject"
       v-if="showModalProjectPlus"
       class="absolute left-40 top-[185px] text-white"
     >
@@ -133,6 +141,8 @@
 <script setup lang="ts">
 import { postData } from "@/utils/utils";
 import { useRouter } from "vue-router";
+import { useProjectStore } from "@/stores/user";
+const projectStore = useProjectStore();
 const router = useRouter();
 async function onSubmit() {
   await postData("http://localhost:3000/auth/logout");
@@ -160,6 +170,7 @@ import { RouterLink } from "vue-router";
 import { toggleModalOfProjetAndPlusInSideBar } from "../layouts/topSideBar";
 import { onMounted } from "vue";
 import { getData } from "@/utils/utils";
+import AddProject from "../AddProject.vue";
 onMounted(async () => {
   const responseReceived = await getData("http://localhost:3000/projects");
   if (responseReceived != null) {

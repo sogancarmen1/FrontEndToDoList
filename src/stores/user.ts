@@ -26,6 +26,19 @@ export const useTaskStore = defineStore("tasks", () => {
   };
 });
 
+export const useProjectStore = defineStore("projectsCreate", () => {
+  const showModalOfAddProject = ref(false);
+
+  function toggleModalAddProject() {
+    showModalOfAddProject.value = !showModalOfAddProject.value;
+  }
+
+  return {
+    showModalOfAddProject,
+    toggleModalAddProject,
+  };
+});
+
 export const useProjectsStore = defineStore("projects", () => {
   const projects = ref<any[]>([]);
   const countCompletedTasks = ref(0);
@@ -40,6 +53,10 @@ export const useProjectsStore = defineStore("projects", () => {
       }
     });
     return true;
+  }
+
+  function addNewProject(value: any) {
+    projects.value.push(value);
   }
 
   async function fetchProjects() {
@@ -123,5 +140,6 @@ export const useProjectsStore = defineStore("projects", () => {
     countOverdueTasks,
     addProject: addTask,
     fetchProjects,
+    addNewProject,
   };
 });
