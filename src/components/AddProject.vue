@@ -79,6 +79,7 @@ const name = ref("");
 import { postData } from "@/utils/utils";
 import { useProjectStore } from "@/stores/user";
 const projectStores = useProjectStore();
+import { useToast } from "vue-toast-notification";
 async function onSubmit() {
   try {
     const value = await postData("http://localhost:3000/projects", {
@@ -92,6 +93,11 @@ async function onSubmit() {
     projectsStore.addNewProject(value.data.data);
     projectStores.toggleModalAddProject();
     return value;
-  } catch (error) {}
+  } catch (error: any) {
+    const toast = useToast();
+    toast.error(error.response.data.message, {
+      position: "top-right",
+    });
+  }
 }
 </script>

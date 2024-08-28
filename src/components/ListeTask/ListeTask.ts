@@ -63,8 +63,14 @@ export function hiddenBackgroundAndDetail() {
   deleteBackground.value = false;
 }
 export const showIconAndBorder = ref(false);
-export const onSubmit = function (task: any) {
+import { updateData } from "@/utils/utils";
+export const onSubmit = async function (task: any, taskId: any, newData: any) {
   task.showValueOfInput = true;
+  try {
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
+      name: newData,
+    });
+  } catch (error) {}
   task.showInput = false;
 };
 export const onClick = function (task: any) {
@@ -75,15 +81,33 @@ export const onClickDate = function (task: any) {
   task.showValueOfInputOfDate = false;
   task.showInputOfDate = true;
 };
-export const onSubmitDate = function (task: any) {
+export const onSubmitDate = async function (
+  task: any,
+  taskId: any,
+  newData: any
+) {
   task.showValueOfInputOfDate = true;
+  try {
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
+      dueDate: newData,
+    });
+  } catch (error) {}
   task.showInputOfDate = false;
 };
 // export const showInputOfPriority = ref(false);
 // export const showValueOfInputOfStatus = ref(true);
-export function showOrNotPriorityChoice(task: any) {
+export async function showOrNotPriorityChoice(
+  task: any,
+  taskId: any,
+  newData: any
+) {
   if (task.priority) {
     task.showValueOfInputOfPriority = true;
+    try {
+      await updateData(`http://localhost:3000/tasks/${taskId}`, {
+        priority: newData,
+      });
+    } catch (error) {}
     task.showChoicePriority = false;
   } else {
     task.showValueOfInputOfPriority = false;
@@ -92,19 +116,20 @@ export function showOrNotPriorityChoice(task: any) {
 }
 export function resetPriority(task: any) {
   task.priority = null;
-  // task.showChoicePriority = true;
-  // task.showValueOfInputOfPriority = false;
-  // task.showCloseIcon = false;
 }
 
-// export const showCloseIconStatus = ref(false);
-
-// export const status = ref("DONE");
-// export const showChoiceStatus = ref(false);
-
-export function showOrNotStatusChoice(task: any) {
-  task.showChoiceStatus = false;
+export async function showOrNotStatusChoice(
+  task: any,
+  taskId: any,
+  newData: any
+) {
   task.showValueOfInputOfStatus = true;
+  try {
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
+      status: newData,
+    });
+  } catch (error) {}
+  task.showChoiceStatus = false;
 }
 
 export function resetTodo(task: any) {

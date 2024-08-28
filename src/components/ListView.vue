@@ -36,22 +36,22 @@
           </div> -->
           </AddtaskButton>
         </button>
-        <div class="flex">
-          <div class="px-4">
+        <div class="flex absolute right-[28px] top-[145px]">
+          <!-- <div class="px-4 cursor-pointer">
             <font-awesome-icon
               class="text-sm px-1"
               icon="fa-pen-nib"
             ></font-awesome-icon>
             <span class="text-sm font-zen">Description</span>
-          </div>
-          <div class="px-4">
+          </div> -->
+          <div class="px-4 cursor-pointer">
             <font-awesome-icon
               class="text-sm px-1"
               icon="fa-filter"
             ></font-awesome-icon>
             <span class="text-sm font-zen">Filter</span>
           </div>
-          <div class="px-4">
+          <div class="px-4 cursor-pointer">
             <font-awesome-icon
               class="text-sm px-1"
               icon="fa-sort"

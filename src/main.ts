@@ -157,9 +157,6 @@ export const app = createApp(App);
 app.component("font-awesome-icon", FontAwesomeIcon);
 app.use(createPinia());
 
-const projectsStore = useProjectsStore();
-await projectsStore.fetchProjects();
-
 app.use(router);
 app.use(ToastPlugin);
 app.mount("#app");

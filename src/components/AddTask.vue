@@ -102,6 +102,7 @@ const projects = projectsStore.projects;
 import { useTaskStore } from "@/stores/user";
 const taskStores = useTaskStore();
 import { postData } from "@/utils/utils";
+import { useToast } from "vue-toast-notification";
 async function onSubmit() {
   try {
     const value = await postData("http://localhost:3000/tasks", {
@@ -125,6 +126,11 @@ async function onSubmit() {
     );
     taskStores.toggleRevele();
     return value;
-  } catch (error) {}
+  } catch (error: any) {
+    const toast = useToast();
+    toast.error(error.response.data.message, {
+      position: "top-right",
+    });
+  }
 }
 </script>

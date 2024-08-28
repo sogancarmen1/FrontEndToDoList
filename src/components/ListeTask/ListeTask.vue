@@ -13,7 +13,7 @@
         <div class="flex">
           <form
             :class="task.showInput ? 'inline' : 'hidden'"
-            @submit.prevent="onSubmit(task)"
+            @submit.prevent="onSubmit(task, task.id, task.name)"
             action=""
             class="absolute left-[41px]"
           >
@@ -79,19 +79,19 @@
         >
           <input
             v-if="true"
-            @change="onSubmitDate(task)"
+            @change="onSubmitDate(task, task.id, task.dueDate)"
             v-model="task.dueDate"
             class="border-y w-full font-zen px-2 pt-2 pb-[10px] outline-none cursor-pointer"
             type="date"
           />
-          <p
+          <!-- <p
             @click="onClickDate(task)"
             class="border-y w-full font-zen px-2 pt-2 pb-[12px] outline-none cursor-pointer"
             v-if="task.showValueOfInputOfDate"
             title="Click for modification"
           >
             {{ task.dueDate }}
-          </p>
+          </p> -->
         </form>
       </td>
       <td
@@ -105,7 +105,7 @@
             v-model="task.priority"
             name=""
             id=""
-            @change="showOrNotPriorityChoice(task)"
+            @change="showOrNotPriorityChoice(task, task.id, task.priority)"
             :class="`absolute font-zen rounded bottom-[2px] left-[-4px] px-2 py-2 mx-2 outline-none`"
           >
             <option disabled value="">Add</option>
@@ -143,7 +143,7 @@
             v-model="task.status"
             name=""
             id=""
-            @change="showOrNotStatusChoice(task)"
+            @change="showOrNotStatusChoice(task, task.id, task.status)"
             :class="`absolute rounded px-1 font-zen bottom-[2px] left-[-4px] py-2 mx-2 outline-none`"
           >
             <option disabled value="">Add</option>
@@ -191,7 +191,7 @@ import {
   showDetailOrNot,
   hiddenBackgroundAndDetail,
   deleteBackground,
-  onClickDate,
+  // onClickDate,
   onSubmitDate,
   hoveredTaskId,
 } from "./ListeTask";

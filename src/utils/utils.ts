@@ -24,3 +24,13 @@ export async function postData(route: string, dataEntered?: any) {
 export async function deleteData(route: string) {
   await axios.delete(route);
 }
+
+export async function updateData(route: string, newData: any) {
+  const reponse = await axios.put(route, newData);
+  return reponse;
+}
+
+export async function getDataById(route: string) {
+  const reponse = await axios.get(route);
+  return reponse.data.data;
+}
