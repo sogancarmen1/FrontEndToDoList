@@ -56,6 +56,7 @@ export const hoveredTaskId = ref<number | null>(null);
 // ]);
 export function showDetailOrNot() {
   detailOfTask.value = true;
+  console.log(hoveredTaskId.value);
   deleteBackground.value = true;
 }
 export function hiddenBackgroundAndDetail() {

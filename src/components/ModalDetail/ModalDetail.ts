@@ -25,8 +25,4 @@ export const details = ref([
     name: "Collaborateur",
     value: "Lorrain, Senami",
   },
-  {
-    name: "Description",
-    description: "Une des mes descriptions les plus importantes d'une tache",
-  },
 ]);
