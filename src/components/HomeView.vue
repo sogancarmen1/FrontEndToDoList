@@ -3,7 +3,10 @@
     <div class="w-full bg-back font-zen">
       <div class="flex py-2 flex-col px-8 w-full bg-white shadow-md">
         <span class="font-bold">Dashboard </span>
-        <span>Hi, welcome to task management dashboard</span>
+        <span
+          >Hi <span class="font-bold">{{ userInformations.informations }}</span
+          >, welcome to task management dashboard</span
+        >
       </div>
       <div class="font-zen">
         <main class="p-6">
@@ -167,13 +170,15 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from "vue";
 import TopsideBar from "./TopsideBar.vue";
-import { useProjectsStore } from "@/stores/user";
+import { useProjectsStore, useUserStore } from "@/stores/user";
 const projectsStore = useProjectsStore();
+const userInformations = useUserStore();
 const projectss = ref<any[]>([]);
 onBeforeMount(async () => {
   projectss.value = projectsStore.projects;
   projectsStore.projects.forEach((proj: any) => {
     console.log(proj);
   });
+  userInformations.getUserInformations();
 });
 </script>
