@@ -29,7 +29,7 @@
         <p>Collaborators</p>
       </div>
       <div class="text-sm space-y-4 font-bold absolute left-[100px] my-20 mx-4">
-        <a href="#">{{ userInformations.informations }}</a>
+        <a class="lowercase" href="#">{{ userInformations.informations }}</a>
         <p v-if="!modalDetail.valueOfDetail.dueDate">Empty</p>
         <p v-if="modalDetail.valueOfDetail.dueDate">
           {{ modalDetail.valueOfDetail.dueDate }}

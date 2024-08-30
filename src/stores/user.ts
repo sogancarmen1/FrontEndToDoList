@@ -14,7 +14,7 @@ export const useUserStore = defineStore("user", {
 
     async getUserInformations() {
       const response = await getData("http://localhost:3000/users");
-      this.informations = response.lastName + response.firstName + "@gmail.com";
+      this.informations = response.email;
     },
   },
 });

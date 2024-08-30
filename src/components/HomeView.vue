@@ -4,7 +4,10 @@
       <div class="flex py-2 flex-col px-8 w-full bg-white shadow-md">
         <span class="font-bold">Dashboard </span>
         <span
-          >Hi <span class="font-bold">{{ userInformations.informations }}</span
+          >Hi
+          <span class="font-bold lowercase">{{
+            userInformations.informations
+          }}</span
           >, welcome to task management dashboard</span
         >
       </div>
