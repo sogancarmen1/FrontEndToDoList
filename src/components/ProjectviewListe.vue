@@ -64,11 +64,36 @@
         </td>
       </tr>
     </table>
+    <button @click="taskStores.toggleRevele">
+      <AddtaskButton
+        classProp="bg-blue-600 text-white hover:bg-blue-800"
+        class="m-4"
+      >
+      </AddtaskButton>
+    </button>
+    <div class="flex absolute right-[28px] top-[245px]">
+      <div class="px-4 cursor-pointer">
+        <font-awesome-icon
+          class="text-sm px-1"
+          icon="fa-filter"
+        ></font-awesome-icon>
+        <span class="text-sm font-zen">Filter</span>
+      </div>
+      <div class="px-4 cursor-pointer">
+        <font-awesome-icon
+          class="text-sm px-1"
+          icon="fa-sort"
+        ></font-awesome-icon>
+        <span class="text-sm font-zen">Sort</span>
+      </div>
+    </div>
+    <ListeTaskInProject></ListeTaskInProject>
   </ProjectView>
 </template>
 
 <script setup lang="ts">
 //  projectIsSelected,
+import ListeTaskInProject from "./ListeTaskInProject.vue";
 import {
   taskIsSelected,
   dateIsSelected,
@@ -77,4 +102,7 @@ import {
   statusIsSelected,
 } from "./EnteteTableau/EnteteTableau";
 import ProjectView from "./ProjectView.vue";
+import { useTaskStore } from "@/stores/user";
+const taskStores = useTaskStore();
+import AddtaskButton from "./AddButton/AddtaskButton.vue";
 </script>

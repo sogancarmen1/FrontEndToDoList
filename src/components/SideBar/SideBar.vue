@@ -83,15 +83,17 @@
                   class="text-white text-base px-5 mt-2 mx-2 rounded-md hover:bg-black/25"
                 >
                   <RouterLink :to="path(Number(project.id))">
-                    <span
-                      v-if="project.disable"
-                      class="px-2 font-zen rounded bg-blue-500 my-8 mr-1"
-                    ></span>
-                    {{
-                      project.nameOfProject.length > 10
-                        ? project.nameOfProject.slice(0, 10) + "..."
-                        : project.nameOfProject
-                    }}
+                    <div @click="see(project.id)">
+                      <span
+                        v-if="project.disable"
+                        class="px-2 font-zen rounded bg-blue-500 my-8 mr-1"
+                      ></span>
+                      {{
+                        project.nameOfProject.length > 10
+                          ? project.nameOfProject.slice(0, 10) + "..."
+                          : project.nameOfProject
+                      }}
+                    </div>
                   </RouterLink>
                 </li>
               </ul>
@@ -171,6 +173,12 @@ import { toggleModalOfProjetAndPlusInSideBar } from "../layouts/topSideBar";
 import { onMounted } from "vue";
 import { getData } from "@/utils/utils";
 import AddProject from "../AddProject.vue";
+import { useTaskStore } from "@/stores/user";
+async function see(id: any) {
+  const taskStore = useTaskStore();
+  console.log(await taskStore.getAllTasksInProject(id));
+  // console.log(taskStore.tasks);
+}
 onMounted(async () => {
   const responseReceived = await getData("http://localhost:3000/projects");
   if (responseReceived != null) {

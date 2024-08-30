@@ -125,6 +125,9 @@ const routes = [
   },
   {
     path: "/project/:id/list",
+    meta: {
+      requiresAuth: true,
+    },
     component: ProjectviewListe,
   },
   {
