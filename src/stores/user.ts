@@ -1,14 +1,48 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { getData } from "@/utils/utils";
+import { getData, getDataById, updateData } from "@/utils/utils";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     userData: null,
+    informations: "",
   }),
   actions: {
     setUserData(data: any) {
       this.userData = data;
+    },
+
+    async getUserInformations() {
+      const response = await getData("http://localhost:3000/users");
+      this.informations = response.lastName + response.firstName + "@gmail.com";
+    },
+  },
+});
+
+export const useModalDetailStore = defineStore("details", {
+  state: () => ({
+    valueOfDetail: ref<{
+      id?: number;
+      name?: string;
+      dueDate?: Date;
+      priority?: string;
+      status?: string;
+      taskDescription?: string;
+    }>({}),
+    descriptionValue: "",
+    idTask: 0,
+  }),
+  actions: {
+    async getDetailTask(value: number) {
+      this.valueOfDetail = await getDataById(
+        `http://localhost:3000/tasks/${value}`
+      );
+    },
+    setId(value: number) {
+      this.idTask = value;
+    },
+    setDescription(value: string) {
+      this.descriptionValue = value;
     },
   },
 });
@@ -79,6 +113,7 @@ export const useProjectsStore = defineStore("projects", () => {
                 dueDate: task.dueDate?.slice(0, 10) || null,
                 priority: task.priority,
                 status: task.status,
+                description: task.taskDescription,
                 isSelected: false,
                 inProject: project.name,
                 showInput: false,
