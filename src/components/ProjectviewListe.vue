@@ -1,4 +1,10 @@
 <template>
+  <!-- <div
+    v-if="taskStores.revele"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <AddCollaborator></AddCollaborator>
+  </div> -->
   <ProjectView>
     <table class="w-full my-8 bg-white">
       <tr class="">
@@ -102,7 +108,8 @@ import {
   statusIsSelected,
 } from "./EnteteTableau/EnteteTableau";
 import ProjectView from "./ProjectView.vue";
-import { useTaskStore } from "@/stores/user";
-const taskStores = useTaskStore();
+import { useAddCollaboratorStore } from "@/stores/user";
+const taskStores = useAddCollaboratorStore();
 import AddtaskButton from "./AddButton/AddtaskButton.vue";
+// import AddCollaborator from "./AddCollaborator.vue";
 </script>

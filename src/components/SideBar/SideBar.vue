@@ -5,6 +5,14 @@
   >
     <AddProject></AddProject>
   </div>
+
+  <div
+    v-if="collaborator.revele"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <AddCollaborator></AddCollaborator>
+  </div>
+
   <!-- Travailler sur les transitions après -->
   <!-- Travailler sur le truc de la mise à jour -->
   <div @click="" class="bg-black/85 h-screen w-16 sm:w-52 pt-4">
@@ -119,28 +127,36 @@
           class="border-opacity-10 border-white sm:border-opacity-10 sm:border-white pb-2"
         />
         <div @click="onSubmit" class="absolute bottom-16">
-          <ModalsideBar :icon-and-text-prop="iconAndTextLogout"></ModalsideBar>
+          <ModalsideBar :icon="value3" :text="value33"></ModalsideBar>
         </div>
       </div>
     </div>
     <div
       v-if="showModalProject"
-      @click="projectStore.toggleModalAddProject"
+      @click="collaborator.toggleRevele"
       class="absolute left-14 top-[191px] text-white"
     >
-      <ModalsideBar :icon-and-text-prop="iconAndText"></ModalsideBar>
+      <ModalsideBar :icon="value11" :text="value22"></ModalsideBar>
     </div>
-    <div
-      @click="projectStore.toggleModalAddProject"
-      v-if="showModalProjectPlus"
-      class="absolute left-40 top-[185px] text-white"
-    >
-      <ModalsideBar :icon-and-text-prop="iconAndTextPlus"></ModalsideBar>
+    <div>
+      <div
+        @click="projectStore.toggleModalAddProject"
+        v-if="showModalProjectPlus"
+        class="absolute left-40 top-[185px] text-white"
+      >
+        <ModalsideBar :icon="value1" :text="value2"></ModalsideBar>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+const value1 = "fa-diagram-project";
+const value11 = "fa-user-plus";
+const value2 = "Nouveau projet";
+const value22 = "Add collaborator";
+const value3 = "fa-right-from-bracket";
+const value33 = "Logout";
 import { postData } from "@/utils/utils";
 import { useRouter } from "vue-router";
 import { useProjectStore } from "@/stores/user";
@@ -152,6 +168,7 @@ async function onSubmit() {
 }
 const iconAndTextLogout = [
   {
+    id: 1,
     icon: "fa-right-from-bracket",
     text: "Logout",
   },
@@ -159,7 +176,6 @@ const iconAndTextLogout = [
 import {
   iconAndText,
   showModalProject,
-  iconAndTextPlus,
   showModalProjectPlus,
   toggleAndHidden,
   toggleAndHiddenOther,
@@ -173,10 +189,11 @@ import { toggleModalOfProjetAndPlusInSideBar } from "../layouts/topSideBar";
 import { onMounted } from "vue";
 import { getData } from "@/utils/utils";
 import AddProject from "../AddProject.vue";
-import { useTaskStore } from "@/stores/user";
+import { useTaskStore, useAddCollaboratorStore } from "@/stores/user";
+const collaborator = useAddCollaboratorStore();
+import AddCollaborator from "../AddCollaborator.vue";
 async function see(id: any) {
   const taskStore = useTaskStore();
-  console.log(await taskStore.getAllTasksInProject(id));
   // console.log(taskStore.tasks);
 }
 onMounted(async () => {

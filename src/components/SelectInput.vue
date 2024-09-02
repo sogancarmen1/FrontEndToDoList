@@ -20,22 +20,39 @@ import {
   TagsInputItemDelete,
   TagsInputItemText,
 } from "@/components/ui/tags-input";
+import { getData } from "@/utils/utils";
+import { watch } from "vue";
 
-const frameworks = [
-  { value: "next.js", label: "Next.js" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt", label: "Nuxt" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-];
+const frameworks = ref([{ value: "1", label: "1" }]);
 
 const modelValue = ref<string[]>([]);
 const open = ref(false);
 const searchTerm = ref("");
 
 const filteredFrameworks = computed(() =>
-  frameworks.filter((i) => !modelValue.value.includes(i.label))
+  frameworks.value.filter((i) => !modelValue.value.includes(i.label))
 );
+
+watch(searchTerm, async (newTerm) => {
+  if (newTerm !== "" && newTerm.length === 4) {
+    try {
+      const result = await getData(
+        `http://localhost:3000/users/email-contains?search=${newTerm}`
+      );
+      frameworks.value = result.data?.map((user: any) => {
+        return {
+          value: {
+            idUser: user.id,
+            roleType: user.role,
+          },
+          label: user.email,
+        };
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+});
 </script>
 
 <template>
@@ -54,7 +71,7 @@ const filteredFrameworks = computed(() =>
       class="w-full"
     >
       <ComboboxAnchor as-child>
-        <ComboboxInput placeholder="Framework..." as-child>
+        <ComboboxInput placeholder="Add email..." as-child>
           <TagsInputInput
             class="w-full px-3"
             :class="modelValue.length > 0 ? 'mt-2' : ''"
@@ -64,7 +81,7 @@ const filteredFrameworks = computed(() =>
       </ComboboxAnchor>
 
       <ComboboxPortal>
-        <ComboboxContent>
+        <ComboboxContent class="z-50 relative">
           <CommandList
             position="popper"
             class="w-[--radix-popper-anchor-width] rounded-md mt-2 border bg-popover text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"

@@ -128,9 +128,9 @@
         </form>
       </td>
       <td
-        class="pl-2 pr-20 border-y text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
+        class="border-y pl-2 pr-20 text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
       >
-        <span @click="seeInputOfTextarea" class="font-zen">Collaborateur</span>
+        <span class="font-zen">Collaborateur</span>
       </td>
       <td
         @mouseover="task.showCloseIconStatus = true"
@@ -176,15 +176,9 @@
   ></div>
   <modal-detail v-if="detailOfTask"></modal-detail>
   <!-- new -->
-  <span v-if="myValue"><select-input></select-input></span>
 </template>
 
 <script setup lang="ts">
-const myValue = ref(false);
-function seeInputOfTextarea() {
-  myValue.value = !myValue.value;
-}
-import SelectInput from "./SelectInput.vue";
 import ModalDetail from "@/components/ModalDetail/ModalDetailTaskInProject.vue";
 import {
   onSubmit,
@@ -203,12 +197,12 @@ import {
 } from "@/components/ListeTaskInProject";
 import { onBeforeMount, ref } from "vue";
 import { useProjectsStore } from "@/stores/user";
+// const collaborators = useAddCollaboratorStore();
 const projectsStore = useProjectsStore();
 const projects = ref<any[]>([]);
 onBeforeMount(async () => {
   // await projectsStore.fetchProjects();
   projects.value = projectsStore.projects;
-  console.log(projects.value);
 });
 
 // });

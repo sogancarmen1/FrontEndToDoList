@@ -53,19 +53,22 @@ export const footerContent = ref([
 
 export const iconAndText = [
   {
-    icon: "fa-diagram-project",
-    text: "Nouveau projet",
-  },
-  {
-    icon: "fa-list-ul",
-    text: "Parcourir les projets",
+    id: 1,
+    icon: "fa-user-plus",
+    text: "Add collaborator",
   },
 ];
 
 export const iconAndTextPlus = [
   {
+    id: 1,
     icon: "fa-diagram-project",
     text: "Nouveau projet",
+  },
+  {
+    id: 2,
+    icon: "fa-user-plus",
+    text: "Add collaborator",
   },
 ];
 

@@ -57,10 +57,12 @@ import {
   faDiagramProject,
   faListUl,
   faRightFromBracket,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
   faUserSecret,
+  faUserPlus,
   faUser,
   faBars,
   faCirclePlus,

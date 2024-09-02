@@ -69,6 +69,26 @@ export const useTaskStore = defineStore("tasks", () => {
   };
 });
 
+export const useAddCollaboratorStore = defineStore("add collaborator", () => {
+  const revele = ref(false);
+  const projectId = ref(0);
+  function toggleRevele() {
+    revele.value = !revele.value;
+  }
+
+  function toggleReveleWithValue(value: any) {
+    revele.value = !revele.value;
+    projectId.value = value;
+  }
+
+  return {
+    revele,
+    projectId,
+    toggleRevele,
+    toggleReveleWithValue,
+  };
+});
+
 export const useProjectStore = defineStore("projectsCreate", () => {
   const showModalOfAddProject = ref(false);
 
