@@ -69,13 +69,6 @@
             >
               Name
             </p>
-            <!-- <input
-              v-model="name"
-              @keyup.enter="onSubmit"
-              placeholder="Enter name of task"
-              type=""
-              class="mt-1 px-3 py-2 dark:bg-black/20 dark:text-white text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-            /> -->
             <div class="">
               <SelectInput></SelectInput>
             </div>
@@ -88,6 +81,15 @@
             >
               Add task
             </button>
+            <p>
+              {{
+                member.member.map((mem) => {
+                  return {
+                    userEmail: mem,
+                  };
+                })
+              }}
+            </p>
           </div>
         </div>
       </div>
@@ -100,42 +102,28 @@ import { ref } from "vue";
 const inProject = ref("");
 import { useProjectsStore } from "@/stores/user";
 const projectsStore = useProjectsStore();
-const name = ref("");
+// const name = ref("");
 const projects = projectsStore.projects;
 import { useAddCollaboratorStore } from "@/stores/user";
 const taskStores = useAddCollaboratorStore();
 import { postData } from "@/utils/utils";
-import { useToast } from "vue-toast-notification";
 import SelectInput from "./SelectInput.vue";
+import { members } from "@/stores/user";
+
+const member = members();
 
 async function onSubmit() {
   try {
-    const value = await postData("http://localhost:3000/tasks", {
-      name: name.value,
-      nameFormatted: "",
-      projectId: Number(inProject.value),
-      showInput: false,
-      showValueOfInput: true,
-      showValueOfInputOfDate: true,
-      showInputOfDate: false,
-      showChoicePriority: false,
-      showValueOfInputOfPriority: true,
-      showCloseIcon: false,
-      showCloseIconStatus: false,
-      showChoiceStatus: false,
-      showValueOfInputOfStatus: true,
-    });
-    // console.log(value.data.data);
-    console.log(
-      projectsStore.addProject(value.data.data, Number(inProject.value))
+    const value = await postData(
+      `http://localhost:3000/projects/${inProject.value}/members`,
+      member.member.map((mem) => {
+        return {
+          userEmail: mem,
+        };
+      })
     );
     taskStores.toggleRevele();
     return value;
-  } catch (error: any) {
-    const toast = useToast();
-    toast.error(error.response.data.message, {
-      position: "top-right",
-    });
-  }
+  } catch (error: any) {}
 }
 </script>

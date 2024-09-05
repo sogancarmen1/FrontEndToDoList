@@ -22,15 +22,17 @@ import {
 } from "@/components/ui/tags-input";
 import { getData } from "@/utils/utils";
 import { watch } from "vue";
+import { members } from "@/stores/user";
 
 const frameworks = ref([{ value: "1", label: "1" }]);
 
-const modelValue = ref<string[]>([]);
+// const member.member = ref<string[]>([]);
 const open = ref(false);
 const searchTerm = ref("");
 
+const member = members();
 const filteredFrameworks = computed(() =>
-  frameworks.value.filter((i) => !modelValue.value.includes(i.label))
+  frameworks.value.filter((i) => !member.member.includes(i.label))
 );
 
 watch(searchTerm, async (newTerm) => {
@@ -56,17 +58,16 @@ watch(searchTerm, async (newTerm) => {
 </script>
 
 <template>
-  <p>{{ modelValue }}</p>
-  <TagsInput class="px-0 gap-0 w-80" :model-value="modelValue">
+  <TagsInput class="px-0 gap-0 w-80" :model-value="member.member">
     <div class="flex gap-2 flex-wrap items-center px-3">
-      <TagsInputItem v-for="item in modelValue" :key="item" :value="item">
+      <TagsInputItem v-for="item in member.member" :key="item" :value="item">
         <TagsInputItemText />
         <TagsInputItemDelete />
       </TagsInputItem>
     </div>
 
     <ComboboxRoot
-      v-model="modelValue"
+      v-model="member.member"
       v-model:open="open"
       v-model:searchTerm="searchTerm"
       class="w-full"
@@ -75,7 +76,7 @@ watch(searchTerm, async (newTerm) => {
         <ComboboxInput placeholder="Add email..." as-child>
           <TagsInputInput
             class="w-full px-3"
-            :class="modelValue.length > 0 ? 'mt-2' : ''"
+            :class="member.member.length > 0 ? 'mt-2' : ''"
             @keydown.enter.prevent
           />
         </ComboboxInput>
@@ -97,7 +98,7 @@ watch(searchTerm, async (newTerm) => {
                   (ev: any) => {
                     if (typeof ev.detail.value === 'string') {
                       searchTerm = '';
-                      modelValue.push(ev.detail.value);
+                      member.member.push(ev.detail.value);
                     }
 
                     if (filteredFrameworks.length === 0) {

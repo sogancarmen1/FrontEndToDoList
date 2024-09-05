@@ -19,6 +19,17 @@ export const useUserStore = defineStore("user", {
   },
 });
 
+export const members = defineStore("members", {
+  state: () => ({
+    member: ref<string[]>([]),
+  }),
+  actions: {
+    setAllMember(data: any) {
+      this.member = data;
+    },
+  },
+});
+
 export const useModalDetailStore = defineStore("details", {
   state: () => ({
     valueOfDetail: ref<{
