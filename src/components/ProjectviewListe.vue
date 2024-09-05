@@ -1,10 +1,15 @@
 <template>
-  <!-- <div
+  <div
     v-if="taskStores.revele"
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
   >
-    <AddCollaborator></AddCollaborator>
-  </div> -->
+    <AddTaskOnProjectPage></AddTaskOnProjectPage>
+  </div>
+  <div
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <AssignTaskPage></AssignTaskPage>
+  </div>
   <ProjectView>
     <table class="w-full my-8 bg-white">
       <tr class="">
@@ -108,8 +113,10 @@ import {
   statusIsSelected,
 } from "./EnteteTableau/EnteteTableau";
 import ProjectView from "./ProjectView.vue";
-import { useAddCollaboratorStore } from "@/stores/user";
-const taskStores = useAddCollaboratorStore();
+import { useTaskOnProjectStore } from "@/stores/user";
+const taskStores = useTaskOnProjectStore();
 import AddtaskButton from "./AddButton/AddtaskButton.vue";
+import AddTaskOnProjectPage from "./AddTaskOnProjectPage.vue";
 // import AddCollaborator from "./AddCollaborator.vue";
+import AssignTaskPage from "./AssigntaskPage.vue";
 </script>

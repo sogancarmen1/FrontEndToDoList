@@ -1,13 +1,13 @@
 <template>
   <div
-    class="flex items-center justify-center h-screen fixed top-0 bottom-0 right-0 left-0 z-50"
+    class="flex items-center justify-center h-screen fixed top-0 bottom-0 right-0 left-0"
   >
     <div
       @click="taskStores.toggleRevele"
-      class="bg-[rgba(0,0,0,0.5)] fixed top-0 bottom-0 right-0 left-0 z-40"
+      class="bg-[rgba(0,0,0,0.5)] fixed top-0 bottom-0 right-0 left-0"
     ></div>
     <div
-      class="space-y-2 rounded-lg dark:bg-black/90 bg-white shadow-2xl fixed z-50"
+      class="space-y-2 rounded-lg dark:bg-black/90 bg-white shadow-2xl fixed"
     >
       <button
         @click="taskStores.toggleRevele"
@@ -40,38 +40,21 @@
           <h1
             class="text-center font-bold py-4 text-2xl dark:text-white text-gray-800"
           >
-            Add a collaborator
+            Add a task
           </h1>
           <div>
-            <div>
-              <p
-                class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium dark:text-white text-slate-700"
-              >
-                In project
-              </p>
-              <select
-                v-model="inProject"
-                @keyup.enter="onSubmit"
-                class="mt-1 px-3 py-2 dark:bg-black/20 dark:text-white text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-              >
-                <option disabled value="">Please select project</option>
-                <option
-                  v-for="project in projects"
-                  :key="project.id"
-                  :value="project.id"
-                >
-                  {{ project.nameOfProject }}
-                </option>
-              </select>
-            </div>
             <p
               class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium dark:text-white text-slate-700"
             >
               Name
             </p>
-            <div class="">
-              <SelectInput></SelectInput>
-            </div>
+            <input
+              v-model="name"
+              @keyup.enter="onSubmit"
+              placeholder="Enter name of task"
+              type=""
+              class="mt-1 px-3 py-2 dark:bg-black/20 dark:text-white text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+            />
           </div>
           <div class="py-5">
             <button
@@ -79,7 +62,7 @@
               class="shadow-xl mx-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
             >
-              Add collab
+              Add task
             </button>
           </div>
         </div>
@@ -93,28 +76,42 @@ import { ref } from "vue";
 const inProject = ref("");
 import { useProjectsStore } from "@/stores/user";
 const projectsStore = useProjectsStore();
-// const name = ref("");
-const projects = projectsStore.projects;
-import { useAddCollaboratorStore } from "@/stores/user";
-const taskStores = useAddCollaboratorStore();
+const name = ref("");
+// const projects = projectsStore.projects;
+import { useTaskOnProjectStore } from "@/stores/user";
+const taskStores = useTaskOnProjectStore();
 import { postData } from "@/utils/utils";
-import SelectInput from "./SelectInput.vue";
-import { members } from "@/stores/user";
-
-const member = members();
-
+import { useToast } from "vue-toast-notification";
+import { useRoute } from "vue-router";
+const route = useRoute();
 async function onSubmit() {
   try {
-    const value = await postData(
-      `http://localhost:3000/projects/${inProject.value}/members`,
-      member.member.map((mem) => {
-        return {
-          userEmail: mem,
-        };
-      })
+    const value = await postData("http://localhost:3000/tasks", {
+      name: name.value,
+      nameFormatted: "",
+      projectId: Number(route.params.id),
+      showInput: false,
+      showValueOfInput: true,
+      showValueOfInputOfDate: true,
+      showInputOfDate: false,
+      showChoicePriority: false,
+      showValueOfInputOfPriority: true,
+      showCloseIcon: false,
+      showCloseIconStatus: false,
+      showChoiceStatus: false,
+      showValueOfInputOfStatus: true,
+    });
+    // console.log(value.data.data);
+    console.log(
+      projectsStore.addProject(value.data.data, Number(inProject.value))
     );
     taskStores.toggleRevele();
     return value;
-  } catch (error: any) {}
+  } catch (error: any) {
+    const toast = useToast();
+    toast.error(error.response.data.message, {
+      position: "top-right",
+    });
+  }
 }
 </script>

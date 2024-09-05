@@ -80,6 +80,28 @@ export const useTaskStore = defineStore("tasks", () => {
   };
 });
 
+export const useTaskOnProjectStore = defineStore("tasksOnProject", () => {
+  const revele = ref(false);
+  const tasks = ref<any[]>([]);
+
+  function toggleRevele() {
+    revele.value = !revele.value;
+  }
+
+  async function getAllTasksInProject(projectId: any) {
+    const response = await getData("http://localhost:3000/tasks", projectId);
+    tasks.value = response.data;
+    return response;
+  }
+
+  return {
+    revele,
+    toggleRevele,
+    getAllTasksInProject,
+    tasks,
+  };
+});
+
 export const useAddCollaboratorStore = defineStore("add collaborator", () => {
   const revele = ref(false);
   const projectId = ref(0);
