@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { getData, getDataById, updateData } from "@/utils/utils";
+import axios from "axios";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -26,6 +27,18 @@ export const members = defineStore("members", {
   actions: {
     setAllMember(data: any) {
       this.member = data;
+    },
+  },
+});
+
+export const assignTo = defineStore("tache", {
+  state: () => ({
+    userAssigned: ref(""),
+    userAssignedStore: ref<any[]>([]),
+  }),
+  actions: {
+    setAllMember(data: any) {
+      this.userAssigned = data;
     },
   },
 });
@@ -77,6 +90,27 @@ export const useTaskStore = defineStore("tasks", () => {
     toggleRevele,
     getAllTasksInProject,
     tasks,
+  };
+});
+
+export const useAssignToStore = defineStore("assignStore", () => {
+  const revele = ref(false);
+  const taskId = ref(0);
+
+  function toggleRevele() {
+    revele.value = !revele.value;
+  }
+
+  function toggleReveleAndShowTaskId(value: any) {
+    taskId.value = value;
+    revele.value = !revele.value;
+  }
+
+  return {
+    revele,
+    toggleRevele,
+    toggleReveleAndShowTaskId,
+    taskId,
   };
 });
 
@@ -175,6 +209,11 @@ export const useProjectsStore = defineStore("projects", () => {
                 dueDate: task.dueDate?.slice(0, 10) || null,
                 priority: task.priority,
                 status: task.status,
+                assign: axios
+                  .get(`http://localhost:3000/users/${task.assignedTo}`)
+                  .then((response) => {
+                    return response.data?.data.email;
+                  }),
                 description: task.taskDescription,
                 isSelected: false,
                 inProject: project.name,

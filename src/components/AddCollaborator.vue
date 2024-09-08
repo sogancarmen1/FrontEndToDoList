@@ -67,7 +67,7 @@
             <p
               class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium dark:text-white text-slate-700"
             >
-              Name
+              Email
             </p>
             <div class="">
               <SelectInput></SelectInput>

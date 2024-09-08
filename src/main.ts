@@ -1,3 +1,4 @@
+
 import { createApp } from "vue";
 import "./style.css";
 import ToastPlugin from "vue-toast-notification";

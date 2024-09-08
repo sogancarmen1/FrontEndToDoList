@@ -194,7 +194,6 @@ const collaborator = useAddCollaboratorStore();
 import AddCollaborator from "../AddCollaborator.vue";
 async function see(id: any) {
   const taskStore = useTaskStore();
-  // console.log(taskStore.tasks);
 }
 onMounted(async () => {
   const responseReceived = await getData("http://localhost:3000/projects");

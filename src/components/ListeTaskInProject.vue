@@ -128,9 +128,15 @@
         </form>
       </td>
       <td
+        @click="assignStore.toggleReveleAndShowTaskId(task.id)"
         class="border-y pl-2 pr-20 text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
       >
-        <span class="font-zen">Collaborateur</span>
+        <span class="font-zen">{{
+          task.assign ? task.assign : "Assign task to"
+        }}</span>
+        <!-- <span class="font-zen">{{
+          task.assign ? task.assign : "Assign task to"
+        }}</span> -->
       </td>
       <td
         @mouseover="task.showCloseIconStatus = true"
@@ -196,7 +202,8 @@ import {
   hoveredTask,
 } from "@/components/ListeTaskInProject";
 import { onBeforeMount, ref } from "vue";
-import { useProjectsStore } from "@/stores/user";
+import { useProjectsStore, useAssignToStore } from "@/stores/user";
+const assignStore = useAssignToStore();
 // const collaborators = useAddCollaboratorStore();
 const projectsStore = useProjectsStore();
 const projects = ref<any[]>([]);

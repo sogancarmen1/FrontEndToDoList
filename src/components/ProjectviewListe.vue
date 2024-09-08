@@ -6,6 +6,7 @@
     <AddTaskOnProjectPage></AddTaskOnProjectPage>
   </div>
   <div
+    v-if="assignStores.revele"
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
   >
     <AssignTaskPage></AssignTaskPage>
@@ -54,7 +55,7 @@
           @mouseleave="collaboratorIsSelected = false"
           class="pl-2 pr-20 border-y text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
         >
-          <span>Collaborateur</span>
+          <span>Assign task to</span>
           <font-awesome-icon
             v-show="collaboratorIsSelected"
             icon="fa-chevron-down"
@@ -113,8 +114,9 @@ import {
   statusIsSelected,
 } from "./EnteteTableau/EnteteTableau";
 import ProjectView from "./ProjectView.vue";
-import { useTaskOnProjectStore } from "@/stores/user";
+import { useTaskOnProjectStore, useAssignToStore } from "@/stores/user";
 const taskStores = useTaskOnProjectStore();
+const assignStores = useAssignToStore();
 import AddtaskButton from "./AddButton/AddtaskButton.vue";
 import AddTaskOnProjectPage from "./AddTaskOnProjectPage.vue";
 // import AddCollaborator from "./AddCollaborator.vue";
