@@ -26,7 +26,7 @@
         <p>Due Date</p>
         <p>Priority</p>
         <p>Status</p>
-        <p>Collaborators</p>
+        <p>Assign to</p>
       </div>
       <div class="text-sm space-y-4 font-bold absolute left-[100px] my-20 mx-4">
         <a class="lowercase" href="#">{{ userInformations.informations }}</a>
@@ -42,7 +42,18 @@
         <p v-if="modalDetail.valueOfDetail.status" class="uppercase">
           {{ modalDetail.valueOfDetail.status }}
         </p>
-        <p>Les collaborateurs</p>
+        <p v-if="!modalDetail.valueOfDetail.assignedTo">Empty</p>
+        <div
+          v-if="modalDetail.valueOfDetail.assignedTo"
+          class="lowercase border rounded bg-green-200 text-gray-900"
+        >
+          <span class="p-1">{{ modalDetail.valueOfDetail.assignedTo }}</span>
+          <font-awesome-icon
+            @click="unassigned"
+            class="rounded mx-2 hover:bg-slate-200 cursor-pointeur"
+            icon="fa-xmark"
+          ></font-awesome-icon>
+        </div>
       </div>
       <div
         class="text-sm absolute w-82 overflow-hidden top-[80px] left-[300px] text-ellipsis mx-4"
@@ -105,6 +116,7 @@ import { hiddenBackgroundAndDetailView } from "@/components/ListeTaskInProject";
 import { ref } from "vue";
 const showInputDescription = ref(false);
 import { hoveredTask } from "@/components/ListeTaskInProject";
+import { useRoute } from "vue-router";
 async function addDescription(value: string) {
   showInputDescription.value = false;
   (
@@ -116,6 +128,12 @@ async function addDescription(value: string) {
     )
   ).data.data.taskDescription;
   seeValueOfTextArea.value = true;
+}
+const route = useRoute();
+async function unassigned() {
+  await updateData(
+    `http://localhost:3000/tasks/${route.params.id}/responsible?id1=${hoveredTask.value!}`
+  );
 }
 const seeValueOfTextArea = ref(true);
 function clickValue() {

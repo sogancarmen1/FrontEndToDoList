@@ -13,8 +13,9 @@
       <td
         @mouseover="hoveredTask = task.id"
         @mouseleave="hoveredTask = null"
-        class="pl-2 pb-8 relative pt-2 pr-[317px] border-y text-sm whitespace-nowrap cursor-pointer"
+        class="pl-2 pb-8 relative pt-2 w-[412px] overflow-hidden text-ellipsis whitespace-nowrap border-y text-sm whitespace-nowrap cursor-pointer"
       >
+        <!--  pr-[317px] -->
         <div class="flex">
           <form
             :class="task.showInput ? 'inline' : 'hidden'"
@@ -129,14 +130,18 @@
       </td>
       <td
         @click="assignStore.toggleReveleAndShowTaskId(task.id)"
-        class="border-y pl-2 pr-20 text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
+        class="border-y text-sm whitespace-nowrap cursor-pointer w-56 overflow-hidden text-ellipsis whitespace-nowrap text-black/70 hover:text-black"
       >
-        <span class="font-zen">{{
-          task.assign ? task.assign : "Assign task to"
-        }}</span>
-        <!-- <span class="font-zen">{{
-          task.assign ? task.assign : "Assign task to"
-        }}</span> -->
+        <span
+          v-if="task.assign"
+          class="font-zen border bg-green-200 text-gray-900 rounded mx-1 px-1"
+          >{{ task.assign }}
+        </span>
+        <span
+          v-if="!task.assign"
+          class="font-zen border rounded bg-yellow-200 text-gray-700 mx-1 px-1"
+          >Assign task to</span
+        >
       </td>
       <td
         @mouseover="task.showCloseIconStatus = true"
@@ -204,11 +209,9 @@ import {
 import { onBeforeMount, ref } from "vue";
 import { useProjectsStore, useAssignToStore } from "@/stores/user";
 const assignStore = useAssignToStore();
-// const collaborators = useAddCollaboratorStore();
 const projectsStore = useProjectsStore();
 const projects = ref<any[]>([]);
 onBeforeMount(async () => {
-  // await projectsStore.fetchProjects();
   projects.value = projectsStore.projects;
 });
 

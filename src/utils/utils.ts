@@ -25,7 +25,7 @@ export async function deleteData(route: string) {
   await axios.delete(route);
 }
 
-export async function updateData(route: string, newData: any) {
+export async function updateData(route: string, newData?: any) {
   const reponse = await axios.put(route, newData, {
     withCredentials: true,
   });

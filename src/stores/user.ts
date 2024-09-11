@@ -52,6 +52,7 @@ export const useModalDetailStore = defineStore("details", {
       priority?: string;
       status?: string;
       taskDescription?: string;
+      assignedTo?: string;
     }>({}),
     descriptionValue: "",
     idTask: 0,
@@ -209,11 +210,7 @@ export const useProjectsStore = defineStore("projects", () => {
                 dueDate: task.dueDate?.slice(0, 10) || null,
                 priority: task.priority,
                 status: task.status,
-                assign: axios
-                  .get(`http://localhost:3000/users/${task.assignedTo}`)
-                  .then((response) => {
-                    return response.data?.data.email;
-                  }),
+                assign: task.assignedTo,
                 description: task.taskDescription,
                 isSelected: false,
                 inProject: project.name,
