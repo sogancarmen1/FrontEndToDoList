@@ -159,14 +159,49 @@ export const useAddCollaboratorStore = defineStore("add collaborator", () => {
 
 export const useProjectStore = defineStore("projectsCreate", () => {
   const showModalOfAddProject = ref(false);
+  const reveleInput = ref(false);
+  const reveleText = ref(true);
+  const projectName = ref("");
 
   function toggleModalAddProject() {
     showModalOfAddProject.value = !showModalOfAddProject.value;
   }
 
+  async function getProjectById(value: any) {
+    const result = await getData(`http://localhost:3000/projects/${value}`);
+    projectName.value = result.data.name;
+  }
+
+  async function toggleReveleInput() {
+    reveleInput.value = !reveleInput.value;
+    reveleText.value = !reveleText.value;
+  }
+
+  async function onSubmit(value: any) {
+    await updateData(`http://localhost:3000/projects/${value}`, {
+      name: projectName.value,
+    });
+    const project = useProjectsStore();
+    project.fetchProjects();
+    reveleInput.value = !reveleInput.value;
+    reveleText.value = !reveleText.value;
+  }
+
+  function resetView() {
+    reveleInput.value = false;
+    reveleText.value = true;
+  }
+
   return {
     showModalOfAddProject,
     toggleModalAddProject,
+    reveleInput,
+    reveleText,
+    toggleReveleInput,
+    resetView,
+    projectName,
+    onSubmit,
+    getProjectById,
   };
 });
 
@@ -202,6 +237,7 @@ export const useProjectsStore = defineStore("projects", () => {
           return {
             id: project.id,
             nameOfProject: project.name,
+            description: project.description,
             listOfTask:
               tasksResponse?.data.map((task: any) => ({
                 id: task.id,
@@ -274,5 +310,36 @@ export const useProjectsStore = defineStore("projects", () => {
     addProject: addTask,
     fetchProjects,
     addNewProject,
+  };
+});
+
+export const useProjectParameterStore = defineStore(
+  "parameter of project",
+  () => {
+    const revele = ref(false);
+    function toggleRevele() {
+      revele.value = !revele.value;
+    }
+
+    return {
+      revele,
+      toggleRevele,
+    };
+  }
+);
+
+export const useMemberStore = defineStore("member of project", () => {
+  const members = ref([]);
+
+  async function getAllMembersInProject(value: any) {
+    const result = await getDataById(
+      `http://localhost:3000/projects/${value}/members`
+    );
+    members.value = result;
+  }
+
+  return {
+    members,
+    getAllMembersInProject,
   };
 });

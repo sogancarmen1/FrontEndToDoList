@@ -133,7 +133,8 @@
           <!-- Project Overview Section -->
           <div class="bg-white shadow-lg rounded-lg p-6">
             <h3 class="text-xl font-bold mb-4">Project Overview</h3>
-            <div class="overflow-x-auto">
+            <div class="overflow-x-scroll">
+              <!--  h-[215px] -->
               <table class="w-full text-left">
                 <thead>
                   <tr class="bg-gray-100 text-gray-700 uppercase text-sm">

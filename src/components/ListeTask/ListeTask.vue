@@ -8,7 +8,7 @@
       <td
         @mouseover="hoveredTaskId = task.id"
         @mouseleave="hoveredTaskId = null"
-        class="pl-2 pb-8 relative pt-2 pr-[291px] border-y text-sm whitespace-nowrap cursor-pointer"
+        class="pl-2 pb-8 relative pt-2 w-[339px] overflow-hidden text-ellipsis whitespace-nowrap border-y text-sm whitespace-nowrap cursor-pointer"
       >
         <div class="flex">
           <form
@@ -66,10 +66,10 @@
         </div>
       </td>
       <td
-        class="pl-2 pr-[80px] border text-sm whitespace-nowrap text-black/70 hover:text-black"
+        class="w-[161px] border text-sm whitespace-nowrap text-black/70 hover:text-black"
       >
         <span :title="task.inProject" class="font-zen px-2">{{
-          task.inProject.slice(0, 5)
+          task.inProject
         }}</span>
       </td>
       <td class="px-[123px] relative min-w-10 pr-8 text-sm whitespace-nowrap">
@@ -128,9 +128,23 @@
         </form>
       </td>
       <td
-        class="pl-2 pr-20 border-y text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
+        class="w-[200px] overflow-hidden text-ellipsis whitespace-nowrap border-y text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
       >
-        <span class="font-zen">Collaborateur</span>
+         <td
+        @click="assignStore.toggleReveleAndShowTaskId(task.id)"
+        class="text-sm whitespace-nowrap cursor-pointer w-56 overflow-hidden text-ellipsis whitespace-nowrap text-black/70 hover:text-black"
+      >
+        <span
+          v-if="task.assign"
+          class="font-zen border bg-green-200 text-gray-900 rounded mx-1 px-1"
+          >{{ task.assign }}
+        </span>
+        <span
+          v-if="!task.assign"
+          class="font-zen border rounded bg-yellow-200 text-gray-700 mx-1 px-1"
+          >Assign task to</span
+        >
+      </td>
       </td>
       <td
         @mouseover="task.showCloseIconStatus = true"
@@ -199,6 +213,8 @@ import { onBeforeMount, ref } from "vue";
 import { useProjectsStore } from "@/stores/user";
 const projectsStore = useProjectsStore();
 const projects = ref<any[]>([]);
+import { useAssignToStore } from "@/stores/user";
+const assignStore = useAssignToStore();
 onBeforeMount(async () => {
   // await projectsStore.fetchProjects();
   projects.value = projectsStore.projects;

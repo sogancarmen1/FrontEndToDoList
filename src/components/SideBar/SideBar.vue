@@ -97,7 +97,7 @@
                         class="px-2 font-zen rounded bg-blue-500 my-8 mr-1"
                       ></span>
                       {{
-                        project.nameOfProject.length > 10
+                        project.nameOfProject?.length > 10
                           ? project.nameOfProject.slice(0, 10) + "..."
                           : project.nameOfProject
                       }}

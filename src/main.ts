@@ -1,4 +1,3 @@
-
 import { createApp } from "vue";
 import "./style.css";
 import ToastPlugin from "vue-toast-notification";
@@ -59,6 +58,7 @@ import {
   faListUl,
   faRightFromBracket,
   faUserPlus,
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -92,7 +92,8 @@ library.add(
   faLock,
   faDiagramProject,
   faListUl,
-  faRightFromBracket
+  faRightFromBracket,
+  faGear
 );
 
 const routes = [

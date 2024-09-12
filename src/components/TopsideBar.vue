@@ -3,7 +3,7 @@
     <top-bar @toggle-sidebar="toggleSidebar"></top-bar>
   </nav>
   <div class="flex">
-    <div @click="">
+    <div @click="projectStore.resetView">
       <side-bar v-if="isSidebarVisible"></side-bar>
     </div>
     <slot class=""></slot>
@@ -18,4 +18,6 @@ import {
   toggleSidebar,
   toggleModalOfProjetAndPlus,
 } from "./layouts/topSideBar";
+import { useProjectStore } from "@/stores/user";
+const projectStore = useProjectStore();
 </script>
