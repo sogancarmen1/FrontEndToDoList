@@ -101,7 +101,7 @@ const name = ref("");
 const projects = projectsStore.projects;
 import { useTaskStore } from "@/stores/user";
 const taskStores = useTaskStore();
-import { postData } from "@/utils/utils";
+import { getData, postData } from "@/utils/utils";
 import { useToast } from "vue-toast-notification";
 async function onSubmit() {
   try {
@@ -120,9 +120,25 @@ async function onSubmit() {
       showChoiceStatus: false,
       showValueOfInputOfStatus: true,
     });
-    // console.log(value.data.data);
-    console.log(
-      projectsStore.addProject(value.data.data, Number(inProject.value))
+    const projectFound = await getData(
+      `http://localhost:3000/projects/${inProject.value}`
+    );
+    projectsStore.addProject(
+      {
+        ...value.data.data,
+        inProject: projectFound.data.name,
+        showInput: false,
+        showValueOfInput: true,
+        showValueOfInputOfDate: true,
+        showInputOfDate: false,
+        showChoicePriority: false,
+        showValueOfInputOfPriority: true,
+        showCloseIcon: false,
+        showCloseIconStatus: false,
+        showChoiceStatus: false,
+        showValueOfInputOfStatus: true,
+      },
+      Number(inProject.value)
     );
     taskStores.toggleRevele();
     return value;

@@ -1,6 +1,6 @@
 <template>
   <table
-    v-for="project in projects"
+    v-for="project in projectsStore.projects"
     :key="project.id"
     class="w-full bg-white relative overflow-auto"
   >
@@ -206,14 +206,11 @@ import {
   onSubmitDate,
   hoveredTask,
 } from "@/components/ListeTaskInProject";
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount } from "vue";
 import { useProjectsStore, useAssignToStore } from "@/stores/user";
 const assignStore = useAssignToStore();
 const projectsStore = useProjectsStore();
-const projects = ref<any[]>([]);
-onBeforeMount(async () => {
-  projects.value = projectsStore.projects;
-});
+onBeforeMount(async () => {});
 
 // });
 // const priorityClass = computed((task: any) => {

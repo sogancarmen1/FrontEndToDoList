@@ -1,6 +1,6 @@
 <template>
   <table
-    v-for="project in projects"
+    v-for="project in projectsStore.projects"
     :key="project.id"
     class="w-full bg-white relative overflow-auto"
   >
@@ -209,15 +209,12 @@ import {
   onSubmitDate,
   hoveredTaskId,
 } from "./ListeTask";
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount } from "vue";
 import { useProjectsStore } from "@/stores/user";
 const projectsStore = useProjectsStore();
-const projects = ref<any[]>([]);
 import { useAssignToStore } from "@/stores/user";
 const assignStore = useAssignToStore();
 onBeforeMount(async () => {
-  // await projectsStore.fetchProjects();
-  projects.value = projectsStore.projects;
 });
 
 // });

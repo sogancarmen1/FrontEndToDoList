@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { getData, getDataById, updateData } from "@/utils/utils";
-import axios from "axios";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -218,7 +217,6 @@ export const useProjectsStore = defineStore("projects", () => {
         project.listOfTask.push(value);
       }
     });
-    return true;
   }
 
   function addNewProject(value: any) {
