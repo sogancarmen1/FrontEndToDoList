@@ -81,17 +81,14 @@
               ></IconView>
             </div>
             <div v-if="projectAndEquipe.showValue" class="">
-              <ul
-                v-if="Number(projectAndEquipe.listOfProject?.length) > 0"
-                class="hidden sm:inline"
-              >
+              <ul class="hidden sm:inline">
                 <li
-                  v-for="project in projectAndEquipe.listOfProject"
+                  v-for="project in projectsStore.projects"
                   :key="project.id"
                   class="text-white text-base px-5 mt-2 mx-2 rounded-md hover:bg-black/25"
                 >
                   <RouterLink :to="path(Number(project.id))">
-                    <div @click="see(project.id)">
+                    <div>
                       <span
                         v-if="project.disable"
                         class="px-2 font-zen rounded bg-blue-500 my-8 mr-1"
@@ -166,15 +163,7 @@ async function onSubmit() {
   await postData("http://localhost:3000/auth/logout");
   router.push("/");
 }
-const iconAndTextLogout = [
-  {
-    id: 1,
-    icon: "fa-right-from-bracket",
-    text: "Logout",
-  },
-];
 import {
-  iconAndText,
   showModalProject,
   showModalProjectPlus,
   toggleAndHidden,
@@ -186,28 +175,9 @@ import { stores, projectsAndEquipe } from "./sideBar";
 import IconView from "../IconView.vue";
 import { RouterLink } from "vue-router";
 import { toggleModalOfProjetAndPlusInSideBar } from "../layouts/topSideBar";
-import { onMounted } from "vue";
-import { getData } from "@/utils/utils";
 import AddProject from "../AddProject.vue";
-import { useTaskStore, useAddCollaboratorStore } from "@/stores/user";
+import { useAddCollaboratorStore, useProjectsStore } from "@/stores/user";
 const collaborator = useAddCollaboratorStore();
 import AddCollaborator from "../AddCollaborator.vue";
-async function see(id: any) {
-  const taskStore = useTaskStore();
-}
-onMounted(async () => {
-  const responseReceived = await getData("http://localhost:3000/projects");
-  if (responseReceived != null) {
-    projectsAndEquipe.value[0].listOfProject = responseReceived.data.map(
-      (project: any) => ({
-        id: project.id,
-        nameOfProject: project.name,
-        listOfTask: [],
-        isSelectedProject: true,
-        reveleTaskList: false,
-        disable: true,
-      })
-    );
-  }
-});
+const projectsStore = useProjectsStore();
 </script>

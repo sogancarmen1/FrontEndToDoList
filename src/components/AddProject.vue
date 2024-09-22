@@ -76,7 +76,7 @@ import { ref } from "vue";
 import { useProjectsStore } from "@/stores/user";
 const projectsStore = useProjectsStore();
 const name = ref("");
-import { postData } from "@/utils/utils";
+import { getData, postData } from "@/utils/utils";
 import { useProjectStore } from "@/stores/user";
 const projectStores = useProjectStore();
 import { useToast } from "vue-toast-notification";
@@ -89,8 +89,16 @@ async function onSubmit() {
       isSelectedProject: true,
       reveleTaskList: false,
     });
-    console.log(value);
-    projectsStore.addNewProject(value.data.data);
+    const value1 = await getData(
+      `http://localhost:3000/projects/${value.data.data.id_projects}`
+    );
+    projectsStore.addNewProject({
+      ...value.data.data,
+      nameOfProject: value1.data.name,
+      disable: true,
+      isSelectedProject: true,
+      reveleTaskList: false,
+    });
     projectStores.toggleModalAddProject();
     return value;
   } catch (error: any) {

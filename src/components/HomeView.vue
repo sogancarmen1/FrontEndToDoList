@@ -180,9 +180,6 @@ const userInformations = useUserStore();
 const projectss = ref<any[]>([]);
 onBeforeMount(async () => {
   projectss.value = projectsStore.projects;
-  projectsStore.projects.forEach((proj: any) => {
-    console.log(proj);
-  });
   userInformations.getUserInformations();
 });
 </script>

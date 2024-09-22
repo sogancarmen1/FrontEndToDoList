@@ -36,7 +36,7 @@ export const projectsAndEquipe = ref([
     fourNameIcon: "fa-list-check",
     isSelect: false,
     showValue: true,
-    listOfProject: [],
+    listOfProject: ref<any[]>([]),
   },
 ]);
 
