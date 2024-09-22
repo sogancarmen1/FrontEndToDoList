@@ -69,14 +69,14 @@
 
 <script setup lang="ts">
 const assignStores = useAssignToStore();
-import { useAssignToStore, assignTo } from "@/stores/user";
-// const name = ref("");
+import { useAssignToStore, assignTo, useProjectsStore } from "@/stores/user";
 import { updateData } from "@/utils/utils";
 import SelectInputAssign from "./SelectInputAssign.vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 const assigned = assignTo();
+const projectsStore = useProjectsStore();
 
 async function onSubmit() {
   try {
@@ -87,6 +87,15 @@ async function onSubmit() {
         idProject: Number(route.params.id),
       }
     );
+    projectsStore.projects.forEach((project) => {
+      if (project.id == route.params.id) {
+        project.listOfTask.forEach((task: any) => {
+          if (task.id === assignStores.taskId) {
+            task.assign = assigned.userAssigned;
+          }
+        });
+      }
+    });
     assignStores.toggleRevele();
     return value;
   } catch (error: any) {}

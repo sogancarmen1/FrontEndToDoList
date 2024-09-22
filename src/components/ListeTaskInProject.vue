@@ -183,7 +183,7 @@
   <div
     @click="hiddenBackgroundAndDetailView"
     v-if="deleteBackground"
-    class="border absolute h-full top-[47px] w-full"
+    class="absolute h-full top-[57px] w-full"
   ></div>
   <modal-detail v-if="detailOfTask"></modal-detail>
   <!-- new -->

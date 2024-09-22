@@ -7,7 +7,7 @@ export const stores = ref([
     textWithIcon: "Home",
     title: "Home",
     nameRoute: "/home",
-    isSelectedAccueil: true,
+    isSelectedAccueil: false,
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ export const stores = ref([
     textWithIcon: "My tasks",
     title: "My tasks",
     nameRoute: `/tasks${isNotSelected ? "/list" : "/file"}`,
-    isSelectedTacks: false,
+    isSelectedAccueil: false,
   },
 ]);
 

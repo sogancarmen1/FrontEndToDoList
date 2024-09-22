@@ -1,13 +1,11 @@
 <template>
-  <div
-    class="absolute bg-white font-zen border top-[47px] right-0 h-full text-sm"
-  >
+  <div class="absolute bg-white font-zen top-[57px] right-0 h-full text-sm">
     <div class="py-2 mx-12">
       <div @click="hiddenBackgroundAndDetailView" class="cursor-pointer">
         <font-awesome-icon class="px-1" icon="xmark"></font-awesome-icon>
       </div>
     </div>
-    <div class="border-t bg-slate-100 py-[10px] px-[160px]">
+    <div class="bg-slate-100 py-[10px] px-[160px]">
       <font-awesome-icon icon="fa-lock" class="px-2"></font-awesome-icon>
       <span>Cette tâche est visible par : ses collaborateurs</span>
     </div>
@@ -132,8 +130,17 @@ async function addDescription(value: string) {
 const route = useRoute();
 async function unassigned() {
   await updateData(
-    `http://localhost:3000/tasks/${route.params.id}/responsible?id1=${hoveredTask.value!}`
+    `http://localhost:3000/tasks/${modalDetail.valueOfDetail.id}/responsible/${route.params.id}`
   );
+  projetsStore.projects.forEach((project) => {
+    if (project.id === route.params.id) {
+      project.listOfTask.forEach((task: any) => {
+        if (task.id === modalDetail.valueOfDetail.id) {
+          task.assign = null;
+        }
+      });
+    }
+  });
 }
 const seeValueOfTextArea = ref(true);
 function clickValue() {
