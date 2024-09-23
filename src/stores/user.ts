@@ -61,6 +61,7 @@ export const useModalDetailStore = defineStore("details", {
       this.valueOfDetail = await getDataById(
         `http://localhost:3000/tasks/${value}`
       );
+      return this.valueOfDetail;
     },
     setId(value: number) {
       this.idTask = value;

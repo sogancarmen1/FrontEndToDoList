@@ -10,15 +10,19 @@
       <span>Cette tâche est visible par : ses collaborateurs</span>
     </div>
     <div class="relative w-22">
-      <h1
-        class="absolute my-8 mx-6 text-3xl font-bold overflow-hidden text-ellipsis"
-      >
-        {{
-          modalDetail.valueOfDetail.name?.length > 20
-            ? modalDetail.valueOfDetail.name?.slice(0, 20)
-            : modalDetail.valueOfDetail.name
-        }}
-      </h1>
+      <div v-for="project in projetsStore.projects" :key="project.id">
+        <div v-if="project.id == $route.params.id">
+          <div v-for="task in project.listOfTask" :key="task.id">
+            <h1
+              class="absolute my-8 mx-6 text-3xl font-bold overflow-hidden text-ellipsis"
+              v-if="task.id == modalDetail.idTask"
+            >
+              {{ task.name.length > 20 ? task.name.slice(0, 20) : task.name }}
+            </h1>
+          </div>
+        </div>
+      </div>
+
       <div class="text-sm space-y-4 absolute my-20 mx-4">
         <p>Responsible</p>
         <p>Due Date</p>
@@ -26,38 +30,48 @@
         <p>Status</p>
         <p>Assign to</p>
       </div>
-      <div class="text-sm space-y-4 font-bold absolute left-[100px] my-20 mx-4">
-        <a class="lowercase" href="#">{{ userInformations.informations }}</a>
-        <p v-if="!modalDetail.valueOfDetail.dueDate">Empty</p>
-        <p v-if="modalDetail.valueOfDetail.dueDate">
-          {{ modalDetail.valueOfDetail.dueDate }}
-        </p>
-        <p v-if="!modalDetail.valueOfDetail.priority">Empty</p>
-        <p v-if="modalDetail.valueOfDetail.priority" class="uppercase">
-          {{ modalDetail.valueOfDetail.priority }}
-        </p>
-        <p v-if="!modalDetail.valueOfDetail.status">Empty</p>
-        <p v-if="modalDetail.valueOfDetail.status" class="uppercase">
-          {{ modalDetail.valueOfDetail.status }}
-        </p>
-        <p v-if="!modalDetail.valueOfDetail.assignedTo">Empty</p>
-        <div
-          v-if="modalDetail.valueOfDetail.assignedTo"
-          class="lowercase border rounded bg-green-200 text-gray-900"
-        >
-          <span class="p-1">{{ modalDetail.valueOfDetail.assignedTo }}</span>
-          <font-awesome-icon
-            @click="unassigned"
-            class="rounded mx-2 hover:bg-slate-200 cursor-pointeur"
-            icon="fa-xmark"
-          ></font-awesome-icon>
+      <div v-for="project in projetsStore.projects" :key="project.id">
+        <div v-if="project.id == $route.params.id">
+          <div v-for="task in project.listOfTask" :key="task.id">
+            <h1
+              class="text-sm space-y-4 font-bold absolute left-[100px] my-20 mx-4"
+              v-if="task.id == modalDetail.idTask"
+            >
+              <a class="lowercase" href="#">{{
+                userInformations.informations
+              }}</a>
+              <p>
+                {{ task.dueDate ? task.dueDate : "Empty" }}
+              </p>
+              <p :class="task.priority ? 'uppercase' : ''">
+                {{ task.priority ? task.priority : "Empty" }}
+              </p>
+              <p :class="task.status ? 'uppercase' : ''">
+                {{ task.status ? task.status : "Empty" }}
+              </p>
+              <p
+                :class="
+                  task.assign
+                    ? 'lowercase border rounded bg-green-200 text-gray-900'
+                    : ''
+                "
+              >
+                <span>{{ task.assign ? task.assign : "Empty" }}</span>
+                <font-awesome-icon
+                  v-if="task.assign"
+                  @click="unassigned"
+                  class="rounded mx-2 hover:bg-slate-200 cursor-pointeur"
+                  icon="fa-xmark"
+                ></font-awesome-icon>
+              </p>
+            </h1>
+          </div>
         </div>
       </div>
       <div
         class="text-sm absolute w-82 overflow-hidden top-[80px] left-[300px] text-ellipsis mx-4"
       >
         <div>Description</div>
-        <!-- v-if="showInputDescription" -->
         <div v-for="project in projetsStore.projects" :key="project.id">
           <div v-for="task in project.listOfTask" :key="task.id">
             <textarea
@@ -109,7 +123,6 @@
 </template>
 
 <script setup lang="ts">
-// import { details } from "./ModalDetail";
 import { hiddenBackgroundAndDetailView } from "@/components/ListeTaskInProject";
 import { ref } from "vue";
 const showInputDescription = ref(false);
@@ -133,9 +146,9 @@ async function unassigned() {
     `http://localhost:3000/tasks/${modalDetail.valueOfDetail.id}/responsible/${route.params.id}`
   );
   projetsStore.projects.forEach((project) => {
-    if (project.id === route.params.id) {
+    if (project.id == route.params.id) {
       project.listOfTask.forEach((task: any) => {
-        if (task.id === modalDetail.valueOfDetail.id) {
+        if (task.id == modalDetail.idTask) {
           task.assign = null;
         }
       });
@@ -158,8 +171,8 @@ const modalDetail = useModalDetailStore();
 const userInformations = useUserStore();
 const projetsStore = useProjectsStore();
 onBeforeMount(async () => {
-  await modalDetail.getDetailTask(hoveredTask.value!);
-  modalDetail.setId(modalDetail.valueOfDetail.id ?? 0);
+  const value = await modalDetail.getDetailTask(hoveredTask.value!);
+  modalDetail.setId(value.id ?? 0);
   await projetsStore.fetchProjects();
   userInformations.getUserInformations();
 });
