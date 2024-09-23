@@ -64,6 +64,7 @@ export function hiddenBackgroundAndDetailView() {
 }
 export const showIconAndBorder = ref(false);
 import { updateData } from "@/utils/utils";
+import { value } from "./ProjectviewListe/ProjectviewListe";
 export const onSubmit = async function (task: any, taskId: any, newData: any) {
   task.showValueOfInput = true;
   try {
@@ -114,7 +115,12 @@ export async function showOrNotPriorityChoice(
     task.showCloseIcon = false;
   }
 }
-export function resetPriority(task: any) {
+export async function resetPriority(task: any, taskId: any) {
+  try {
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
+      priority: null,
+    });
+  } catch (error) {}
   task.priority = null;
 }
 
@@ -132,6 +138,11 @@ export async function showOrNotStatusChoice(
   task.showChoiceStatus = false;
 }
 
-export function resetTodo(task: any) {
+export async function resetTodo(task: any, taskId: any) {
+  try {
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
+      status: null,
+    });
+  } catch (error) {}
   task.status = null;
 }

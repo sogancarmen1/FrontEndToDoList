@@ -211,6 +211,7 @@ export const useProjectsStore = defineStore("projects", () => {
   const countOnGoingTasks = ref(0);
   const countPendingTasks = ref(0);
   const countOverdueTasks = ref(0);
+  const projectId = ref(0);
 
   function addTask(value: any, id: Number) {
     projects.value.forEach((project: any) => {
@@ -309,6 +310,7 @@ export const useProjectsStore = defineStore("projects", () => {
     addProject: addTask,
     fetchProjects,
     addNewProject,
+    projectId,
   };
 });
 

@@ -13,15 +13,14 @@
       <td
         @mouseover="hoveredTask = task.id"
         @mouseleave="hoveredTask = null"
-        class="pl-2 pb-8 relative pt-2 w-[412px] overflow-hidden text-ellipsis whitespace-nowrap border-y text-sm whitespace-nowrap cursor-pointer"
+        class="pl-2 pb-8 relative pt-2 w-[415px] overflow-hidden text-ellipsis whitespace-nowrap border-y text-sm whitespace-nowrap cursor-pointer"
       >
-        <!--  pr-[317px] -->
         <div class="flex">
           <form
             :class="task.showInput ? 'inline' : 'hidden'"
             @submit.prevent="onSubmit(task, task.id, task.name)"
             action=""
-            class="absolute left-[41px]"
+            class="absolute mx-8"
           >
             <font-awesome-icon
               :class="task.showInput ? 'text-black' : ''"
@@ -34,7 +33,7 @@
                   ? 'border border-blue-500'
                   : 'border border-black/0'
               "
-              class="outline-none"
+              class="outline-none mx-2"
               type="text"
               v-model="task.name"
               placeholder="Donner un nom à la tâche"
@@ -54,7 +53,7 @@
                 :class="
                   hoveredTask === task.id ? 'border' : 'border border-black/0'
                 "
-                class="text-ellipsis font-zen overflow-hidden w-[197px]"
+                class="text-ellipsis font-zen overflow-hidden w-[380px] px-2 lowercase font-bold"
               >
                 {{ task.name }}
               </p>
@@ -71,9 +70,7 @@
           </div>
         </div>
       </td>
-      <td
-        class="px-[130px] border relative min-w-10 pr-8 text-sm whitespace-nowrap"
-      >
+      <td class="border relative text-sm whitespace-nowrap w-[120px]">
         <form
           action=""
           class="absolute w-full h-full bottom-[-8px] top-[-1px] right-[-0px]"
@@ -85,29 +82,21 @@
             class="border-y w-full font-zen px-2 pt-2 pb-[10px] outline-none cursor-pointer"
             type="date"
           />
-          <!-- <p
-            @click="onClickDate(task)"
-            class="border-y w-full font-zen px-2 pt-2 pb-[12px] outline-none cursor-pointer"
-            v-if="task.showValueOfInputOfDate"
-            title="Click for modification"
-          >
-            {{ task.dueDate }}
-          </p> -->
         </form>
       </td>
       <td
         @mouseover="task.showCloseIcon = true"
         @mouseleave="task.showCloseIcon = false"
-        class="px-[58px] relative border text-sm whitespace-nowrap cursor-pointer"
+        class="relative border text-sm whitespace-nowrap cursor-pointer w-[100px] overflow-hidden text-ellipsis"
       >
         <form action="" class="border-black">
           <select
-            v-if="task.priority == null ? true : false"
+            v-if="task.priority == null"
             v-model="task.priority"
             name=""
             id=""
             @change="showOrNotPriorityChoice(task, task.id, task.priority)"
-            :class="`absolute font-zen rounded bottom-[2px] left-[-4px] px-2 py-2 mx-2 outline-none`"
+            :class="`absolute font-zen rounded bottom-[2px] left-[-4px]  py-2 mx-2 outline-none`"
           >
             <option disabled value="">Add</option>
             <option value="High">HIGH</option>
@@ -115,41 +104,27 @@
             <option value="Low">LOW</option>
           </select>
           <p
-            v-if="task.priority == null ? false : true"
+            v-if="task.priority != null"
             class="absolute text-white font-zen rounded bottom-[2px] left-[-4px] px-2 py-2 mx-2 outline-none"
             :class="priorityClass(task.priority)"
           >
             <span :class="`uppercase`">{{ task.priority }}</span>
             <font-awesome-icon
               :class="task.showCloseIcon ? 'inline' : 'hidden'"
-              @click="resetPriority(task)"
+              @click="resetPriority(task, task.id)"
               class="absolute bottom-[10px] right-[-24px] cursor-pointer bg-slate-200 rounded-full px-1 py-[2px]"
               icon="fa-xmark"
             ></font-awesome-icon>
           </p>
         </form>
       </td>
-      <td
-        @click="assignStore.toggleReveleAndShowTaskId(task.id)"
-        class="border-y text-sm whitespace-nowrap cursor-pointer w-56 overflow-hidden text-ellipsis whitespace-nowrap text-black/70 hover:text-black"
-      >
-        <span
-          v-if="task.assign"
-          class="font-zen border bg-green-200 text-gray-900 rounded mx-1 px-1"
-          >{{ task.assign }}
-        </span>
-        <span
-          v-if="!task.assign"
-          class="font-zen border rounded bg-yellow-200 text-gray-700 mx-1 px-1"
-          >Assign task to</span
-        >
-      </td>
+
       <td
         @mouseover="task.showCloseIconStatus = true"
         @mouseleave="task.showCloseIconStatus = false"
-        class="px-[66px] relative border text-sm whitespace-nowrap cursor-pointer"
+        class="relative border text-sm cursor-pointer w-[125px] overflow-hidden text-ellipsis whitespace-nowrap"
       >
-        <form action="" class="border-black w-full">
+        <form action="" class="border-black">
           <select
             v-if="task.status == null ? true : false"
             v-model="task.status"
@@ -173,12 +148,27 @@
             <span class="uppercase">{{ task.status }}</span>
             <font-awesome-icon
               :class="task.showCloseIconStatus ? 'inline' : 'hidden'"
-              @click="resetTodo(task)"
+              @click="resetTodo(task, task.id)"
               class="absolute bottom-[10px] right-[-24px] cursor-pointer bg-slate-200 rounded-full px-1 py-[2px]"
               icon="fa-xmark"
             ></font-awesome-icon>
           </p>
         </form>
+      </td>
+      <td
+        @click="assignStore.toggleReveleAndShowTaskId(task.id)"
+        class="border-y text-sm whitespace-nowrap cursor-pointer w-[46px] overflow-hidden text-ellipsis whitespace-nowrap text-black/70 hover:text-black"
+      >
+        <span
+          v-if="task.assign"
+          class="font-zen border bg-green-200 text-gray-900 rounded mx-1 px-1"
+          >{{ task.assign }}
+        </span>
+        <span
+          v-if="!task.assign"
+          class="font-zen border rounded bg-yellow-200 text-gray-700 mx-1 px-1"
+          >Assign task to user in project</span
+        >
       </td>
     </tr>
   </table>
@@ -208,9 +198,21 @@ import {
   hoveredTask,
 } from "@/components/ListeTaskInProject";
 import { onBeforeMount } from "vue";
+import { useRoute } from "vue-router";
 import { useProjectsStore, useAssignToStore } from "@/stores/user";
 const assignStore = useAssignToStore();
 const projectsStore = useProjectsStore();
+import { watch } from "vue";
+
+const route = useRoute();
+projectsStore.projectId = Number(route.params.id);
+watch(
+  () => route.params.id,
+  (newId) => {
+    projectsStore.projectId = Number(newId);
+  }
+);
+
 onBeforeMount(async () => {});
 
 function priorityClass(taskPriority: any) {
