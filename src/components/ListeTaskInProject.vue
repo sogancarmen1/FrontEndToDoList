@@ -116,7 +116,8 @@
           </select>
           <p
             v-if="task.priority == null ? false : true"
-            :class="`absolute bg-red-500 text-white font-zen rounded bottom-[2px] left-[-4px] px-2 py-2 mx-2 outline-none`"
+            class="absolute text-white font-zen rounded bottom-[2px] left-[-4px] px-2 py-2 mx-2 outline-none"
+            :class="priorityClass(task.priority)"
           >
             <span :class="`uppercase`">{{ task.priority }}</span>
             <font-awesome-icon
@@ -166,7 +167,8 @@
           </select>
           <p
             v-if="task.status == null ? false : true"
-            class="absolute bg-red-700 text-white font-zen rounded bottom-[2px] left-[-4px] px-2 py-2 mx-2 outline-none"
+            class="absolute text-white font-zen rounded bottom-[2px] left-[-4px] px-2 py-2 mx-2 outline-none"
+            :class="statusClass(task.status)"
           >
             <span class="uppercase">{{ task.status }}</span>
             <font-awesome-icon
@@ -202,7 +204,6 @@ import {
   showDetailOrNot,
   hiddenBackgroundAndDetailView,
   deleteBackground,
-  // onClickDate,
   onSubmitDate,
   hoveredTask,
 } from "@/components/ListeTaskInProject";
@@ -212,19 +213,19 @@ const assignStore = useAssignToStore();
 const projectsStore = useProjectsStore();
 onBeforeMount(async () => {});
 
-// });
-// const priorityClass = computed((task: any) => {
-//   if (task.priority === "High") return "bg-red-700";
-//   if (task.priority === "Average") return "bg-yellow-500";
-//   if (task.priority === "Low") return "bg-green-500";
-//   return "";
-// });
-// const statusClass = computed(() => {
-//   if (status.value === "todo") return "bg-blue-300";
-//   if (status.value === "in_progress") return "bg-yellow-500";
-//   if (status.value === "waiting") return "bg-orange-500";
-//   if (status.value === "done") return "bg-green-700";
-//   if (status.value === "canceled") return "bg-gray-400";
-//   return "";
-// });
+function priorityClass(taskPriority: any) {
+  if (taskPriority === "High") return "bg-red-700";
+  if (taskPriority === "Average") return "bg-yellow-500";
+  if (taskPriority === "Low") return "bg-green-500";
+  return "";
+}
+
+function statusClass(taskStatus: any) {
+  if (taskStatus === "todo") return "bg-blue-300";
+  if (taskStatus === "in_progress") return "bg-yellow-500";
+  if (taskStatus === "waiting") return "bg-orange-500";
+  if (taskStatus === "done") return "bg-green-700";
+  if (taskStatus === "canceled") return "bg-gray-400";
+  return "";
+}
 </script>
