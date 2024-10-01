@@ -89,6 +89,9 @@ importers:
       vue:
         specifier: ^3.4.38
         version: 3.4.38(typescript@5.5.4)
+      vue-cli-service:
+        specifier: ^5.0.10
+        version: 5.0.10
       vue-cookies:
         specifier: ^1.8.4
         version: 1.8.4
@@ -2643,6 +2646,10 @@ packages:
         optional: true
       jsdom:
         optional: true
+
+  vue-cli-service@5.0.10:
+    resolution: {integrity: sha512-j4+wxqjaHsgphWsQsDs0ET1TWSu+dW5syxk5MloTp6BsQ9dpN+SB0nq253thS6konMC+YiQLHxbf73ytrTHoRA==}
+    hasBin: true
 
   vue-component-type-helpers@2.1.2:
     resolution: {integrity: sha512-URuxnrOhO9lUG4LOAapGWBaa/WOLDzzyAbL+uKZqT7RS+PFy0cdXI2mUSh7GaMts6vtHaeVbGk7trd0FPJi65Q==}
@@ -5376,6 +5383,8 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+
+  vue-cli-service@5.0.10: {}
 
   vue-component-type-helpers@2.1.2: {}
 
