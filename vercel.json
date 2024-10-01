@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "framework": "vuejs",
+  "framework": "vue",
   "builds": [
     {
       "src": "package.json",
