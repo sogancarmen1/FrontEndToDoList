@@ -123,7 +123,15 @@ export async function showOrNotPriorityChoice(
     task.showCloseIcon = false;
   }
 }
-export function resetPriority(task: any) {
+export async function resetPriority(task: any, taskId: any) {
+  try {
+    await updateData(
+      `https://backend-application-v09m.onrender.com/tasks/${taskId}`,
+      {
+        priority: null,
+      }
+    );
+  } catch (error) {}
   task.priority = null;
 }
 
@@ -144,6 +152,14 @@ export async function showOrNotStatusChoice(
   task.showChoiceStatus = false;
 }
 
-export function resetTodo(task: any) {
+export async function resetTodo(task: any, taskId: any) {
+  try {
+    await updateData(
+      `https://backend-application-v09m.onrender.com/tasks/${taskId}`,
+      {
+        status: null,
+      }
+    );
+  } catch (error) {}
   task.status = null;
 }

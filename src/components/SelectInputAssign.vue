@@ -31,12 +31,14 @@ const filteredFrameworks = computed(() =>
 
 import { useRoute } from "vue-router";
 const route = useRoute();
+import { useAssignToStore } from "@/stores/user";
 
 watch(searchTerm, async (newTerm) => {
+  const assignToStore = useAssignToStore();
   if (newTerm !== "" && newTerm.length === 4) {
     try {
       const result = await getData(
-        `https://backend-application-v09m.onrender.com/projects/${route.params.id}/members`
+        `https://backend-application-v09m.onrender.com/projects/${route.params.id ? route.params.id : assignToStore.taskId}/members`
       );
       frameworks.value = result.data?.map((user: any) => {
         return {

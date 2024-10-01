@@ -157,7 +157,7 @@
       </td>
       <td
         @click="assignStore.toggleReveleAndShowTaskId(task.id)"
-        class="border-y text-sm whitespace-nowrap cursor-pointer w-[46px] overflow-hidden text-ellipsis whitespace-nowrap text-black/70 hover:text-black"
+        class="border-y text-sm cursor-pointer w-[46px] overflow-hidden text-ellipsis whitespace-nowrap text-black/70 hover:text-black"
       >
         <span
           v-if="task.assign"

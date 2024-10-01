@@ -5,6 +5,12 @@
   >
     <AddTask></AddTask>
   </div>
+  <div
+    v-if="assignStores.revele"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <AssignTaskPage></AssignTaskPage>
+  </div>
   <TopsideBar>
     <EnTete>
       <div class="border-t">
@@ -77,4 +83,7 @@ import ListeTask from "./ListeTask/ListeTask.vue";
 import AddTask from "./AddTask.vue";
 import { useTaskStore } from "@/stores/user";
 const taskStores = useTaskStore();
+import AssignTaskPage from "./AssigntaskPage.vue";
+import { useAssignToStore } from "@/stores/user";
+const assignStores = useAssignToStore()
 </script>

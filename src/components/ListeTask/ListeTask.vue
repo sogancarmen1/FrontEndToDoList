@@ -120,7 +120,7 @@
             <span :class="`uppercase`">{{ task.priority }}</span>
             <font-awesome-icon
               :class="task.showCloseIcon ? 'inline' : 'hidden'"
-              @click="resetPriority(task)"
+              @click="resetPriority(task, task.id)"
               class="absolute bottom-[10px] right-[-24px] cursor-pointer bg-slate-200 rounded-full px-1 py-[2px]"
               icon="fa-xmark"
             ></font-awesome-icon>
@@ -128,11 +128,11 @@
         </form>
       </td>
       <td
-        class="w-[200px] overflow-hidden text-ellipsis whitespace-nowrap border-y text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
+        class="w-[200px] overflow-hidden text-ellipsis border-y text-sm whitespace-nowrap cursor-pointer text-black/70 hover:text-black"
       >
          <td
         @click="assignStore.toggleReveleAndShowTaskId(task.id)"
-        class="text-sm whitespace-nowrap cursor-pointer w-56 overflow-hidden text-ellipsis whitespace-nowrap text-black/70 hover:text-black"
+        class="text-sm cursor-pointer w-56 overflow-hidden text-ellipsis whitespace-nowrap text-black/70 hover:text-black"
       >
         <span
           v-if="task.assign"
@@ -174,7 +174,7 @@
             <span class="uppercase">{{ task.status }}</span>
             <font-awesome-icon
               :class="task.showCloseIconStatus ? 'inline' : 'hidden'"
-              @click="resetTodo(task)"
+              @click="resetTodo(task, task.id)"
               class="absolute bottom-[10px] right-[-24px] cursor-pointer bg-slate-200 rounded-full px-1 py-[2px]"
               icon="fa-xmark"
             ></font-awesome-icon>
@@ -209,13 +209,14 @@ import {
   onSubmitDate,
   hoveredTaskId,
 } from "./ListeTask";
-import { onBeforeMount } from "vue";
+import { watch } from "vue";
 import { useProjectsStore } from "@/stores/user";
 const projectsStore = useProjectsStore();
 import { useAssignToStore } from "@/stores/user";
 const assignStore = useAssignToStore();
-onBeforeMount(async () => {
-});
+watch(hoveredTaskId, (newHoveredTaskId) => {
+  console.log(newHoveredTaskId);
+})
 
 // });
 // const priorityClass = computed((task: any) => {
