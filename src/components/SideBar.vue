@@ -17,7 +17,7 @@ export default {
     const firstName = ref("");
     const lastName = ref("");
     onMounted(async () => {
-      const userData = await getData("http://localhost:3000/users");
+      const userData = await getData("https://backend-application-v09m.onrender.com/users");
       firstName.value = userData.firstName;
       lastName.value = userData.lastName;
     });

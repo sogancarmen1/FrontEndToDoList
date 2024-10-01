@@ -36,7 +36,7 @@ watch(searchTerm, async (newTerm) => {
   if (newTerm !== "" && newTerm.length === 4) {
     try {
       const result = await getData(
-        `http://localhost:3000/projects/${route.params.id}/members`
+        `https://backend-application-v09m.onrender.com/projects/${route.params.id}/members`
       );
       frameworks.value = result.data?.map((user: any) => {
         return {

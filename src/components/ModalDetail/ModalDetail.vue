@@ -111,7 +111,7 @@ async function addDescription(value: string) {
   showInputDescription.value = false;
   (
     await updateData(
-      `http://localhost:3000/tasks/${modalDetail.valueOfDetail.id}`,
+      `https://backend-application-v09m.onrender.com/tasks/${modalDetail.valueOfDetail.id}`,
       {
         description: value,
       }
