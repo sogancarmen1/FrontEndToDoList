@@ -1,4 +1,3 @@
-import { Project } from "@/Interfaces/interface";
 import { ref } from "vue";
 export const detailOfTask = ref(false);
 export const deleteBackground = ref(false);
@@ -64,7 +63,6 @@ export function hiddenBackgroundAndDetailView() {
 }
 export const showIconAndBorder = ref(false);
 import { updateData } from "@/utils/utils";
-import { value } from "./ProjectviewListe/ProjectviewListe";
 export const onSubmit = async function (task: any, taskId: any, newData: any) {
   task.showValueOfInput = true;
   try {

@@ -344,8 +344,10 @@ export const useProjectParameterStore = defineStore(
   }
 );
 
+import { Member } from "@/Interfaces/interface";
+
 export const useMemberStore = defineStore("member of project", () => {
-  const members = ref([]);
+  const members = ref<Member[]>([]);
 
   async function getAllMembersInProject(value: any) {
     const result = await getDataById(

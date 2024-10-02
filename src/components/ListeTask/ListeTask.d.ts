@@ -1,0 +1,14 @@
+export declare const detailOfTask: import("vue").Ref<boolean, boolean>;
+export declare const deleteBackground: import("vue").Ref<boolean, boolean>;
+export declare const hoveredTaskId: import("vue").Ref<number | null, number | null>;
+export declare function showDetailOrNot(): Promise<void>;
+export declare function hiddenBackgroundAndDetail(): void;
+export declare const showIconAndBorder: import("vue").Ref<boolean, boolean>;
+export declare const onSubmit: (task: any, taskId: any, newData: any) => Promise<void>;
+export declare const onClick: (task: any) => void;
+export declare const onClickDate: (task: any) => void;
+export declare const onSubmitDate: (task: any, taskId: any, newData: any) => Promise<void>;
+export declare function showOrNotPriorityChoice(task: any, taskId: any, newData: any): Promise<void>;
+export declare function resetPriority(task: any, taskId: any): Promise<void>;
+export declare function showOrNotStatusChoice(task: any, taskId: any, newData: any): Promise<void>;
+export declare function resetTodo(task: any, taskId: any): Promise<void>;

@@ -40,6 +40,7 @@ watch(searchTerm, async (newTerm) => {
       const result = await getData(
         `https://backend-application-v09m.onrender.com/projects/${route.params.id ? route.params.id : assignToStore.taskId}/members`
       );
+      console.log(assignToStore.taskId);
       frameworks.value = result.data?.map((user: any) => {
         return {
           value: {

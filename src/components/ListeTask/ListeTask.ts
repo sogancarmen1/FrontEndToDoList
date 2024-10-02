@@ -1,4 +1,3 @@
-import { Project } from "@/Interfaces/interface";
 import { ref } from "vue";
 export const detailOfTask = ref(false);
 export const deleteBackground = ref(false);

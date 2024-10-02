@@ -27,3 +27,9 @@ export interface Project {
   isSelectedProject: boolean;
   reveleTaskList: boolean;
 }
+
+export interface Member {
+  id: number;
+  email: string;
+  roleType: string;
+}

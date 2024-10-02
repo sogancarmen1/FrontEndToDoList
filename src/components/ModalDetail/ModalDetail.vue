@@ -16,6 +16,7 @@
         class="absolute my-8 mx-6 text-3xl font-bold overflow-hidden text-ellipsis"
       >
         {{
+          modalDetail.valueOfDetail.name != undefined &&
           modalDetail.valueOfDetail.name?.length > 20
             ? modalDetail.valueOfDetail.name?.slice(0, 20)
             : modalDetail.valueOfDetail.name

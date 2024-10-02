@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createWebHistory, createRouter } from "vue-router";
 import FormPageConnexion from "./components/FormPageConnexion.vue";
 import FormPageInscription from "./components/FormPageInscription.vue";
-import HomePage from "./components/HomePage.vue";
 import AddTaskPage from "./components/AddTaskPage.vue";
 import VoirProfil from "./components/VoirProfil.vue";
 import UpdateTask from "./components/UpdateTask.vue";
@@ -24,7 +23,6 @@ import FilesView from "./components/FilesView.vue";
 import ProjectviewListe from "./components/ProjectviewListe.vue";
 import ProjectviewFile from "./components/ProjectviewFile.vue";
 import AddTask from "./components/AddTask.vue";
-import { useProjectsStore } from "@/stores/user";
 
 import {
   faUserSecret,
@@ -170,7 +168,6 @@ app.mount("#app");
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
-
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!userStore.userData) {
       next("/");
@@ -178,6 +175,9 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else {
+    if (from.path === "/specific-page") {
+      console.log("L’utilisateur vient de la page spécifique");
+    }
     next();
   }
 });
