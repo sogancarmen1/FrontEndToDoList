@@ -139,7 +139,7 @@
 
             async deleteProject(value) {
                 this.reveleRemoveProject = !this.reveleRemoveProject;
-                await deleteData(`https://backend-application-v09m.onrender.com/projects/${value}`)
+                await deleteData(`http://localhost:3000/projects/${value}`)
                 this.projects = this.projects.filter(project => project.id !== value);
                 if(this.projects.length == 0) {
                     this.showImage = true;
@@ -185,7 +185,7 @@
                     console.log(forValue1);
                     if(forValue != -1) {
                         //Partie permettant de supprimer une tâche dans un projet donnée
-                        await deleteData(`https://backend-application-v09m.onrender.com/tasks/${value}`);
+                        await deleteData(`http://localhost:3000/tasks/${value}`);
                         this.projects[valueFor].listOfTask.splice(forValue, 1);
                         if(this.projects[valueFor].listOfTask.length == 0) {
                             this.projects[valueFor].isSelectedProject = true;
@@ -221,7 +221,7 @@
             tooglereveleTaskList(projectId) {
                 this.projects.forEach(async (project) => {
                     if (project.id === projectId){
-                        const dataReceived = await getData("https://backend-application-v09m.onrender.com/tasks", projectId);
+                        const dataReceived = await getData("http://localhost:3000/tasks", projectId);
 
                         project.listOfTask = dataReceived.data.map(task => ({
                             id: task.id,
@@ -319,7 +319,7 @@
                 //Insertion d'une tâche dans la base de donnée
                 this.projects.forEach(async (project) => {
                     if(this.receivedId.inProject === project.nameOfProject) {
-                        await postData("https://backend-application-v09m.onrender.com/tasks", {
+                        await postData("http://localhost:3000/tasks", {
                             name: this.receivedId.name,
                             dueDate: this.receivedId.dueDate,
                             priority: this.receivedId.priority,
@@ -342,7 +342,7 @@
                     reveleTaskList: false,
                     listOfTask: [],
                 }
-                const projectCreated = await postData("https://backend-application-v09m.onrender.com/projects", {
+                const projectCreated = await postData("http://localhost:3000/projects", {
                     name: this.receiveProject.nameOfProject,
                     description: this.receiveProject.description
                 })
@@ -364,7 +364,7 @@
                 showLoader.value = true;
                 // showImage.value = false;
 
-                const responseReceived = await getData("https://backend-application-v09m.onrender.com/projects");
+                const responseReceived = await getData("http://localhost:3000/projects");
                 if(responseReceived != null) {
                     projects.value = responseReceived.data.map(project => ({
                         id: project.id,

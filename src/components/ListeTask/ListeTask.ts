@@ -66,12 +66,9 @@ import { updateData } from "@/utils/utils";
 export const onSubmit = async function (task: any, taskId: any, newData: any) {
   task.showValueOfInput = true;
   try {
-    await updateData(
-      `https://backend-application-v09m.onrender.com/tasks/${taskId}`,
-      {
-        name: newData,
-      }
-    );
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
+      name: newData,
+    });
   } catch (error) {}
   task.showInput = false;
 };
@@ -90,12 +87,9 @@ export const onSubmitDate = async function (
 ) {
   task.showValueOfInputOfDate = true;
   try {
-    await updateData(
-      `https://backend-application-v09m.onrender.com/tasks/${taskId}`,
-      {
-        dueDate: newData,
-      }
-    );
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
+      dueDate: newData,
+    });
   } catch (error) {}
   task.showInputOfDate = false;
 };
@@ -109,12 +103,9 @@ export async function showOrNotPriorityChoice(
   if (task.priority) {
     task.showValueOfInputOfPriority = true;
     try {
-      await updateData(
-        `https://backend-application-v09m.onrender.com/tasks/${taskId}`,
-        {
-          priority: newData,
-        }
-      );
+      await updateData(`http://localhost:3000/tasks/${taskId}`, {
+        priority: newData,
+      });
     } catch (error) {}
     task.showChoicePriority = false;
   } else {
@@ -124,12 +115,9 @@ export async function showOrNotPriorityChoice(
 }
 export async function resetPriority(task: any, taskId: any) {
   try {
-    await updateData(
-      `https://backend-application-v09m.onrender.com/tasks/${taskId}`,
-      {
-        priority: null,
-      }
-    );
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
+      priority: null,
+    });
   } catch (error) {}
   task.priority = null;
 }
@@ -141,24 +129,18 @@ export async function showOrNotStatusChoice(
 ) {
   task.showValueOfInputOfStatus = true;
   try {
-    await updateData(
-      `https://backend-application-v09m.onrender.com/tasks/${taskId}`,
-      {
-        status: newData,
-      }
-    );
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
+      status: newData,
+    });
   } catch (error) {}
   task.showChoiceStatus = false;
 }
 
 export async function resetTodo(task: any, taskId: any) {
   try {
-    await updateData(
-      `https://backend-application-v09m.onrender.com/tasks/${taskId}`,
-      {
-        status: null,
-      }
-    );
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
+      status: null,
+    });
   } catch (error) {}
   task.status = null;
 }

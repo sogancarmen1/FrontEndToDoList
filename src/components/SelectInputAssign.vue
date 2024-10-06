@@ -38,7 +38,7 @@ watch(searchTerm, async (newTerm) => {
   if (newTerm !== "" && newTerm.length === 4) {
     try {
       const result = await getData(
-        `https://backend-application-v09m.onrender.com/projects/${route.params.id ? route.params.id : assignToStore.taskId}/members`
+        `http://localhost:3000/projects/${route.params.id ? route.params.id : assignToStore.taskId}/members`
       );
       console.log(assignToStore.taskId);
       frameworks.value = result.data?.map((user: any) => {

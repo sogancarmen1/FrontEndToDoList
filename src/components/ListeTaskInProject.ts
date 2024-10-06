@@ -66,7 +66,7 @@ import { updateData } from "@/utils/utils";
 export const onSubmit = async function (task: any, taskId: any, newData: any) {
   task.showValueOfInput = true;
   try {
-    await updateData(`https://backend-application-v09m.onrender.com/tasks/${taskId}`, {
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
       name: newData,
     });
   } catch (error) {}
@@ -87,7 +87,7 @@ export const onSubmitDate = async function (
 ) {
   task.showValueOfInputOfDate = true;
   try {
-    await updateData(`https://backend-application-v09m.onrender.com/tasks/${taskId}`, {
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
       dueDate: newData,
     });
   } catch (error) {}
@@ -103,7 +103,7 @@ export async function showOrNotPriorityChoice(
   if (task.priority) {
     task.showValueOfInputOfPriority = true;
     try {
-      await updateData(`https://backend-application-v09m.onrender.com/tasks/${taskId}`, {
+      await updateData(`http://localhost:3000/tasks/${taskId}`, {
         priority: newData,
       });
     } catch (error) {}
@@ -115,7 +115,7 @@ export async function showOrNotPriorityChoice(
 }
 export async function resetPriority(task: any, taskId: any) {
   try {
-    await updateData(`https://backend-application-v09m.onrender.com/tasks/${taskId}`, {
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
       priority: null,
     });
   } catch (error) {}
@@ -129,7 +129,7 @@ export async function showOrNotStatusChoice(
 ) {
   task.showValueOfInputOfStatus = true;
   try {
-    await updateData(`https://backend-application-v09m.onrender.com/tasks/${taskId}`, {
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
       status: newData,
     });
   } catch (error) {}
@@ -138,7 +138,7 @@ export async function showOrNotStatusChoice(
 
 export async function resetTodo(task: any, taskId: any) {
   try {
-    await updateData(`https://backend-application-v09m.onrender.com/tasks/${taskId}`, {
+    await updateData(`http://localhost:3000/tasks/${taskId}`, {
       status: null,
     });
   } catch (error) {}

@@ -83,7 +83,7 @@ import { useToast } from "vue-toast-notification";
 async function onSubmit() {
   try {
     const value = await postData(
-      "https://backend-application-v09m.onrender.com/projects",
+      "http://localhost:3000/projects",
       {
         name: name.value,
         listOfTask: [],
@@ -93,7 +93,7 @@ async function onSubmit() {
       }
     );
     const value1 = await getData(
-      `https://backend-application-v09m.onrender.com/projects/${value.data.data.id_projects}`
+      `http://localhost:3000/projects/${value.data.data.id_projects}`
     );
     projectsStore.addNewProject({
       ...value.data.data,

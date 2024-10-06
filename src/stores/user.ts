@@ -13,9 +13,7 @@ export const useUserStore = defineStore("user", {
     },
 
     async getUserInformations() {
-      const response = await getData(
-        "https://backend-application-v09m.onrender.com/users"
-      );
+      const response = await getData("http://localhost:3000/users");
       this.informations = response.email;
     },
   },
@@ -61,7 +59,7 @@ export const useModalDetailStore = defineStore("details", {
   actions: {
     async getDetailTask(value: number) {
       this.valueOfDetail = await getDataById(
-        `https://backend-application-v09m.onrender.com/tasks/${value}`
+        `http://localhost:3000/tasks/${value}`
       );
       return this.valueOfDetail;
     },
@@ -83,10 +81,7 @@ export const useTaskStore = defineStore("tasks", () => {
   }
 
   async function getAllTasksInProject(projectId: any) {
-    const response = await getData(
-      "https://backend-application-v09m.onrender.com/tasks",
-      projectId
-    );
+    const response = await getData("http://localhost:3000/tasks", projectId);
     tasks.value = response.data;
     return response;
   }
@@ -129,10 +124,7 @@ export const useTaskOnProjectStore = defineStore("tasksOnProject", () => {
   }
 
   async function getAllTasksInProject(projectId: any) {
-    const response = await getData(
-      "https://backend-application-v09m.onrender.com/tasks",
-      projectId
-    );
+    const response = await getData("http://localhost:3000/tasks", projectId);
     tasks.value = response.data;
     return response;
   }
@@ -176,9 +168,7 @@ export const useProjectStore = defineStore("projectsCreate", () => {
   }
 
   async function getProjectById(value: any) {
-    const result = await getData(
-      `https://backend-application-v09m.onrender.com/projects/${value}`
-    );
+    const result = await getData(`http://localhost:3000/projects/${value}`);
     projectName.value = result.data.name;
   }
 
@@ -188,12 +178,9 @@ export const useProjectStore = defineStore("projectsCreate", () => {
   }
 
   async function onSubmit(value: any) {
-    await updateData(
-      `https://backend-application-v09m.onrender.com/projects/${value}`,
-      {
-        name: projectName.value,
-      }
-    );
+    await updateData(`http://localhost:3000/projects/${value}`, {
+      name: projectName.value,
+    });
     const project = useProjectsStore();
     project.fetchProjects();
     reveleInput.value = !reveleInput.value;
@@ -239,14 +226,12 @@ export const useProjectsStore = defineStore("projects", () => {
   }
 
   async function fetchProjects() {
-    const responseReceived = await getData(
-      "https://backend-application-v09m.onrender.com/projects"
-    );
+    const responseReceived = await getData("http://localhost:3000/projects");
     if (responseReceived != null) {
       const projectsWithTasks = await Promise.all(
         responseReceived.data.map(async (project: any) => {
           const tasksResponse = await getData(
-            "https://backend-application-v09m.onrender.com/tasks",
+            "http://localhost:3000/tasks",
             project.id
           );
           return {
@@ -351,7 +336,7 @@ export const useMemberStore = defineStore("member of project", () => {
 
   async function getAllMembersInProject(value: any) {
     const result = await getDataById(
-      `https://backend-application-v09m.onrender.com/projects/${value}/members`
+      `http://localhost:3000/projects/${value}/members`
     );
     members.value = result;
   }

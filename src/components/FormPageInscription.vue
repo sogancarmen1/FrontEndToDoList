@@ -49,7 +49,7 @@ export default {
       }
       try {
         const toast = useToast();
-        const value = await postData("https://backend-application-v09m.onrender.com/auth/register", {
+        const value = await postData("http://localhost:3000/auth/register", {
           firstName: this.emailValue
             .split("@")[0]
             .slice(this.emailValue.split("@")[0].length / 2),
