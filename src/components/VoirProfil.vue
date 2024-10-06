@@ -13,7 +13,7 @@ export default {
   methods: {
     async onSubmit() {
       await postData(
-        "http://localhost:3000/auth/logout"
+        "https://backend-application-v09m.onrender.com/auth/logout"
       );
       this.$router.push("/");
     },

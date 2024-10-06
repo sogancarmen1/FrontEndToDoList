@@ -105,23 +105,26 @@ import { getData, postData } from "@/utils/utils";
 import { useToast } from "vue-toast-notification";
 async function onSubmit() {
   try {
-    const value = await postData("http://localhost:3000/tasks", {
-      name: name.value,
-      nameFormatted: "",
-      projectId: Number(inProject.value),
-      showInput: false,
-      showValueOfInput: true,
-      showValueOfInputOfDate: true,
-      showInputOfDate: false,
-      showChoicePriority: false,
-      showValueOfInputOfPriority: true,
-      showCloseIcon: false,
-      showCloseIconStatus: false,
-      showChoiceStatus: false,
-      showValueOfInputOfStatus: true,
-    });
+    const value = await postData(
+      "https://backend-application-v09m.onrender.com/tasks",
+      {
+        name: name.value,
+        nameFormatted: "",
+        projectId: Number(inProject.value),
+        showInput: false,
+        showValueOfInput: true,
+        showValueOfInputOfDate: true,
+        showInputOfDate: false,
+        showChoicePriority: false,
+        showValueOfInputOfPriority: true,
+        showCloseIcon: false,
+        showCloseIconStatus: false,
+        showChoiceStatus: false,
+        showValueOfInputOfStatus: true,
+      }
+    );
     const projectFound = await getData(
-      `http://localhost:3000/projects/${inProject.value}`
+      `https://backend-application-v09m.onrender.com/projects/${inProject.value}`
     );
     projectsStore.addProject(
       {

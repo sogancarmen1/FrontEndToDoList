@@ -160,7 +160,7 @@ import { useProjectStore } from "@/stores/user";
 const projectStore = useProjectStore();
 const router = useRouter();
 async function onSubmit() {
-  await postData("http://localhost:3000/auth/logout");
+  await postData("https://backend-application-v09m.onrender.com/auth/logout");
   router.push("/");
 }
 import {

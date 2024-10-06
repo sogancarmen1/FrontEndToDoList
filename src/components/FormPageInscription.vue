@@ -51,17 +51,20 @@ export default {
       try {
         this.showLoader = true;
         const toast = useToast();
-        const value = await postData("http://localhost:3000/auth/register", {
-          firstName: this.emailValue
-            .split("@")[0]
-            .slice(this.emailValue.split("@")[0].length / 2),
-          lastName: this.emailValue
-            .split("@")[0]
-            .slice(0, this.emailValue.split("@")[0].length / 2),
-          email: this.emailValue,
-          password: this.password,
-          confirmPassword: this.confirmPassword,
-        });
+        const value = await postData(
+          "https://backend-application-v09m.onrender.com/auth/register",
+          {
+            firstName: this.emailValue
+              .split("@")[0]
+              .slice(this.emailValue.split("@")[0].length / 2),
+            lastName: this.emailValue
+              .split("@")[0]
+              .slice(0, this.emailValue.split("@")[0].length / 2),
+            email: this.emailValue,
+            password: this.password,
+            confirmPassword: this.confirmPassword,
+          }
+        );
         toast.success(value.data.message, {
           position: "top-right",
         });
