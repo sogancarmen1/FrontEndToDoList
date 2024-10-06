@@ -84,14 +84,6 @@
             class="border-y w-full font-zen px-2 pt-2 pb-[10px] outline-none cursor-pointer"
             type="date"
           />
-          <!-- <p
-            @click="onClickDate(task)"
-            class="border-y w-full font-zen px-2 pt-2 pb-[12px] outline-none cursor-pointer"
-            v-if="task.showValueOfInputOfDate"
-            title="Click for modification"
-          >
-            {{ task.dueDate }}
-          </p> -->
         </form>
       </td>
       <td
@@ -205,7 +197,6 @@ import {
   showDetailOrNot,
   hiddenBackgroundAndDetail,
   deleteBackground,
-  // onClickDate,
   onSubmitDate,
   hoveredTaskId,
 } from "./ListeTask";
@@ -217,20 +208,4 @@ const assignStore = useAssignToStore();
 watch(hoveredTaskId, (newHoveredTaskId) => {
   console.log(newHoveredTaskId);
 })
-
-// });
-// const priorityClass = computed((task: any) => {
-//   if (task.priority === "High") return "bg-red-700";
-//   if (task.priority === "Average") return "bg-yellow-500";
-//   if (task.priority === "Low") return "bg-green-500";
-//   return "";
-// });
-// const statusClass = computed(() => {
-//   if (status.value === "todo") return "bg-blue-300";
-//   if (status.value === "in_progress") return "bg-yellow-500";
-//   if (status.value === "waiting") return "bg-orange-500";
-//   if (status.value === "done") return "bg-green-700";
-//   if (status.value === "canceled") return "bg-gray-400";
-//   return "";
-// });
 </script>

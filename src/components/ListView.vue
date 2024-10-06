@@ -85,5 +85,5 @@ import { useTaskStore } from "@/stores/user";
 const taskStores = useTaskStore();
 import AssignTaskPage from "./AssigntaskPage.vue";
 import { useAssignToStore } from "@/stores/user";
-const assignStores = useAssignToStore()
+const assignStores = useAssignToStore();
 </script>
