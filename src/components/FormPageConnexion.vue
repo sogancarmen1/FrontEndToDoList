@@ -27,10 +27,13 @@ export default {
     async onSubmit() {
       try {
         this.showLoader = true;
-        const value = await postData("http://localhost:3000/auth/login", {
-          email: this.emailValue,
-          password: this.password,
-        });
+        const value = await postData(
+          "https://backend-application-v09m.onrender.com/auth/login",
+          {
+            email: this.emailValue,
+            password: this.password,
+          }
+        );
         if (value.data != null) {
           const userStore = useUserStore();
           const toast = useToast();

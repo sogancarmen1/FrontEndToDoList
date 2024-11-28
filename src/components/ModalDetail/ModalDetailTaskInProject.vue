@@ -132,7 +132,7 @@ async function addDescription(value: string) {
   showInputDescription.value = false;
   (
     await updateData(
-      `http://localhost:3000/tasks/${modalDetail.valueOfDetail.id}`,
+      `https://backend-application-v09m.onrender.com/tasks/${modalDetail.valueOfDetail.id}`,
       {
         description: value,
       }
@@ -143,7 +143,7 @@ async function addDescription(value: string) {
 const route = useRoute();
 async function unassigned() {
   await updateData(
-    `http://localhost:3000/tasks/${modalDetail.valueOfDetail.id}/responsible/${route.params.id}`
+    `https://backend-application-v09m.onrender.com/tasks/${modalDetail.valueOfDetail.id}/responsible/${route.params.id}`
   );
   projetsStore.projects.forEach((project) => {
     if (project.id == route.params.id) {

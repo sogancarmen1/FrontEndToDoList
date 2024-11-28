@@ -102,9 +102,12 @@ import { ref } from "vue";
 const showInputDescription = ref(false);
 async function addDescription(value: any, newDescription: string) {
   showInputDescription.value = false;
-  await updateData(`http://localhost:3000/projects/${value}`, {
-    description: newDescription,
-  });
+  await updateData(
+    `https://backend-application-v09m.onrender.com/projects/${value}`,
+    {
+      description: newDescription,
+    }
+  );
   seeValueOfTextArea.value = true;
 }
 const seeValueOfTextArea = ref(true);

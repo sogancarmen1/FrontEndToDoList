@@ -81,7 +81,7 @@ const projectsStore = useProjectsStore();
 async function onSubmit() {
   try {
     const value = await updateData(
-      `http://localhost:3000/tasks/${assignStores.taskId}/responsible`,
+      `https://backend-application-v09m.onrender.com/tasks/${assignStores.taskId}/responsible`,
       {
         userEmail: assigned.userAssigned,
         idProject: Number(route.params.id),
